@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.liancheng.it.dao.admin.AdminDao">
+ 
+ 	<!-- 查询admin账户 -->
+ 	<select id="checkAdmin" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.admin.Admin">
+ 		select * from admin where admin_name=#{adminame}
+ 	</select>
+ 	
+ 	
+ 	
+ </mapper>

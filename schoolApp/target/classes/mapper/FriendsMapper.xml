@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.liancheng.it.dao.friends.FriendsDao">
+ 	
+ 	<insert id="addFriend" parameterType="com.liancheng.it.entity.friends.Friends" 
+ 	keyProperty="f_id">
+ 		insert into friends 
+ 		(user_id,f_user_id,type,f_creatime) 
+ 		values 
+ 		(#{user_id},#{f_user_id},'0',#{f_creatime})
+ 	</insert>
+ 	
+ 	<select id="queryfTof" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select F.user_id,F.f_user_id,F.f_see_state,F.f_creatime from friends F INNER JOIN
+ 		(SELECT f_user_id from friends where user_id=#{user_id}) Q
+ 		ON F.user_id=Q.f_user_id 
+		where F.user_id NOT in (#{user_id}) AND F.f_user_id NOT in (#{user_id})
+		and F.user_id &lt;&gt; F.f_user_id and F.type='0'
+ 	</select>
+ 	
+ 	<select id="queryFriends" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select * from friends 
+ 		where user_id=#{user_id} and f_user_id &lt;&gt; #{user_id} and type='0'
+ 	</select>
+ 	
+ 	<insert id="addAttention" parameterType="java.util.Map" keyProperty="f_id">
+ 		insert into friends 
+ 		(user_id,f_user_id,type,f_creatime) 
+ 		values 
+ 		(#{user_id},#{f_user_id},'1',#{f_creatime})
+ 	</insert>
+ 	
+ 	<select id="countIsAttention" parameterType="java.util.Map" 
+ 	resultType="int">
+ 		select count(*) from friends 
+ 		where user_id=#{user_id} and f_user_id=#{f_user_id} and type='1'
+ 	</select>
+ 	
+ 	<select id="cancelAttention" parameterType="java.util.Map">
+ 		delete from friends 
+ 		where user_id=#{user_id} and f_user_id=#{f_user_id} and type='1'
+ 	</select>
+ 	
+ 	<select id="queryAttentions" parameterType="java.util.Map" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select * from friends 
+ 		where type='1' and user_id=#{user_id} 
+ 		limit #{start},#{end}
+ 	</select>
+ 	
+ 	<select id="queryTotalAttention" parameterType="string" resultType="int">
+ 		select count(*) from friends 
+ 		where type='1' and user_id=#{user_id}
+ 	</select>
+ 	
+ 	<select id="queryFans" parameterType="java.util.Map" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select * from friends 
+ 		where type='1' and f_user_id=#{f_user_id}
+ 		limit #{start},#{end}
+ 	</select>
+ 	
+ 	<select id="queryTotalFans" parameterType="string" resultType="int">
+ 		select count(*) from friends 
+ 		where type='1' and f_user_id=#{f_user_id}
+ 	</select>
+ 	
+ 	<select id="queryFriendCount" parameterType="string" resultType="int">
+ 		select count(*) from friends 
+ 		where user_id=#{user_id} and f_user_id not in (#{user_id}) and type='0'
+ 	</select>
+ 	
+ 	<select id="queryFriendList" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select F.f_user_id,U.profile,U.user_nickname from friends F INNER JOIN user U 
+ 		on F.f_user_id=U.user_id 
+ 		where F.user_id=#{user_id} and F.f_user_id not in (#{user_id}) and type='0'
+ 	</select>
+ 	
+ 	<delete id="cancelFans" parameterType="map">
+ 		delete from friends 
+ 		where type='1' and user_id=#{f_user_id} and f_user_id=#{user_id}
+ 	</delete>
+ 	
+ 	
+ </mapper>

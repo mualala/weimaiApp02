@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin</title>
+    <!--[if lt IE 9]>
+      <script src="plugins/bootstrap/js/html5shiv.min.js"></script>
+      <script src="plugins/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap-table.min.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap-editable.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap-switch.min.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap-select.min.css">
+<style type="text/css">
+    body {
+        font-family: "微软雅黑,Arial,sans-serif";
+    }
+    a {
+        color: black;
+    }
+    /*
+    #activeTable {
+    	table-layout: fixed;
+    }
+    */
+    .img-rounded {
+    	width: 80px;
+    	height: 50px;
+    }
+</style>
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <!-- 响应式设置 -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <span class="glyphicon glyphicon-home"></span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a class="icon-bar" href="#"><strong>系统首页</strong></a>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a><span class="glyphicon glyphicon-user"></span>欢迎您,admin</a></li>
+                    <li><a href="#">安全退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <!-- 导航栏下的菜单栏 -->
+        <div class="row">
+
+            <!-- 左侧边栏 -->
+            <div class="col-sm-2">
+                
+                <!--手风琴侧边栏-->
+                <div class="panel-group" id="accordion">
+                    <a href="#" class="list-group-item active"><strong>内容审核</strong></a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa1" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>朋友圈<span class="glyphicon glyphicon-chevron-up pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse in" id="aa1">
+                            <a href="#a01" data-toggle="tab" id="aa001" onclick="initActiveTable();">
+                                <div class="panel-body"> 动态审核
+                                   	<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                            <a href="#a02" data-toggle="tab" onclick="initActiveVertify();">
+                                <div class="panel-body">发动态的权限
+                                    <span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa2" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>用户认证审核<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa2">
+                            <a href="#a03" data-toggle="tab" onclick="initUserVertifyTable();">
+                                <div class="panel-body">
+                                   	 信息验证审核<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa3" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>碰碰<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa3">
+                            <a href="#a04" data-toggle="tab" onclick="initQuestionTable();">
+                                <div class="panel-body">
+                                    	发布问题管理<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+            <!-- 
+                	右侧主体内容边栏
+             -->
+            <div class="col-sm-10">
+                
+                <!-- 主体内容，使用tab标签嵌入 -->
+                <div class="tab-content">
+
+                    <div class="tab-pane fade" id="a01">   
+
+                        <!-- 列表展示，主体内容，相当于以前的ifram -->
+                        <div>
+                            <div class="row">
+                                <div id="toolbar" class="col-xs-12">
+                                    <a href="#addUserModel" class="btn btn-warning" data-toggle="modal" id="batchActive">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>批量审核
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <table id="activeTable" class="table table-bordered table-hover"></table>
+                        </div>
+
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a02">
+                    	<h4><b>用户发动态的权限控制</b></h4>
+                    	<hr />
+                    	<div>
+	                    	<div class="row">
+                                <div id="toolbar02" class="col-xs-12" style="color: red;font-size: 11px;">
+                                	<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>修改权限：0表示关闭;1表示开启
+                                </div>
+                            </div>
+	                    	<table id="activeVertify" class="table table-bordered table-hover"></table>
+                    	</div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a03">
+                    	<h4><b>身份待审核用户</b></h4>
+                    	<hr />
+                    	<div>
+                    		<div class="row">
+                                <div id="toolbar03" class="col-xs-12" style="color: red;font-size: 11px;">
+                                	<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>修改权限：0表示审核中;1表示审核通过;2表示审核不通过
+                                </div>
+                            </div>
+	                    	<table id="userVertify" class="table table-bordered table-hover"></table>
+                    	</div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a04">
+                   		<button id="subquestion" class="btn btn-warning" style="margin-right: 50px;"><span class="glyphicon glyphicon-star"></span>发布问题</button>
+                   		<textarea id="questionArea" class="form-control" rows="3" style="width:550px;margin-top: 3px;"></textarea>
+                   		<hr />
+                   		<table id="questionTable" class="table table-bordered table-hover"></table>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+        
+    </div>
+	
+
+
+	<script type="text/javascript" src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/tableExport.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-table-export.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-editable.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/myjs/activeVerify.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/myjs/verifies.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/myjs/userVerify.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/myjs/questions.js"></script>
+	
+    <script type="text/javascript">
+        $(function(){
+            //动态切换侧边栏图标
+            $(".panel-heading").click(function(){
+                $(this).find('span').toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+            });
+        	
+        })  
+		//所有模态框可拖动
+        $(document).on("show.bs.modal",".modal",function(){
+        	$(this).draggable({
+	//		   handle: ".modal-header"   //只能点击头部拖动
+		    });
+        	$(this).css("overflow","hidden");
+        });
+        
+    </script>
+	
+</body>
+</html>

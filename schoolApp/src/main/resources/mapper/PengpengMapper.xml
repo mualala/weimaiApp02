@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.liancheng.it.dao.pengpeng.PengPengDao">
+	
+	<!-- 用于后台管理系统 -->
+	<insert id="addQuestion" parameterType="java.util.Map" 
+	keyProperty="ques_id">
+		insert into questions 
+		(question,ques_creatime)
+		values 
+		(#{question},#{ques_creatime})
+	</insert>
+	<select id="questionReport" parameterType="java.util.Map" 
+	resultType="com.liancheng.it.entity.pengpeng.Questions">
+		select * from questions 
+		limit #{start},#{end}
+	</select>
+	<select id="totalQuestions" resultType="int">
+		select count(*) from questions
+	</select>
+	
+	
+	<!-- 用于界面功能 -->
+	<insert id="saveAnswer" parameterType="java.util.Map" keyProperty="ans_id">
+		insert into answer 
+		(user_id,ques_id,type,name_type,content,ans_creatime) 
+		values 
+		(#{user_id},#{ques_id},'1',#{name_type},#{content},#{ans_creatime})
+	</insert>
+	<select id="queryOneAnswer" parameterType="java.util.Map" 
+	resultType="com.liancheng.it.entity.pengpeng.Answer">
+		select * from answer 
+		where user_id=#{user_id} and ques_id=#{ques_id}
+	</select>
+	<!-- 随机查询某条问题 -->
+	<select id="randOneQuestion" resultType="com.liancheng.it.entity.pengpeng.Questions">
+		select * from questions order by rand()
+		limit 1
+	</select>
+	
+	<select id="queryAnswers" parameterType="java.util.Map" 
+	resultType="com.liancheng.it.entity.pengpeng.AnswerUsers">
+		select 
+			F.user_id,F.name_type,F.ques_id,F.type,
+			F.content,F.ans_creatime,F.ans_id,U.user_nickname,U.profile,
+			U.gender,U.birthday,U.province,U.city 
+		from 
+			(select A.ans_id,A.user_id,A.ques_id,A.type,A.name_type,A.content,A.ans_creatime from answer A 
+			INNER JOIN questions Q on A.ques_id=Q.ques_id) F INNER JOIN user U 
+		ON F.user_id=U.user_id 
+		where F.ques_id=#{ques_id} 
+		<if test="name_type != ''">and F.name_type=#{name_type}</if>
+		<if test="gender != '' and gender != '全部'"> and U.gender=#{gender}</if>
+		ORDER BY F.ans_creatime desc 
+		limit #{start},#{end}
+	</select>
+	
+	
+	<select id="queryQuestion" parameterType="int" 
+	resultType="com.liancheng.it.entity.pengpeng.Questions">
+		select * from questions 
+		where ques_id=#{ques_id}
+	</select>
+	
+	<select id="queryTypeQuestions" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.Questions">
+		select 
+			Q.ques_id,Q.question,Q.ques_creatime,A.ans_id,A.type,A.name_type,A.user_id,COUNT(A.ans_id) count
+		from questions Q 
+		LEFT JOIN 
+		(select ans_id,type,name_type,user_id,ques_id from answer where name_type=#{name_type} and type='1') A 
+		ON Q.ques_id=A.ques_id 
+		GROUP BY Q.ques_id 
+		limit #{start},#{end}
+	</select>
+	
+	<insert id="addChildAnsLaud" keyProperty="child_ans_id">
+		insert into child_answer 
+		(user_id,ans_id,child_type,child_ans_creatime) 
+		values 
+		(#{user_id},#{ans_id},'2',#{child_ans_creatime})
+	</insert>
+	<insert id="addChildAnswer" parameterType="map" 
+	keyProperty="child_ans_id">
+		insert into child_answer 
+		(user_id,ans_id,child_type,content,child_ans_creatime) 
+		values 
+		(#{user_id},#{ans_id},'1',#{content},#{child_ans_creatime})
+	</insert>
+	
+	<select id="queryIsLaud" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.ChildAnswer">
+		select * from child_answer 
+		where user_id=#{user_id} and ans_id=#{ans_id} and child_type='2'
+	</select>
+	<select id="countAnswerLaud" parameterType="int" resultType="int">
+		select count(*) from child_answer 
+		where child_type='2' and ans_id=#{ans_id}
+	</select>
+	
+	<select id="queryCurrUserAnswer" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.Answer">
+		select * from answer 
+		where ques_id=#{ques_id} and user_id=#{user_id}
+	</select>
+	
+	<select id="queryOwnAnswer" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.OwnAnswer">
+		select 
+			A.ques_id,A.ans_id,A.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.home,
+			A.type,A.name_type,A.content,A.see,A.ans_creatime 
+		from answer A INNER JOIN user U ON A.user_id=U.user_id
+		where A.ques_id=#{ques_id} and A.user_id=#{user_id}
+	</select>
+	<select id="queryOwnChildAnswers" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.ChildAnswer">
+		select 
+			C.child_ans_id,C.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city,
+			C.ans_id,C.child_type,C.content,C.child_ans_creatime 
+		from child_answer C INNER JOIN user U ON C.user_id=U.user_id 
+		where C.ans_id=#{ans_id} and C.child_type='1'
+		limit #{start},#{end}
+	</select>
+	<select id="queryOnlyChildAnswers" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.ChildAnswer">
+		select 
+			C.child_ans_id,C.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city,
+			C.ans_id,C.child_type,C.content,C.child_ans_creatime 
+		from child_answer C INNER JOIN user U ON C.user_id=U.user_id 
+		where C.ans_id=#{ans_id} and C.child_type='1' and C.user_id in (#{own_user_id},#{other_user_id}) 
+		limit #{start},#{end}
+	</select>
+	
+	<select id="queryAnswerById" parameterType="int" 
+	resultType="com.liancheng.it.entity.pengpeng.Answer">
+		select * from answer where ans_id=#{ans_id}
+	</select>
+	
+	<update id="saveAnswerSee" parameterType="map">
+		update answer set see=#{see} 
+		where ans_id=#{ans_id}
+	</update>
+	
+	<select id="countChildAnswer" parameterType="map" resultType="int">
+		select count(*) from child_answer 
+		where ans_id=#{ans_id} and user_id not in (#{user_id})
+	</select>
+	
+ </mapper>

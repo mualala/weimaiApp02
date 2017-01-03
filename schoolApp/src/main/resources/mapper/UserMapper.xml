@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.liancheng.it.dao.user.UserDao">
+ 
+ 	<select id="findByPhoneNum" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user
+ 		where phoneNum=#{phoneNum} 
+ 	</select>
+ 	
+ 	<select id="findByUserId" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user where user_id=#{user_id}
+ 	</select>
+ 	
+ 	<select id="findBySchoolId" parameterType="com.liancheng.it.entity.user.User"
+ 		resultType="com.liancheng.it.entity.user.User">
+ 		select * from user where schoolId=#{schoolId}
+ 	</select>
+ 	
+ 	
+ 	<insert id="save" parameterType="com.liancheng.it.entity.user.User" >
+ 		insert into user 
+ 		(user_id,phoneNum,password,user_nickname,token,creatime)
+ 		values 
+ 		(#{user_id},#{phoneNum},#{password},#{user_nickname},#{token},#{creatime})
+ 	</insert>
+ 	
+ 	<update id="saveProfile" parameterType="com.liancheng.it.entity.user.User">
+ 		update user set profile=#{profile} where user_id=#{user_id}
+ 	</update>
+ 	
+ 	<update id="editUser" parameterType="com.liancheng.it.entity.user.User">
+ 	<!-- 动态sql语句能更新用户，因为不更新的字段，会被传递null到SQL中，引起异常 -->
+ 		update user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="user_nickname!=null">user_nickname=#{user_nickname},</if>
+			<if test="gender!=null">gender=#{gender},</if>
+			<if test="birthday!=null">birthday=#{birthday},</if>
+			<if test="star!=null">star=#{star},</if>
+			<if test="e_state!=null">e_state=#{e_state},</if>
+			<if test="grade!=null">grade=#{grade},</if>
+			<if test="profession!=null">profession=#{profession},</if>
+			<if test="major!=null">major=#{major},</if>
+			<if test="school!=null">school=#{school},</if>
+			<if test="highschool!=null">highschool=#{highschool},</if>
+			<if test="province!=null">province=#{province},</if>
+			<if test="city!=null">city=#{city},</if>
+			<if test="county!=null">county=#{county},</if>
+			<if test="lable!=null">lable=#{lable},</if>
+			<if test="skill!=null">skill=#{skill},</if>
+			<if test="lastmodifytime!=null">lastmodifytime=#{lastmodifytime},</if>
+		</trim>
+ 		where user_id=#{user_id}
+ 	</update>
+	
+	<!-- #{}相当于jdbc中的preparedstatment,${}是取值也即ognl
+		这里取map中的值,所以要用${}来去集合中的值
+	<update id="editSkills" parameterType="java.util.Map">
+		
+	</update>
+	 -->
+	
+ 	
+ 	<delete id="deleteById" parameterType="string" >
+ 		delete from user where
+ 		user_id=#{user_id}
+ 	</delete>
+ 	
+ 	
+ 	<select id="findById" parameterType="String" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user
+ 		where user_id=#{user_id} 
+ 	</select>
+ 	
+ 	<select id="findByNickName"	parameterType="string" 
+ 	resultType="com.liancheng.it.entity.user.User" >
+ 		select * from user
+ 		where user_nickname like #{user_nickname}
+ 	</select>
+ 	
+ 	<select id="queryUserProfile" parameterType="string" resultType="string">
+ 		select profile from user where user_id=#{user_id}
+ 	</select>
+ 	
+ 	<select id="queryUserNickName" parameterType="string" resultType="string">
+ 		select user_nickname from user where user_id=#{user_id}
+ 	</select>
+ 	
+ 	<update id="saveStuVerify" parameterType="java.util.Map">
+ 		update user set 
+ 		stu_verify=#{stu_verify},lastmodifytime=#{lastmodifytime} 
+ 		where user_id=#{user_id}
+ 	</update>
+ 	<update id="saveCertiVerify" parameterType="java.util.Map">
+ 		update user set 
+ 		certi_verify=#{certi_verify},lastmodifytime=#{lastmodifytime} 
+ 		where user_id=#{user_id}
+ 	</update>
+ 	
+ 	<select id="queryAdminVerify" parameterType="java.util.Map" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user 
+ 		where (stu_state='0' or certi_state='0') and (stu_verify is not NULL or certi_verify is not null) 
+ 		ORDER BY lastmodifytime desc 
+ 		limit #{start},#{end}
+ 	</select>
+ 	<select id="queryCountVerifies" resultType="int">
+ 		select count(*) from user 
+ 		where stu_state='0' and certi_state='0' and stu_verify is not NULL or certi_verify is not null
+ 	</select>
+ 	
+ 	<update id="modifyStuAdmin" parameterType="java.util.Map">
+ 		update user set 
+ 		stu_state=#{stu_state},verify_state='1'  
+ 		where schoolId=#{schoolId}
+ 	</update>
+ 	<update id="modifyCertiAdmin" parameterType="java.util.Map">
+ 		update user set 
+ 		certi_state=#{certi_state},verify_state='1' 
+ 		where schoolId=#{schoolId}
+ 	</update>
+ 	
+ 	<select id="randPeoples" parameterType="java.util.Map" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user 
+ 		where user_id not like #{user_id} 
+ 		order by rand() 
+ 		limit #{start},${end}
+ 	</select>
+ 	
+ 	<select id="filterPeoples" parameterType="java.util.Map" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user 
+ 		<trim prefix="where" suffix="and">
+ 			<if test="user_id != null and user_id != ''">user_id not like #{user_id}</if>
+	 		<if test="gender != null and gender != ''">and gender=#{gender}</if>
+	 		<if test="grade != null and grade != ''">and grade=#{grade}</if>
+	 		<if test="major != null and major != '不限' and major != ''">and major=#{major}</if>
+	 		<if test="type == '同大学'"> and school=#{typeInsert}</if>
+	 		<if test="type == '老乡'"> and home=#{typeInsert}</if>
+	 		<if test="type == '同高中'"> and highschool=#{typeInsert}</if>
+ 		</trim>
+ 		year(CURDATE())-year(STR_TO_DATE(birthday,'%Y-%m-%d')) BETWEEN #{age01} and #{age02} 
+ 		limit #{start},#{end}
+ 	</select>
+ 	
+ 	<select id="queryTypeUser" parameterType="java.util.Map" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user 
+ 		where user_id not in (#{user_id}) 
+ 		<if test="type == '同大学'"> and school=#{typeInsert}</if>
+ 		<if test="type == '老乡'"> and home=#{typeInsert}</if>
+ 		<if test="type == '同高中'"> and highschool=#{typeInsert}</if>
+ 		limit #{start},#{end}
+ 	</select>
+ 	
+ 	<select id="queryCheckMaimai" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user 
+ 		where CONCAT(home,school,highschool) like #{param}
+ 	</select>
+ 	
+ 	<!-- 访客的查询和操作 -->
+ 	<select id="queryVisitorByUserId" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.user.Visitor">
+ 		select * from visitor where v_user_id=#{v_user_id} and user_id=#{user_id}
+ 	</select>
+ 	<insert id="saveVisitor" parameterType="map" keyProperty="v_id">
+ 		insert into visitor 
+ 		(user_id,v_user_id,v_creatime) 
+ 		values 
+ 		(#{user_id},#{v_user_id},#{v_creatime})
+ 	</insert>
+ 	
+ 	<select id="totalVisitors" parameterType="string" resultType="int">
+ 		select count(*) from visitor where v_user_id=#{v_user_id}
+ 	</select>
+	
+	<select id="queryVisitorList" parameterType="map" 
+	resultType="com.liancheng.it.entity.user.Visitor">
+		select * from visitor where v_user_id=#{v_user_id} 
+		limit #{start},#{end}
+	</select>
+	 	
+ </mapper>

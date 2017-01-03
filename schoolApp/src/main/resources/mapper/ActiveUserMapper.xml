@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.liancheng.it.dao.active.ActiveUserDao">
+ 
+ 	<insert id="addActive" parameterType="com.liancheng.it.entity.active.Active" 
+ 	keyProperty="active_user_id">
+	 	insert into active
+	 	(user_id,type_a,type_b,saysay,
+	 	active_pic,docum,docum_size,doc_down_count,active_creatime) 
+	 	values
+	 	(#{user_id},#{type_a},#{type_b},#{saysay},
+	 	#{active_pic},#{docum},#{docum_size},#{doc_down_count},#{active_creatime})
+ 	</insert>
+ 	
+ 	<select id="queryActiveCounts" parameterType="string" 
+ 	resultType="java.lang.Integer">
+ 		select count(*) from active where user_id=#{user_id}
+ 	</select>
+ 	
+ 	<select id="queryOwnActive" parameterType="java.util.Map" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select * from active 
+ 		where user_id=#{user_id} and state='1' order by active_creatime DESC
+ 		limit #{start},#{end}
+ 	</select>
+ 	 
+ 	 <select id="queryClassActive" parameterType="java.util.Map" 
+ 	 resultType="com.liancheng.it.entity.active.ClassActive">
+ 	 	select * from class_active 
+ 	 	where type_a=#{type_a}
+ 	 	limit #{start},#{end}
+ 	 </select>
+ 	 
+ 	 <select id="queryFriendsActvie" parameterType="java.util.Map" 
+ 	 resultType="com.liancheng.it.entity.active.CycFriendsActvie">
+ 	 	select * from cycle_friends_active 
+ 	 	where user_id=#{user_id} 
+ 	 	limit #{start},#{end}
+ 	 </select>
+ 	 
+ 	 
+ 	 <select id="queryActiveSee" parameterType="int" 
+ 	 resultType="com.liancheng.it.entity.active.Active">
+ 	 	select see from active where active_user_id=#{active_user_id}
+ 	 </select>
+ 	 <update id="updateSee" parameterType="com.liancheng.it.entity.active.Active">
+ 	 	update active set 
+ 	 	see=#{see} 
+ 	 	where active_user_id=#{active_user_id}
+ 	 </update>
+ 	 
+ 	 <select id="queryActiveId" parameterType="int" 
+ 	 resultType="com.liancheng.it.entity.active.ClassActive">
+ 	 	select * from active where active_user_id=#{active_user_id}
+ 	 </select>
+ 	 
+
+ 	 <resultMap type="com.liancheng.it.entity.active.Active" id="aa">
+ 	 	<id column="active_user_id" property="active_user_id"/>
+ 	 	<result column="type_a" property="type_a" />
+ 	 	<result column="saysay" property="saysay" />
+ 	 	<result column="active_pic" property="active_pic" />
+ 	 	<result column="active_creatime" property="active_creatime" />
+ 	 </resultMap>
+ 	 <select id="queryAdmin" parameterType="java.util.Map"
+ 	 resultMap="aa">
+ 	 	select active_user_id,user_id,type_a,saysay,active_pic,docum,active_creatime 
+ 	 	from active 
+ 	 	where state='0' order by active_creatime desc 
+ 	 	limit #{start},#{end}
+ 	 </select>
+
+
+ 	 <select id="queryAdminTotal" resultType="int">
+ 	 	select count(*) from active where state='0'
+ 	 </select>
+ 	 
+ 	 <update id="oneActiveVerify" parameterType="int">
+ 	 	update active set 
+ 	 	state='1' 
+ 	 	where active_user_id=#{active_user_id}
+ 	 </update>
+ 	 <update id="oneActiveNoVerify" parameterType="int">
+ 	 	update active set 
+ 	 	state='2' 
+ 	 	where active_user_id=#{active_user_id}
+ 	 </update>
+ 	 
+ 	 <select id="activeVerifies" parameterType="java.util.Map" 
+ 	 resultType="com.liancheng.it.entity.active.ActiveVerify">
+ 		select * from active_verify limit #{start},#{end}
+ 	</select>
+ 	<select id="activeVerifiesTotal" resultType="int">
+ 		select count(*) from active_verify
+ 	</select>
+ 	
+ 	<update id="modifyStuVerify" parameterType="java.util.Map">
+ 		update active_verify set 
+ 		stu_verify=#{stu_verify} 
+ 		where class_active=#{class_active}
+ 	</update>
+ 	<update id="modifyCertiVerify" parameterType="java.util.Map">
+ 		update active_verify set 
+ 		certi_verify=#{certi_verify} 
+ 		where class_active=#{class_active}
+ 	</update>
+ 	
+ 	<select id="queryStuAndCertiVerify" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.active.ActiveVerify">
+ 		select * from active_verify where class_active=#{classActive}
+ 	</select>
+ 	
+ 	<select id="queryKeyActive" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select * from active where saysay like #{text}
+ 	</select>
+ 	
+ 	<select id="queryDownCount" parameterType="int" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select * from active 
+ 		where active_user_id=#{active_user_id}
+ 	</select>
+ 	
+ 	<update id="addDownCount" parameterType="map">
+ 		update active set 
+ 		doc_down_count=#{doc_down_count}
+ 		where active_user_id=#{active_user_id}
+ 	</update>
+ 	
+ 	<select id="queryOneActive" parameterType="int" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select * from active where active_user_id=#{active_user_id}
+ 	</select>
+ 	
+ 	<update id="batchModifyAcvtive">
+ 		update active set state='1' 
+ 		where active_user_id in 
+ 		<foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+ 			#{id}
+ 		</foreach>
+ 	</update>
+ 	
+ 	<select id="queryActForUserInfo" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select * from active where user_id=#{user_id} 
+ 		ORDER BY active_creatime DESC 
+		LIMIT 0,15
+ 	</select>
+ 	
+ </mapper>
