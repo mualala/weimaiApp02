@@ -27,7 +27,7 @@ public interface CommontDao {
 	public int totalChildCom(Map<String, Object> params);//说说的子评论数量
 	public void addChildComLaud(ChildCommont childCom);//添加子评论的点赞
 	
-	
-	
+	public int queryTotalComNoSee(String user_id);//查询某用户直接子评论的未查看数量
+//	public void batchModifyComNoSee();//朋友圈直接子评论改成用户已查看状态
 	
 }

@@ -46,4 +46,7 @@ public interface ActiveUserDao {
 	
 	public List<Active> queryActForUserInfo(String user_id);//查询某用户的动态用于个人信息展示页面
 	
+	public int queryTotalActs(String user_id);//查询某用户的所有审核通过的动态数量
+	
+	
 }

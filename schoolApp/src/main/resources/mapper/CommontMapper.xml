@@ -94,4 +94,10 @@
  	 	(#{child_user_id},#{com_id},#{parent_user_id},'2',#{child_creatime})
  	 </insert>
  	 
+ 	 <select id="queryTotalComNoSee" parameterType="string" resultType="int">
+ 	 	select count(*) from active A inner join commont C 
+ 	 	on A.active_user_id=C.active_user_id 
+ 	 	where A.user_id=#{user_id} and A.state='1' and C.see_state='0'
+ 	 </select>
+ 	 
  </mapper>

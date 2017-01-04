@@ -465,6 +465,7 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 		
 		ArrayList<CycFriendsActvie> friendsActive = 
 				(ArrayList<CycFriendsActvie>) activeUserDao.queryFriendsActvie(params);
+		List<Integer> cc = new ArrayList<Integer>();//用于改变直接评论的查看状态的dao查询参数
 		for(int i=0;i<friendsActive.size();i++){
 			//解析用户上传的图片资源
 			List<String> aa = new ArrayList<String>();
@@ -518,11 +519,19 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 			friendsActive.get(i).setPics(aa);
 			//添加用户上传的资源文件
 			friendsActive.get(i).setDocums(bb);
+			
+			//添加修改直接评论的查看状态的array参数
+			cc.add(friendsActive.get(i).getActive_user_id());
 		}
 		jsonObject.put("msg", "朋友圈的动态展示成功！");
 		jsonObject.put("data", friendsActive);
 		jsonObject.put("status", true);
+		jsonObject.put("totalActs", activeUserDao.queryTotalActs(user_id));//添加总的动态数量
+		jsonObject.put("totalComNoSee", commontDao.queryTotalComNoSee(user_id));//添加总的未查看评论数量
+		
 		System.out.println(friendsActive.toString());
+		//修改直接评论的查看状态的array参数
+		
 		return jsonObject;
 	}
 	
@@ -673,8 +682,6 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 		List<Integer> idList = new ArrayList<Integer>();
 		if(!"".equals(ids)){
 			String[] spIds = ids.split(",");
-			System.out.println(spIds.toString());
-			System.out.println(spIds.length);
 			for(int i=0;i<spIds.length;i++){
 				idList.add(Integer.valueOf(spIds[i]));
 			}

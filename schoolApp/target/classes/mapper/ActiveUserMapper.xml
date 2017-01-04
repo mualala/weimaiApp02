@@ -149,4 +149,8 @@
 		LIMIT 0,15
  	</select>
  	
+ 	<select id="queryTotalActs" parameterType="string" resultType="int">
+ 		select count(*) from active where user_id=#{user_id} and state='1'
+ 	</select>
+ 	
  </mapper>

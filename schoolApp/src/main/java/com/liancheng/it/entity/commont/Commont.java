@@ -18,6 +18,7 @@ public class Commont implements Serializable {
 	private int active_user_id;//动态的的id
 	private String type;//1=评论；2=点赞
 	private String content;//评论的内容
+	private String see_state;//说说的直接评论的查看状态;0=未查看；1=查看
 	private Timestamp com_creatime;//action创建的时间
 	
 	private int totalCommont;//说说的评论数量
@@ -99,6 +100,18 @@ public class Commont implements Serializable {
 		this.content = content;
 	}
 	/**
+	 * @return the see_state
+	 */
+	public String getSee_state() {
+		return see_state;
+	}
+	/**
+	 * @param see_state the see_state to set
+	 */
+	public void setSee_state(String see_state) {
+		this.see_state = see_state;
+	}
+	/**
 	 * @return the com_creatime
 	 */
 	public Timestamp getCom_creatime() {
@@ -177,11 +190,11 @@ public class Commont implements Serializable {
 	public String toString() {
 		return "Commont [com_id=" + com_id + ", com_user_id=" + com_user_id
 				+ ", user_id=" + user_id + ", active_user_id=" + active_user_id
-				+ ", type=" + type + ", content=" + content + ", com_creatime="
-				+ com_creatime + ", totalCommont=" + totalCommont
-				+ ", childcomms=" + childcomms + ", profile=" + profile
-				+ ", user_nickname=" + user_nickname + ", totalChildRev="
-				+ totalChildRev + "]";
+				+ ", type=" + type + ", content=" + content + ", see_state="
+				+ see_state + ", com_creatime=" + com_creatime
+				+ ", totalCommont=" + totalCommont + ", childcomms="
+				+ childcomms + ", profile=" + profile + ", user_nickname="
+				+ user_nickname + ", totalChildRev=" + totalChildRev + "]";
 	}
 	
 }
