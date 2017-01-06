@@ -530,7 +530,12 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 		jsonObject.put("totalComNoSee", commontDao.queryTotalComNoSee(user_id));//添加总的未查看评论数量
 		
 		System.out.println(friendsActive.toString());
-		//修改直接评论的查看状态的array参数
+		//修改直接评论的查看状态
+		Map<String, Object> params02 = new HashMap<String, Object>();
+		params02.put("user_id", user_id);
+		params02.put("actIds", cc);
+		System.out.println("params02="+params02);
+		commontDao.batchModifyComNoSee(params02);
 		
 		return jsonObject;
 	}

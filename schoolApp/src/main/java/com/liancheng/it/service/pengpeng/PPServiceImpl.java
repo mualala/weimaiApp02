@@ -174,16 +174,30 @@ public class PPServiceImpl implements PPService {
 		
 		List<ChildAnswer> childAns = new ArrayList<ChildAnswer>();
 		if(ownAnswer != null){//添加评论的评论
+			ownAnswer.setProfile(hostPath01+ownAnswer.getProfile());
 			Map<String, Object> params02 = new HashMap<String, Object>();
 			int start = (pageNumber-1)*pageSize;
 			int end = pageSize;
 			params02.put("start", start);
 			params02.put("end", end);
 			params02.put("ans_id", ownAnswer.getAns_id());
+			params02.put("user_id", user_id);
 			childAns = pengPengDao.queryOwnChildAnswers(params02);
 			if(childAns!=null || childAns.size()>0){
 				for(ChildAnswer c:childAns){//添加用户头像的url地址
 					c.setProfile(hostPath01+c.getProfile());
+					//查出添加子评论的评论
+					Map<String, Object> params03 = new HashMap<String, Object>();
+					params03.put("parent_user_id", c.getUser_id());
+					params03.put("ans_id", c.getAns_id());
+					List<ChildAnswer> twoChildAns = pengPengDao.queryTwoChildAns(params03);
+					if(twoChildAns!=null || twoChildAns.size()>0){
+						for(ChildAnswer twoChild:twoChildAns){
+							twoChild.setProfile(hostPath01+twoChild.getProfile());//添加头像url
+						}
+					}
+					//添加子评论的评论
+					c.setTwoChildAns(twoChildAns);
 				}
 			}
 		}

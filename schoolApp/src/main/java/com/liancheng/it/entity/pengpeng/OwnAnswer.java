@@ -18,7 +18,8 @@ public class OwnAnswer implements Serializable {
 	private String user_nickname;
 	private String gender;
 	private String birthday;
-	private String home;
+	private String province;
+	private String city;
 	private String name_type;
 	private String content;
 	private int see;
@@ -113,16 +114,28 @@ public class OwnAnswer implements Serializable {
 		this.birthday = birthday;
 	}
 	/**
-	 * @return the home
+	 * @return the province
 	 */
-	public String getHome() {
-		return home;
+	public String getProvince() {
+		return province;
 	}
 	/**
-	 * @param home the home to set
+	 * @param province the province to set
 	 */
-	public void setHome(String home) {
-		this.home = home;
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
 	}
 	/**
 	 * @return the name_type
@@ -216,11 +229,11 @@ public class OwnAnswer implements Serializable {
 		return "OwnAnswer [ques_id=" + ques_id + ", ans_id=" + ans_id
 				+ ", user_id=" + user_id + ", profile=" + profile
 				+ ", user_nickname=" + user_nickname + ", gender=" + gender
-				+ ", birthday=" + birthday + ", home=" + home + ", name_type="
-				+ name_type + ", content=" + content + ", see=" + see
-				+ ", ans_creatime=" + ans_creatime + ", child_answers="
-				+ child_answers + ", totalLaud=" + totalLaud + ", totalCom="
-				+ totalCom + "]";
+				+ ", birthday=" + birthday + ", province=" + province
+				+ ", city=" + city + ", name_type=" + name_type + ", content="
+				+ content + ", see=" + see + ", ans_creatime=" + ans_creatime
+				+ ", child_answers=" + child_answers + ", totalLaud="
+				+ totalLaud + ", totalCom=" + totalCom + "]";
 	}
-
+	
 }

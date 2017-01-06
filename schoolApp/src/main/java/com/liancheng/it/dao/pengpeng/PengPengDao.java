@@ -35,5 +35,6 @@ public interface PengPengDao {
 	public void saveAnswerSee(Map<String, Object> params);//增加碰碰评论的查看数量
 	
 	public int countChildAnswer(Map<String, Object> params);//统计碰碰某评论的子评论数量
+	public List<ChildAnswer> queryTwoChildAns(Map<String, Object> params);//查询评论里面的评论
 	
 }

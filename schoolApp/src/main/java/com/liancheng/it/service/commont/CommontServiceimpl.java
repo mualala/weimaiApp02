@@ -39,10 +39,11 @@ public class CommontServiceimpl implements CommontService {
 	@Resource(name="userDao")
 	private UserDao userDao;
 	
-	public JSONObject addAction(String com_user_id, int active_user_id, String content){
+	public JSONObject addAction(String com_user_id, String user_id, int active_user_id, String content){
 		Commont commont = new Commont();
 		
 		commont.setCom_user_id(com_user_id);
+		commont.setUser_id(user_id);
 		commont.setActive_user_id(active_user_id);
 		commont.setContent(content);
 		commont.setCom_creatime(new Timestamp(System.currentTimeMillis()));
@@ -118,8 +119,11 @@ public class CommontServiceimpl implements CommontService {
 				com.setProfile(hostPath01+userDao.queryUserProfile(com_user_id));//设置以及评论的用户头像
 				com.setUser_nickname(userDao.queryUserNickName(com_user_id));//添加用户昵称
 				
+				Map<String, Object> params01 = new HashMap<String, Object>();
+				params01.put("com_id", com.getCom_id());
+				params01.put("parent_user_id", com.getCom_user_id());
 				ArrayList<ChildCommont> childComms = 
-						(ArrayList<ChildCommont>) commontDao.queryChildComms(com_user_id);
+						(ArrayList<ChildCommont>) commontDao.queryChildComms(params01);
 				for(ChildCommont childComm:childComms){//处理每个直接子评论
 					childComm.setProfile(hostPath01+userDao.queryUserProfile(com_user_id));
 					childComm.setUser_nickname(userDao.queryUserNickName(

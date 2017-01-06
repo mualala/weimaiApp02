@@ -108,7 +108,7 @@ public class PengPengController {
 	}
 	
 	/**
-	 * 添加问题的评论的评论
+	 * 碰碰添加问题的评论的评论
 	 */
 	@RequestMapping("/addChildAnswer.do")
 	@ResponseBody

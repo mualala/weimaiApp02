@@ -21,19 +21,19 @@ public class CommontController {
 	
 	/**
 	 * 用户添加评论
-	 * @param action_user_id 评论用户的uuid
+	 * @param com_user_id 评论用户的uuid
+	 * @param user_id 动态数据的用户uuid
 	 * @param active_user_id 动态的的id
 	 * @param content 评论的内容
 	 */
 	@RequestMapping(value="/addCommont.do")
 	@ResponseBody
-	public JSONObject addAction(@RequestParam("com_user_id") String com_user_id, 
+	public JSONObject addCommont(@RequestParam("com_user_id") String com_user_id, 
+			@RequestParam("user_id") String user_id, 
 			@RequestParam("active_user_id") int active_user_id, 
 			@RequestParam("content") String content){
 		System.out.println("进了添加用户评论！！！");
-		
-		JSONObject jsonObject = commontService.addAction(com_user_id, active_user_id, content);
-		
+		JSONObject jsonObject = commontService.addAction(com_user_id, user_id, active_user_id, content);
 		return jsonObject;
 	}
 	

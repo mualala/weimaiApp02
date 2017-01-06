@@ -109,7 +109,7 @@
 	<select id="queryOwnAnswer" parameterType="map" 
 	resultType="com.liancheng.it.entity.pengpeng.OwnAnswer">
 		select 
-			A.ques_id,A.ans_id,A.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.home,
+			A.ques_id,A.ans_id,A.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city,
 			A.type,A.name_type,A.content,A.see,A.ans_creatime 
 		from answer A INNER JOIN user U ON A.user_id=U.user_id
 		where A.ques_id=#{ques_id} and A.user_id=#{user_id}
@@ -118,9 +118,9 @@
 	resultType="com.liancheng.it.entity.pengpeng.ChildAnswer">
 		select 
 			C.child_ans_id,C.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city,
-			C.ans_id,C.child_type,C.content,C.child_ans_creatime 
+			C.ans_id,C.parent_user_id,C.child_type,C.content,C.child_ans_creatime 
 		from child_answer C INNER JOIN user U ON C.user_id=U.user_id 
-		where C.ans_id=#{ans_id} and C.child_type='1'
+		where C.ans_id=#{ans_id} and C.child_type='1' and C.user_id&lt;&gt;#{user_id} 
 		limit #{start},#{end}
 	</select>
 	<select id="queryOnlyChildAnswers" parameterType="map" 
@@ -146,6 +146,15 @@
 	<select id="countChildAnswer" parameterType="map" resultType="int">
 		select count(*) from child_answer 
 		where ans_id=#{ans_id} and user_id not in (#{user_id})
+	</select>
+	
+	<select id="queryTwoChildAns" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.ChildAnswer">
+		select 
+			C.child_ans_id,C.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city,
+			C.ans_id,C.child_type,C.content,C.child_ans_creatime 
+		from child_answer C INNER JOIN user U on C.user_id=U.user_id 
+		where parent_user_id=#{parent_user_id} and ans_id=#{ans_id} and child_type='1'
 	</select>
 	
  </mapper>

@@ -21,13 +21,13 @@ public interface CommontDao {
 	public List<Commont> queryComs(int active_user_id);//查询说说的所有直接评论
 	
 	public void addChildCom(ChildCommont childCom);//添加子评论
-	public List<ChildCommont> queryChildComms(String parent_user_id);//查找评论的子评论
+	public List<ChildCommont> queryChildComms(Map<String, Object> params);//查找评论的子评论
 	
 	public int totalCom(int active_user_id);//说说的直接评论数量
 	public int totalChildCom(Map<String, Object> params);//说说的子评论数量
 	public void addChildComLaud(ChildCommont childCom);//添加子评论的点赞
 	
 	public int queryTotalComNoSee(String user_id);//查询某用户直接子评论的未查看数量
-//	public void batchModifyComNoSee();//朋友圈直接子评论改成用户已查看状态
+	public void batchModifyComNoSee(Map<String, Object> params);//朋友圈直接子评论改成用户已查看状态
 	
 }

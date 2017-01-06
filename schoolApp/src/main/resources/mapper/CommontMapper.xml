@@ -7,9 +7,9 @@
  	 <insert id="addAction" parameterType="com.liancheng.it.entity.commont.Commont" 
  	 keyProperty="action_id">
  	 	insert into commont 
- 	 	(com_user_id,active_user_id,type,content,com_creatime)
+ 	 	(com_user_id,user_id,active_user_id,type,content,com_creatime)
  	 	values 
- 	 	(#{com_user_id},#{active_user_id},'1',#{content},#{com_creatime})
+ 	 	(#{com_user_id},#{user_id},#{active_user_id},'1',#{content},#{com_creatime})
  	 </insert>
  	 
  	 <select id="totalCommont" parameterType="int" resultType="java.lang.Integer">
@@ -73,7 +73,7 @@
  	 <select id="queryChildComms" parameterType="string" 
  	 resultType="com.liancheng.it.entity.commont.ChildCommont">
  	 	select * from child_commont 
- 	 	where parent_user_id=#{parent_user_id}
+ 	 	where parent_user_id=#{parent_user_id} and com_id=#{com_id} 
  	 	order by child_creatime desc
  	 </select>
  	 
@@ -99,5 +99,18 @@
  	 	on A.active_user_id=C.active_user_id 
  	 	where A.user_id=#{user_id} and A.state='1' and C.see_state='0'
  	 </select>
+ 	 
+ 	 <update id="batchModifyComNoSee">
+ 	 	update commont set see_state='1' 
+ 	 	<where>
+ 	 		<if test="user_id!=null and user_id!=''">user_id=#{user_id}</if>
+ 	 		<if test="actIds!=null and actIds!=''">
+ 	 			and active_user_id in 
+ 	 			<foreach collection="actIds" item="actId" open="(" close=")" separator=",">
+ 	 				#{actId}
+ 	 			</foreach>
+ 	 		</if>
+ 	 	</where>
+ 	 </update>
  	 
  </mapper>

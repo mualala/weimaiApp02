@@ -4,7 +4,7 @@ import net.minidev.json.JSONObject;
 
 public interface CommontService {
 	
-	public JSONObject addAction(String com_user_id, int active_user_id, 
+	public JSONObject addAction(String com_user_id, String user_id, int active_user_id, 
 			String content);//添加action
 	public JSONObject addLaud(String com_user_id, int active_user_id);//点赞
 	public JSONObject laudList(int active_user_id, String hostPath);//某说说的点赞用户列表
