@@ -1,0 +1,7 @@
+.emotion{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: url("../img/list-alerts-expression.png") no-repeat center center;
+    background-size: 100%;
+}

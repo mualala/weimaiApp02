@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>支付订单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/store.css">
+    <script src="js/back.js"></script>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".c_weixinzhifu label").click(function(){
+                $(".c_weixinzhifu label").addClass("shopcar-checkd")
+                $(".c_zhifubao label").removeClass("shopcar-checkd");
+
+            })
+            $(".c_zhifubao label").click(function(){
+
+                $(".c_zhifubao label").addClass("shopcar-checkd")
+                $(".c_weixinzhifu label").removeClass("shopcar-checkd");
+                $(".c_yinhangka label").removeClass("shopcar-checkd");
+
+            })
+        })
+
+    </script>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+<div class="wrap" style="min-height: 100%">
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+        <h1 class="mui-title">支付订单</h1>
+    </header>
+    <!--订单详情开始-->
+    <div class="main_pay">
+        <div class="warning">
+            订单金额：<span class="w_money">￥399</span>
+        </div>
+        <div class="warning">
+            <a href="guanli_adress.html" style="display: inline-block">
+                地址：<span class="">成都市哪里花样回复就会大幅度京东方哈客户</span>
+            </a>
+
+        </div>
+        <div class="pay-method clearfloat">
+            <p class="warning">
+                请选择支付方式
+            </p>
+            <div class="addlist clearfloat">
+                <div class="bottom clearfloat box-s">
+                    <section class="shopcar clearfloat">
+                        <div class="sorder-list clearfloat fl" style="width: 90%">
+                            <img style="float: left;width:23%" src="img/list-like-WeChat.png">
+                            <div class="zuo fl">
+                                <p class="tit">微信支付</p>
+                                <p class="fu-tit">亿万用户的选择，更快更安全</p>
+                            </div>
+                        </div>
+                        <div class="shopcar-checkbox fr c_weixinzhifu">
+                            <label for="shopcar" onselectstart="return false" class=""></label>
+                            <!--<input type="checkbox" id="shopcar"/>-->
+                        </div>
+                    </section>
+                </div>
+                <div class="bottom clearfloat box-s">
+                    <section class="shopcar clearfloat">
+                        <div class="sorder-list clearfloat fl" style="width: 90%">
+                            <img style="float: left;width:23%" src="img/list-like-Pay-treasure.png">
+                            <div class="zuo fl">
+                                <p class="tit">支付宝支付</p>
+                                <p class="fu-tit">亿万用户的选择，更快更安全</p>
+                            </div>
+                        </div>
+                        <div class="shopcar-checkbox fr c_zhifubao">
+                            <label for="" onselectstart="return false" class=""></label>
+                            <!--<input type="checkbox" id="shopcar"/>-->
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <a href="#" class="tui-btn">确认支付</a>
+        </div>
+    </div>
+    <!--底部导航-->
+    <nav class="mui-bar mui-bar-tab"style="z-index: 99999;">
+        <a class="mui-tab-item mui-active" href="index.html">
+            <span class="mui-icon"><img src="img/home-page-square1.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">广场</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/home-page-Like-the-icon.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">喜欢</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/home-page-In-switching.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">地区切换</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon"><img src="img/home-page-A-neighbor.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">邻居</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/p.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">我</span>
+        </a>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/my%20indent.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/yonghu.css">
+    <script src="js/back.js"></script>
+
+    <style>
+        .time {
+            margin-left: 0px;
+            font-size: 12px;
+        }
+        .LH2 {
+            padding-left: 58px;
+            line-height: 30px;
+            height: 30px;
+        }
+        .box{
+            width: 80%;
+            min-height: 80px;
+            line-height: 80px;
+            text-align: center;
+            background: #ffffff;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 11;
+            display: none;
+            transform: translate(-50%, -50%);
+        }
+        .mask{
+            background: black;
+            opacity: .2;
+            z-index:10;
+             position: absolute;
+             left:0;
+             right: 0;
+             top:0;
+             bottom: 0;
+            display: none;
+        }
+    </style>
+</head>
+<body style=";padding-bottom: 60px;background: #ffffff">
+      <div class="wrap" style="min-height: 100%">
+          <div class="mask"></div>
+          <div class="box">添加好友成功</div>
+          <header class="mui-bar  mui-bar-transparent">
+              <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <h1 class="mui-title">个人资料</h1>
+
+          </header>
+          <div class="p_info">
+              <img src="img/list-p-center-Head-portrait.png" alt="" style="width: 100%;height: 240px;">
+              <div class="container img_content"><img src="img/Head-portrait-pe-center.png" alt=""></div>
+              <div class="container second ">
+                  <div class="col-xs-12">
+                      <span class="name" style="color: #ffffff;">被摔死</span>
+                      <span class="icon"></span>
+                      <a href="" class="btn btn-sm btn-warning">LV.8</a>
+                  </div>
+              </div>
+              <div class="container third ">
+                  <div class="col-xs-6" style="padding-right: 0;border-right: 1px solid #ffffff"><span>好友</span><span>28</span></div>
+                  <div class="col-xs-6" style="padding-left: 0"><span>积分</span><span>123</span></div>
+              </div>
+              <div class="container four1">
+                  <p class="own_qianming">个梵蒂冈梵蒂冈个梵蒂冈梵蒂冈个梵蒂冈</p>
+              </div>
+          </div>
+          <!--内容-->
+          <div class="row">
+              <div class="tabMenue">
+                  <ul>
+                      <li class="act">动态</li>
+                      <li class="">评论</li>
+                      <li class="">收藏</li>
+                  </ul>
+              </div>
+              <div class="content" style="" >
+                  <div class="wrap1">
+                         <div class="container" style="padding: 10px 15px">
+                              <!--自己的动态不用连接-->
+                              <div class="container" >
+                                  <div class="col-xs-8" style="padding-left: 0">
+                                      <div class="">
+                                          <img src="img/home-page-Head-portrait.png" alt="" class="radios">
+                                          <span style="font-size: 12px">我要笑都</span>
+                                      </div>
+                                      <a href="seeTie.html" style="display: inline-block">
+                                          <div class="LH">
+                                              <p>xxxxxxxxxxxxxx</p>
+                                          </div>
+                                          <div class="LH">
+                                              <p>xxxxxxxxxxxxxxxxx</p>
+                                          </div>
+                                      </a>
+
+                                  </div>
+                                  <div class="col-xs-4 pos_img" style="padding-right: 0">
+                                      <a href="seeTie.html" style="display: inline-block">
+                                          <img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;">
+                                          <p class="opacit"></p>
+                                          <p class="num">还有四张</p>
+                                      </a>
+
+                                  </div>
+                              </div>
+                              <div class="col-xs-12" style="overflow: hidden">
+                                  <span class="time">3小时前</span>
+                                  <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span style="font-size: 12px;margin-left: 3px">19993</span></span>
+                              </div>
+                          </div>
+                  </div>
+                  <!--第二个（评论）-->
+                  <div class="wrap1" style="display: none">
+                      <div class="container" style="padding: 10px 15px">
+                          <!--左边-->
+                          <div class="container" >
+                              <div class="col-xs-8" style="padding-left: 0">
+                                  <div class="">
+                                      <a href=""></a><img src="img/home-page-Head-portrait.png" alt="" class="radios">
+                                      <span style="font-size: 12px">我要笑都</span>
+                                      <span class="icon"></span>
+                                      <span class="btn btn-warning btn-sm">LV.5</span>
+                                  </div>
+                                  <a href="seeTie.html" style="display: inline-block">
+                                      <div class="LH">
+                                          <p>xxxxxxxxxxxxxx</p>
+                                      </div>
+                                      <div class="LH">
+                                          <p>xxxxxxxxxxxxxxxxx</p>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-xs-4 " style="padding-right: 0;text-align: right;" >
+                                  <span class="time" style="height: 54px;line-height: 54px">刚刚</span>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+                  <!--第三个-->
+                  <div class="wrap1" style="display: none">
+                      <div class="container" style="padding: 10px 15px">
+                          <!--左边-->
+                          <div class="container" >
+                              <div class="col-xs-8" style="padding-left: 0">
+                                  <div class="">
+                                      <img src="img/home-page-Head-portrait.png" alt="" class="radios">
+                                      <span style="font-size: 12px">我要笑都</span>
+                                      <span class="btn btn-warning btn-sm">LV.5</span>
+                                  </div>
+                                  <a href="seeTie.html" style="display: inline-block">
+                                      <div class="LH">
+                                          <p>xxxxxxxxxxxxxx</p>
+                                      </div>
+                                      <div class="LH">
+                                          <p>xxxxxxxxxxxxxxxxx</p>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-xs-4 pos_img" style="padding-right: 0">
+                                  <a href="seeTie.html" style="display: inline-block"><img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;"></a>
+                                  <p class="opacit"></p>
+                                  <p class="num">还有四张</p>
+                              </div>
+                          </div>
+                          <div class="col-xs-12" style="overflow: hidden">
+                              <a href="" class="btn btn-primary btn-sm" style="background: #ffffff;color: #00a0e9">邻里论坛</a>
+                              <span class="time">3小时前</span>
+                              <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span style="font-size: 12px;margin-left: 3px">19993</span></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="container">
+                  <div class="col-xs-6" style="text-align: right"><button class="btn btn-primary btn-sm ff">加好友</button></div>
+                  <div class="col-xs-6" style="text-align: left"><button class="btn btn-primary  btn-sm">发消息</button></div>
+              </div>
+          </div>
+
+      </div>
+      <!--轮播-->
+      <script src="js/swiper-3.4.0.min.js"></script>
+      <!--<script src="js/mui.min.js"></script>-->
+      <!--<script src="js/mui.indexedlist.js"></script>-->
+      <script>
+          $(function () {
+              var Newli=$(".tabMenue ul li");
+              Newli.click(function () {
+                  $(this).addClass("act").siblings().removeClass();
+                  var index=$(this).index();
+                  $(".content>.wrap1").eq(index).show().siblings().hide();
+                  return false
+              })
+          })
+          $(function () {
+              $(".ff").click(function () {
+                 $(".mask,.box").show()
+                  return false
+             })
+              $(document).click(function () {
+                  $(".mask,.box").hide()
+              })
+          })
+
+      </script>
+</body>
+</html>

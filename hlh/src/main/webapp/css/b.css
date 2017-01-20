@@ -1,0 +1,20 @@
+*{margin:0;padding:0;}
+body{max-width: 640px;margin: 0 auto;font-size: 62.5%;  line-height: 1;
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;color: #333;}
+a{text-decoration: none;color: #333;}
+ul,li,ol{list-style: none;}
+a,input,button{-webkit-tap-highlight-color:rgba(255,0,0,0);}
+img{border: 0;}
+input,textarea,button{outline: none;}
+button{border: none;}
+.fl{float:left;}
+.fr{float:right;}
+.w100{width: 100%;}
+.clear:after{content: "";width: 0;height: 0;display: block;clear: both;overflow: hidden;}
+.clear{zoom: 1;}
+.por{position: relative;}
+.poa{position: absolute;}
+.text-c{text-align: center;}
+.text-l{text-align: left;}
+.text-r{text-align: right;}
+

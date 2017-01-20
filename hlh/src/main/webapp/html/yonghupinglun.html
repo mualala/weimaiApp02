@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>用户评论</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/store.css">
+    <script src="js/back.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <style>
+        .blue{
+            color: #007aff;
+            border-bottom: 1px solid #007aff;
+        }
+    </style>
+    <script>
+        //点击切换
+        $(function(){
+            $(".my_p").click(function(){
+                var index = $(this).index();
+                $(".pinglun_alll").eq(index).show().siblings(".pinglun_alll").hide();
+                $(this).addClass("blue").siblings().removeClass("blue");
+            })
+        })
+    </script>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+<div class="wrap" style="min-height: 100%">
+    <!--头部导航开始-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+        <h1 class="mui-title">用户评论</h1>
+    </header>
+    <!--头部导航结束-->
+    <!--全部开始-->
+    <div class="my">
+        <div class="my_hea">
+            <p class="my_p blue" style="margin-right: 3%">全部</p>
+            <p class="my_p">晒图</p>
+        </div>
+        <div class="pinglun_alll">
+            <div class="warning" style="clear: both;">总体评论：<span style="font-size:12px;float: right;color: #ddd">高于74%的同行</span></div>
+            <div class="content_type">
+                <div>
+                    <div class="container" style="padding: 3%">
+                        <div class="row">
+                            <div class="col-xs-2" style="padding-right: 0!important;padding-top: 3%">
+                                <a href="lingju_yonghuziliao.html"><img src="img/home-page-Head-portrait.png" alt="" style="width: 100%"></a>
+                            </div>
+                            <div class="col-xs-7">
+                                <div ><span style="font-size: 12px">几号放假死了</span><span class="f_icon"></span><a href="" class="btn-sm btn-warning btn " style="float: right;margin-top: 3px;">LV8</a></div>
+                                <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx1.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx1.png"></li>
+                                    <li class="five_star five_pingjia">2016.2.2</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="warning" style="padding-top: 0;border-bottom: none">味道好的不得啦</div>
+                    <div class="my_store">
+                        <div class="my_store_list" style="padding-top: 0">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="container" style="padding: 3%">
+                        <div class="row">
+                            <div class="col-xs-2" style="padding-right: 0!important;padding-top: 3%">
+                                <a href="lingju_yonghuziliao.html"><img src="img/home-page-Head-portrait.png" alt="" style="width: 100%"></a>
+                            </div>
+                            <div class="col-xs-7">
+                                <div ><span style="font-size: 12px">东方闪电帅死了</span><span class="f_icon"></span><a href="" class="btn-sm btn-warning btn " style="float: right;margin-top: 3px;">LV8</a></div>
+                                <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx1.png"></li>
+                                    <li class="five_star five_pingjia">2016.2.2</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="warning" style="padding-top: 0;border-bottom: none">味道好的不得啦</div>
+                    <div class="my_store">
+                        <div class="my_store_list" style="padding-top: 0">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-like-tutu.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-like-tutu.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-like-tutu.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-like-tutu.png">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="pinglun_alll" style="display: none">
+            <div class="warning" style="clear: both;">总体评论：<span style="font-size:12px;float: right;color: #ddd">高于74%的同行</span></div>
+            <div class="content_type">
+                <div>
+                    <div class="container" style="padding: 3%">
+                        <div class="row">
+                            <div class="col-xs-2" style="padding-right: 0!important;padding-top: 3%">
+                                <a href="lingju_yonghuziliao.html"><img src="img/home-page-Head-portrait.png" alt="" style="width: 100%"></a>
+                            </div>
+                            <div class="col-xs-7">
+                                <div ><span style="font-size: 12px">已被帅死了</span><span class="f_icon"></span><a href="" class="btn-sm btn-warning btn " style="float: right;margin-top: 3px;">LV8</a></div>
+                                <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx1.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx1.png"></li>
+                                    <li class="five_star five_pingjia">2016.2.2</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="warning" style="padding-top: 0;border-bottom: none">味道好的不得啦</div>
+                    <div class="my_store">
+                        <div class="my_store_list" style="padding-top: 0">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="container" style="padding: 3%">
+                        <div class="row">
+                            <div class="col-xs-2" style="padding-right: 0!important;padding-top: 3%">
+                                <a href="lingju_yonghuziliao.html"><img src="img/home-page-Head-portrait.png" alt="" style="width: 100%"></a>
+                            </div>
+                            <div class="col-xs-7">
+                                <div ><span style="font-size: 12px">已被帅死了</span><span class="f_icon"></span><a href="" class="btn-sm btn-warning btn " style="float: right;margin-top: 3px;">LV8</a></div>
+                                <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="80%" src="img/btn-xx1.png"></li>
+                                    <li class="five_star five_pingjia">2016.2.2</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="warning" style="padding-top: 0;border-bottom: none">味道好的不得啦</div>
+                    <div class="my_store">
+                        <div class="my_store_list" style="padding-top: 0">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+                            <img class="store_img"style="margin-right: 2px" src="img/list-shops-The-picture.png">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!--我的收藏结束-->
+    <!--底部导航-->
+    <nav class="mui-bar mui-bar-tab"style="z-index: 99999;">
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon"><img src="img/home-page-square.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">广场</span>
+        </a>
+        <a class="mui-tab-item mui-active" href="">
+            <span class="mui-icon "><img src="img/home-page-Like-the-icon.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">喜欢</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/home-page-In-switching.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">地区切换</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon"><img src="img/home-page-A-neighbor.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">邻居</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/p.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">我</span>
+        </a>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+.border_ra >img{
+     height: 50px;
+     width: 50px;
+    border-radius: 50%;
+}
+/*输入框点赞功能*/
+.z_icon{
+    background: url("../img/list-alerts-Thumb-up.png") no-repeat center center;
+    background-size: 100%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: relative;
+}
+.z_icon2 {
+    background: url("../img/list-post-Thumb-up1.png") no-repeat center center;
+    background-size: 100%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: relative;
+}
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+    line-height: 21px;
+    width: 100%;
+    height: 28px !important;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    -webkit-user-select: text;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 3px;
+    outline: 0;
+    background-color: #fff;
+    -webkit-appearance: none;
+}
+.number2{
+    position: absolute;
+    text-align: center;
+    font-size: 12px;
+    color: #57A3E8;
+    display: inline-block;
+    border-radius: 50%;
+    right: -3px;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+
+}
+.f_icon{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../img/list-alertsi-boy.png") no-repeat center center;
+    background-size: 100%;
+}

@@ -1,0 +1,106 @@
+*{
+    margin:0;
+    padding: 0;
+    list-style: none;
+}
+body{
+    font-family: "����";
+    font-size: 12px;
+}
+a{
+    text-decoration: none;
+}
+.c_header_top{
+    width: 100%;
+    padding: 3%;
+    height: 43px;
+}
+.c_header_top span{
+    display: inline-block;
+    width: 80%;
+    font-family: "黑体";
+    margin-top: -5px;
+    text-align: center;
+    float: left;
+    font-size: 2rem;
+}
+.c_header_back{
+    display: inline-block;
+    width: 10%;
+    height: 20px;
+    float: left;
+    background: url("../img/list-shops-return.png")no-repeat;
+    background-size: contain;
+}
+.c_header_new{
+    display: inline-block;
+    width: 10%;
+    height: 22px;
+    float: left;
+    background: url("../img/list-shopes-icon.png")no-repeat 9px 0;
+    background-size: contain;
+}
+.c_section{
+    width: 100%;
+    padding: 3%;
+    overflow: hidden;
+    margin-top: 30px;
+    border-bottom:5px solid #f1f1f1;
+
+}
+.c_section_nav{
+    width: 100%;
+    float: left;
+}
+.c_section_nav li{
+    width: 23%;
+    height: 30px;
+    background: #F1F1F1;
+    float: left;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 1.5%;
+    margin-left: 1.6%;
+    color: #838383;
+}
+.c_section_nav .c_xuanze{
+    width: 23%;
+    height: 30px;
+    background: #308EE3;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+.c_section_content img{
+    width: 100%;
+}
+.c_content_text{
+    font-size:1.5rem;
+    margin-top: 10%;
+    padding-left: 0;
+}
+.c_dianpu{
+    border-bottom: 1px solid #e4e4e4;
+    margin-top: 15px;
+}
+.c_content_text p{
+    width:100%;
+    height: 20px;
+}
+.c_content_text p i{
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    background: url("../img/list-shops-The-phone.png")no-repeat;
+    background-size: contain;
+    float:right;
+}
+.c_content_text p span{
+    color: #6D6D6D;
+    float: left;
+}
+.c_huanjing{
+    color: #E4E4E4;
+
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/creatShop.css">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/back.js"></script>
+    <style>
+        input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+            line-height: 21px;
+            width: 100%;
+            height: 40px;
+             margin-bottom:0px!important;
+             padding: 0px 15px!important;
+            -webkit-user-select: text;
+            border: 1px solid rgba(0,0,0,.2);
+            border-radius: 3px;
+            outline: 0;
+            background-color: #fff;
+            -webkit-appearance: none;
+        }
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding:0px 9px !important;
+            vertical-align: top;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding: 11px 15px;
+            vertical-align: top;
+             border-right: none!important;
+             border-bottom: none!important;
+        }
+        .mui-col-xs-3 {
+            width: 23% !important;
+        }
+        .mui-grid-9>li{
+            background:#E4E4E4 !important;
+            margin: 1% !important;
+
+        }
+        .mui-media-body{
+            margin-top: 0 !important;
+            font-size: 1rem !important;
+        }
+
+
+    </style>
+</head>
+<body style="font-size: 75px;padding-bottom: 40px;background: #ffffff">
+      <div class="wrap" style="height: 100%">
+          <header class="mui-bar mui-bar-nav">
+              <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <h1 class="mui-title">查看更多</h1>
+          </header>
+          <div class="input_box">
+              <h4 class="mtop" style="margin-top: 0">店铺类型（0/20）</h4>
+              <div class="mui-content">
+                  <div class="mui-content">
+                      <ul class="mui-table-view mui-grid-view mui-grid-9" style="background: #ffffff !important;">
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+                              <div class="mui-media-body">甜点饮品</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">快餐</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">超市</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">五金杂货</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">风味小吃</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">海鲜</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">特殊火锅</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 blue"><a href="#">
+
+                              <div class="mui-media-body ">川菜</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">风味小吃</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">海鲜</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">特殊火锅</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">川菜</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">风味小吃</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">海鲜</div></a></li>
+                          <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                              <div class="mui-media-body">特殊火锅</div></a></li>
+                      </ul>
+                  </div>
+                </div>
+          </div>
+      </div>
+</body>
+</html>

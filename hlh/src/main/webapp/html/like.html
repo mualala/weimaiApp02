@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>喜欢</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/store.css">
+    <script src="js/back.js"></script>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <style>
+        .blue{
+            color: #007aff;
+            border-bottom: 1px solid #007aff;
+        }
+    </style>
+    <script>
+        //点击切换全部与会员
+        $(function(){
+            $(".my_p").click(function(){
+                var index = $(this).index();
+                $(".my_store").eq(index).show().siblings(".my_store").hide();
+                $(this).addClass("blue").siblings().removeClass("blue");
+            })
+        })
+        //点击选择与不选择
+        $(function(){
+            $(".c_weixinzhifu label").click(function(){
+                $(this).toggleClass("shopcar-checkd");
+            })
+            //点击编辑弹出选出圈圈
+            $(".w_bianji").click(function(){
+                $(".c_weixinzhifu label").toggle();
+            })
+        })
+
+    </script>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+<div class="wrap" style="min-height: 100%">
+    <!--头部导航开始-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon  mui-pull-left" onclick="back()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+        <h1 class="mui-title">喜欢</h1>
+        <a class="mui-action-back mui-icon  mui-pull-right w_bianji" style="color:#555;width: 25%;font-size:14px;padding-right:0;text-align:center;padding-top: 15px">
+            编辑
+        </a>
+    </header>
+    <!--头部导航结束-->
+    <!--我的收藏开始-->
+    <div class="my">
+        <div class="my_hea">
+            <p class="my_p blue" style="margin-right: 3%">我的收藏</p>
+            <p class="my_p">会员店铺</p>
+        </div>
+        <div class="content_type">
+            <div class="my_store">
+                <div class="my_store_list">
+                    <div class="shopcar-checkbox fr c_weixinzhifu" style="float: left;">
+                        <label for="shopcar" onselectstart="return false" style="width: 70%;display: none" class=""></label>
+                    </div>
+                    <div class="order_left0">
+                        <a href="shop_detail.html" style="display: inline-block;"><img class="store_img" src="img/list-shops-The-picture.png">
+
+                            <div class="store_right">
+                                <p class="store_name">方法人西方法餐厅<span style="float: right;color: #dadada;display: inline-block">2.2KM</span></p>
+                                <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star five_pingjia">106评论</li>
+                                </ul>
+                                <p class="store_good" style="font-size: 12px;padding: 0;">环境优美，提供免费wifi</p>
+                            </div>
+                        </a>
+                    </div>
+                    </div>
+
+                <div class="my_store_list">
+                    <div class="shopcar-checkbox fr c_weixinzhifu" style="float: left;display: inline-block">
+                        <label for="" onselectstart="return false" style="width: 70%;display: none" class=""></label>
+                    </div>
+                    <div class="order_left0">
+                        <a href="shop_detail.html" style="display: inline-block;"><img class="store_img" src="img/list-shops-The-picture.png">
+
+                            <div class="store_right">
+                                <p class="store_name">方法人西方法餐厅<span style="float: right;color: #dadada;display: inline-block">2.2KM</span></p>
+                                <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star five_pingjia">106评论</li>
+                                </ul>
+                                <p class="store_good" style="font-size: 12px;padding: 0;">环境优美，提供免费wifi</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12" style="text-align: center;position:fixed;bottom: 30px">
+                    <input type="submit" value="取消收藏" class="btn btn-primary " style="border: none;background-color:#ff0000;width: 100%">
+                </div>
+            </div>
+            <div class="my_store" style="display: none">
+                <div class="my_store_list">
+                    <div class="shopcar-checkbox fr c_weixinzhifu" style="float: left;">
+                        <label for="shopcar" onselectstart="return false" style="width: 70%;display: none" class=""></label>
+                    </div>
+                    <div class="order_left0">
+                        <a href="shop_detail.html" style="display: inline-block;"><img class="store_img" src="img/list-shops-The-picture.png">
+
+                            <div class="store_right">
+                                <p class="store_name">方法人西方法餐厅<span style="float: right;color: #dadada;display: inline-block">2.2KM</span></p>
+                                <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                    <li class="five_star five_pingjia">106评论</li>
+                                </ul>
+                                <p class="store_good" style="font-size: 12px;padding: 0;">环境优美，提供免费wifi</p>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="my_store_list">
+                    <div class="shopcar-checkbox fr c_weixinzhifu" style="float: left;">
+                        <label for="shopcar" onselectstart="return false" style="width: 70%;display: none" class=""></label>
+                    </div>
+                    <div class="order_left0">
+                        <a href="shop_detail.html" style="display: inline-block;"><img class="store_img" src="img/list-shops-The-picture.png">
+
+                        <div class="store_right">
+                            <p class="store_name">方法人西方法餐厅<span style="float: right;color: #dadada;display: inline-block">2.2KM</span></p>
+                            <ul class="star" style="clear: both; margin-bottom:0;overflow: hidden;padding: 0">
+                                <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                <li class="five_star"><img width="90%" src="img/btn-xx.png"></li>
+                                <li class="five_star five_pingjia">106评论</li>
+                            </ul>
+                            <p class="store_good" style="font-size: 12px;padding: 0;">环境优美，提供免费wifi</p>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12" style="text-align: center;position:fixed;bottom: 30px">
+                <input type="submit" value="取消会员" class="btn btn-primary " style="border: none;background-color:#ff0000;width: 100%">
+            </div>
+        </div>
+        </div>
+
+    <!--我的收藏结束-->
+
+</div>
+</body>
+</html>

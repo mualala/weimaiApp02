@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/store.css">
+    <script src="js/back.js"></script>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script>
+        //点击分享，弹出分享框
+        $(function(){
+            $(".fabu").click(function(){
+                $(".share_wai").show();
+                return false;
+            })
+            $(".w_qixiao").click(function(){
+                $(".share_wai").hide();
+            })
+        })
+    </script>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+<div class="wrap" style="min-height: 100%">
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+        <h1 class="mui-title">上传图片</h1>
+        <a class="mui-action-back mui-icon  mui-pull-right fabu" style=" font-size: 16px!important; color: #7A7A7A!important;margin-top: 5px; ">发布</a>
+    </header>
+    <div class="warning up_shop" style="margin-top: 44px">
+        <img class="w_money" style="float: left;width: 24%" src="img/list-To-create-the-store-Store-image.png">
+        <p class="forbidden">禁止上传淫秽图片，被举报则会被封号。</p>
+    </div>
+    <!--弹出框-->
+    <div class="share_wai" style="display: none;">
+        <div class="share_another">
+        </div>
+        <div class="share_inner" style="top:30%;width: 80%;margin: 0 10%;border-radius: 15px;">
+            <div class="sha_ww" style="text-align: center">
+                菜品
+            </div>
+            <div class="sha_ww" style="border: 1px solid #eee;text-align: center;">
+                环境
+            </div>
+            <div class="w_qixiao">取消</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

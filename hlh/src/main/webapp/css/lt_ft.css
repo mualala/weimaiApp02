@@ -1,0 +1,13 @@
+.t1{
+    border: 5px solid #eeeeee;
+    border-right: 0;
+    border-left: 0;
+    min-height: 60px;
+
+}
+.number{
+    line-height: 80px;
+    font-size: 1.2rem;
+    float: left;
+    margin-left:70px;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+    <!--[if lt IE 9]>
+      <script src="admin/plugins/bootstrap/js/html5shiv.min.js"></script>
+      <script src="admin/plugins/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+<link style="text/css" rel="stylesheet" href="admin/plugins/bootstrap/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="admin/plugins/bootstrap/css/bootstrap-table.min.css">
+<style type="text/css">
+    body {
+        background: url(images/background/1.jpg) no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/background/1.jpg',sizingMethod='scale');/*用于兼容ie*/
+    }
+    form {
+        background: rgba(240,240,240,0.4);
+        border-radius:10px;
+        margin:100px auto;
+        padding: 5px 0;
+        width: 570px;
+    }
+    .form-group {
+        margin: 40px 0;
+    }
+    input {
+        background-color: transparent;
+    }
+    form div {
+        margin:0 auto;
+    }
+</style>
+</head>
+
+<body>
+    <div class="container">
+    <!-- <h1 class="page-header">User Login</h1> -->
+    <h1 style="text-align: center;height: 13px;margin-top: 150px;font-size: 60px;color: white;font-family: '微软雅黑",Arial,sans-serif';">Login</h1>
+
+    <form action="admin/login.do" class="form-horizontal" role="form" method="post">
+        <!-- 用户名和密码 -->
+        <div class="form-group">
+            <!-- <label for="userName" class="col-xs-2 control-label">UserName</label> -->
+            <div class="col-xs-offset-3 col-xs-6">
+                <input id="" type="text" class="form-control input-lg" name="username" placeholder="UserName">
+            </div>
+        </div>
+        <div class="form-group">
+            <!-- <label for="inputPassword01" class="col-xs-2 control-label">Password</label> -->
+            <div class="col-xs-offset-3 col-xs-6">
+                <input id="" type="password" class="form-control input-lg" name="password" placeholder="Password">
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-6">
+                <button type="submit" class="btn btn-success btn-block btn-lg">
+                    <strong style="font-family: '微软雅黑,Arial,sans-serif';">Sign in</strong>
+                </button>
+            </div>
+        </div>
+    </form>
+	</div>
+    
+    
+    <script type="text/javascript" src="admin/plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="admin/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

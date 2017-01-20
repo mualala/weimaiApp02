@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<hr>
+	<h2>碰碰再次添加评论的评论</h2>
+	<form action="pengpeng/addTwoChildAnswer.do" method="post">
+		user_id<input type="text" name="user_id">
+		parent_user_id<input type="text" name="parent_user_id">
+		child_ans_id<input type="text" name="child_ans_id">
+		content<input type="text" name="content">
+		<input type="submit" value="碰碰再次添加评论的评论">
+	</form>
+	<hr>
+	<h2>碰碰增加回答的浏览量</h2>
+	<form action="pengpeng/addSee.do" method="post">
+		ans_id<input type="text" name="ans_id">
+		<input type="submit" value="碰碰浏览量">
+	</form>
+	<hr>
+	<h2>展示仅双方可见的评论列表</h2>
+	<form action="pengpeng/showOnlyChildAnswer.do" method="post">
+		ques_id<input type="text" name="ques_id">
+		own_user_id<input type="text" name="own_user_id">
+		other_user_id<input type="text" name="other_user_id">
+		name_type<input type="text" name="name_type">
+		pageNumber<input type="text" name="pageNumber">
+		pageSize<input type="text" name="pageSize">
+		<input type="submit" value="展示only的列表">
+	</form>
+	<hr>
+	<h2>添加问题的评论的评论</h2>
+	<form action="pengpeng/addChildAnswer.do" method="post">
+		user_id<input type="text" name="user_id">
+		ans_id<input type="text" name="ans_id">
+		content<input type="text" name="content">
+		<input type="submit" value="添加问题的子评论的评论">
+	</form>
+	<hr>
+	<h2>某登录用户对问题回答后的展示列表</h2>
+	<form action="pengpeng/showCurrUserAnswer.do" method="post">
+		ques_id<input type="text" name="ques_id">
+		user_id<input type="text" name="user_id">
+		name_type<input type="text" name="name_type">
+		pageNumber<input type="text" name="pageNumber">
+		pageSize<input type="text" name="pageSize">
+		<input type="submit" value="展示已回答问题的用户列表">
+	</form>
+	<hr>
+	<h2>碰碰的直接子评论点赞</h2>
+	<form action="pengpeng/childAnsLaud.do" method="post">
+		user_id<input type="text" name="user_id">
+		ans_id<input type="text" name="ans_id">
+		<input type="submit" value="碰碰首页">
+	</form>
+	<hr>
+	<h2>碰碰首页数据</h2>
+	<form action="pengpeng/defMain.do" method="post">
+		user_id<input type="text" name="user_id">
+		ques_id<input type="text" name="ques_id">
+		pageNumber<input type="text" name="pageNumber">
+		pageSize<input type="text" name="pageSize">
+		name_type<input type="text" name="name_type">
+		gender<input type="text" name="gender">
+		<input type="submit" value="碰碰首页">
+	</form>
+	<hr>
+	<h2>碰碰的问题列表</h2>
+	<form action="pengpeng/questionList.do" method="post">
+		user_id<input type="text" name="user_id">
+		name_type<input type="text" name="name_type">
+		pageNumber<input type="text" name="pageNumber">
+		pageSize<input type="text" name="pageSize">
+		<input type="submit" value="问题列表">
+	</form>
+	<hr>
+	<h2>碰碰功能添加直接子评论</h2>
+	<form action="pengpeng/addAnswer.do" method="post">
+		user_id<input type="text" name="user_id">
+		ques_id<input type="text" name="ques_id">
+		content<input type="text" name="content">
+		name_type<input type="text" name="name_type">
+		<input type="submit" value="评论">
+	</form>
+	<hr>
+	<h2>上传用户头像</h2>
+	<form action="user/profile.do" enctype="multipart/form-data" method="post">
+		上传图片<input type="file" name="profile">
+		user_id<input type="text" name="user_id">
+		<input type="submit" value="提交">
+	</form>
+	<hr />
+	<h2>用户基本信息更新</h2>
+	<form action="user/edit.do" method="post">
+		user_id<input type="text" name="user_id">
+		username<input type="text" name="username"><br />
+		gender<input type="text" name="gender">
+		birthday<input type="text" name="birthday">
+		star<input type="text" name="star"><br />
+		e_state<input type="text" name="e_state">
+		grade<input type="text" name="grade">
+		profession<input type="text" name="profession"><br />
+		major<input type="text" name="major"><br />
+		school<input type="text" name="school">
+		highschool<input type="text" name="highschool">
+		province<input type="text" name="province">
+		city<input type="text" name="city">
+		county<input type="text" name="county">
+		lable<input type="text" name="lable"><br />
+		skill<input type="text" name="skill"><br />
+		<input type="submit" value="提交">
+	</form>
+	<hr>
+	<h2>上传用户验证信息</h2>
+	<form action="user/verify.do" enctype="multipart/form-data" method="post">
+		上传验证图片<input type="file" name="verify">
+		user_id<input type="text" name="user_id">
+		type<input type="text" name="type">
+		<input type="submit" value="上传验证信息">
+	</form>
+	<hr>
+	<h2>测试人海的随机用户列表</h2>
+	<form action="user/peoples.do" method="post">
+		user_id<input type="text" name="user_id">
+		pageNumber<input type="text" name="pageNumber">
+		pageSize<input type="text" name="pageSize">
+		<input type="submit" value="人海的随机用户">
+	</form>
+	<hr>
+	<h2>测试人海用户的筛选</h2>
+	<form action="user/filterPeoples.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		gender<input type="text" name="gender"><br />
+		grade<input type="text" name="grade"><br />
+		age01<input type="text" name="age01"><br />
+		age02<input type="text" name="age02"><br />
+		major<input type="text" name="major"><br />
+		type<input type="text" name="type">
+		<input type="submit" value="人海用户的筛选">
+	</form>
+	<hr>
+	<h2>测试脉脉圈的分类用户</h2>
+	<form action="user/maimaiCateg.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		type<input type="text" name="type"><br />
+		<input type="submit" value="脉脉圈分类用户">
+	</form>
+	<hr />
+	<h2>增加拜访用户</h2>
+	<form action="user/addVisit.do" method="post">
+		v_user_id<input type="text" name="v_user_id"><br />
+		user_id<input type="text" name="user_id"><br />
+		<input type="submit" value="增加拜访用户">
+	</form>
+	
+	
+	<hr />
+	<h2>测试添加好友</h2>
+	<form action="friends/addFriends.do" method="post">
+		user_id<input type="text" name="user_id">
+		f_user_id<input type="text" name="f_user_id"><br />
+		<input type="submit" value="添加好友">
+	</form>
+	<hr>
+	<h2>测试展示朋友的朋友</h2>
+	<form action="friends/fTof.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		<input type="submit" value="展示朋友的朋友">
+	</form>
+	<hr>
+	<h2>测试用户添加关注用户</h2>
+	<form action="friends/addAttention.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		f_user_id<input type="text" name="f_user_id"><br />
+		<input type="submit" value="关注用户">
+	</form>
+	<hr>
+	<h2>测试用户取消关注</h2>
+	<form action="friends/cancelAttention.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		f_user_id<input type="text" name="f_user_id"><br />
+		<input type="submit" value="取消关注">
+	</form>
+	<hr>
+	<h2>查询关注的用户列表</h2>
+	<form action="friends/attentionUsers.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		<input type="submit" value="查询关注的用户列表">
+	</form>
+	<hr>
+	<h2>查询fans的用户列表</h2>
+	<form action="friends/fans.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		<input type="submit" value="查询fans的用户列表">
+	</form>
+	
+	
+	
+	
+	<hr />
+	<h2>用户发表动态</h2>
+	<form action="active/addActive.do" enctype="multipart/form-data" method="post">
+		上传图片1<input type="file" name="active_pic"><br />
+		上传图片2<input type="file" name="active_pic"><br />
+		上传图片3<input type="file" name="active_pic"><br />
+		上传图片4<input type="file" name="active_pic"><br />
+		上传图片5<input type="file" name="active_pic"><br />
+		上传图片6<input type="file" name="active_pic"><br />
+		上传图片7<input type="file" name="active_pic"><br />
+		上传图片8<input type="file" name="active_pic"><br />
+		上传资源文件1<input type="file" name="docum"><br />
+		上传资源文件2<input type="file" name="docum"><br />
+		上传资源文件3<input type="file" name="docum"><br />
+		上传资源文件4<input type="file" name="docum"><br />
+		type_a<input type="text" name="type_a">
+		type_b<input type="text" name="type_b">
+		saysay<input type="text" name="saysay">
+		user_id<input type="text" name="user_id"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		<input type="submit" value="发表动态">
+	</form>
+	<hr />
+	<h2>测试后台登录</h2>
+	<form action="admin/login.do" method="post">
+		username<input type="text" name="username">
+		password<input type="text" name="password">
+		<input type="submit" value="后台登录提交">
+	</form>
+	<hr />
+	<h2>测试添加好有前的查找好友</h2>
+	<form action="friends/findFriends.do" method="post">
+		<input type="text" name="name">
+		<input type="submit" value="查找好友">
+	</form>
+	<hr />
+	<h2>测试发起添加好友请求</h2>
+	<form action="friends/addFriends.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		f_user_id<input type="text" name="f_user_id"><br />
+		<input type="submit" value="添加好友">
+	</form>
+	
+	<hr />
+	<h2>测试个人动态展示</h2>
+	<form action="active/showOwnActive.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		v_user_id<input type="text" name="v_user_id"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		<input type="submit" value="个人动态">
+	</form>
+	<hr />
+	<h2>测试首页大类全网用户的动态展示</h2>
+	<form action="active/classActive.do" method="post">
+		type_a<input type="text" name="type_a"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		com_user_id<input type="text" name="com_user_id"><br />
+		<input type="submit" value="个人动态">
+	</form>
+	<hr />
+	<h2>测试朋友圈的动态展示</h2>
+	<form action="active/friendsActive.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		com_user_id<input type="text" name="com_user_id"><br />
+		<input type="submit" value="朋友圈动态">
+	</form>
+	<hr />
+	<h2>测试点击图片追加查看的数量</h2>
+	<form action="active/seeAction.do" method="post">
+		active_user_id<input type="text" name="active_user_id"><br />
+		<input type="submit" value="追加说说的查看数量">
+	</form>
+	<hr />
+	<h2>测试动态的全文检索</h2>
+	<form action="active/fullText.do" method="post">
+		text<input type="text" name="text"><br />
+		<input type="submit" value="动态检索">
+	</form>
+	
+	
+	
+	<hr />
+	<h2>测试添加用户评论</h2>
+	<form action="commont/addCommont.do" method="post">
+		com_user_id<input type="text" name="com_user_id"><br />
+		active_user_id<input type="text" name="active_user_id"><br />
+		content<input type="text" name="content"><br />
+		<input type="submit" value="添加评论">
+	</form>
+	<hr />
+	<h2>测试用户对说说点赞</h2>
+	<form action="commont/addLaud.do" method="post">
+		com_user_id<input type="text" name="com_user_id"><br />
+		active_user_id<input type="text" name="active_user_id"><br />
+		<input type="submit" value="点赞">
+	</form>
+	<hr />
+	<h2>测试点赞用户的列表</h2>
+	<form action="commont/laudList.do" method="post">
+		active_user_id<input type="text" name="active_user_id"><br />
+		<input type="submit" value="点赞列表展示">
+	</form>
+	<hr />
+	<h2>测试用户对子评论点赞</h2>
+	<form action="commont/childLaud.do" method="post">
+		child_user_id<input type="text" name="child_user_id"><br />
+		com_id<input type="text" name="com_id"><br />
+		parent_user_id<input type="text" name="parent_user_id"><br />
+		<input type="submit" value="子评论点赞">
+	</form>
+	<hr />
+	<h2>测试添加子评论</h2>
+	<form action="commont/addcToc.do" method="post">
+		child_user_id<input type="text" name="child_user_id"><br />
+		com_id<input type="text" name="com_id"><br />
+		parent_user_id<input type="text" name="parent_user_id"><br />
+		content<input type="text" name="content"><br />
+		<input type="submit" value="添加子评论">
+	</form>
+	<hr />
+	<h2>测试评论及子评论的展示</h2>
+	<form action="commont/detailActive.do" method="post">
+		com_user_id<input type="text" name="com_user_id"><br />
+		active_user_id<input type="text" name="active_user_id"><br />
+		<input type="submit" value="展示评论及子评论">
+	</form>
+	
+</body>
+</html>

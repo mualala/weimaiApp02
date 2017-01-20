@@ -1,0 +1,506 @@
+.my{
+    top: 44px;
+    position: relative;
+    width: 100%;
+}
+ul li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+*:focus,*:active{
+    text-decoration: none;
+        }
+*{
+    font-family: "ºÚÌå";
+}
+.my p{
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 0;
+    padding: 2%;
+}
+.blue{
+    color: #007aff;
+    border-bottom: 1px solid #007aff;
+}
+.my_hea{
+    margin: 0 auto;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+.my_store_list{
+    position: relative;
+    width: 100%;
+    padding: 3%;
+    border-bottom: 1px solid #eee;
+    clear: both;
+    overflow: hidden;
+    background-color: white;
+    box-sizing: border-box;
+}
+.store_img{
+    width: 23%;
+    float: left;
+
+}
+.store_right{
+    width: 75%;
+    float: right;
+}
+
+.star li{
+    float: left;
+    list-style: none;
+}
+.five_pingjia{
+    float: right!important;
+    font-size: 14px;
+    margin-top: 2%;
+    color: #dadada;
+}
+.store_name{
+    display: block!important;
+    text-align: left!important;
+    padding: 0!important;
+}
+.main_pay{
+    padding-top: 44px;
+}
+.warning{
+    width: 100%;
+    padding: 3% 5%;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #dcdad3;
+    text-align: left;
+    clear: both;
+    overflow: hidden;
+}
+.w_money{
+    float: right;
+    display: inline-block;
+    color: #e90a56;
+}
+.pay-method {
+    width: 100%;
+    background-color: #fff;
+}
+.addlist {
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid #dcdad3;
+    margin-bottom: 2%;
+    border-bottom: 0;
+}
+.addlist .bottom {
+    padding: 0 5%;
+    border-bottom: 1px solid #dcdada;
+}
+.addlist .bottom .shopcar {
+    border-bottom: none;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    padding: 4% 0;
+    background-color: #fff;
+    overflow: hidden;
+}
+.shopcar-checkbox {
+    padding: 0;
+    float: right;
+    position: relative;
+    width: 10%;
+    height: 5rem;
+}
+.sorder .sorder-list {
+    width: 80%;
+    height: 100%;
+}
+.fl {
+    float: left;
+    display: inline;
+}
+.zuo {
+    margin-left: 4%;
+    margin-top: 2%;
+}
+.tit {
+    color: #111111;
+    font-size: 14px;
+}
+.fu-tit {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+.zuo p{
+    margin: 0;
+}
+
+.tui-btn{
+    display: block;
+    margin: 5% auto;
+    width: 90.741%;
+    text-align: center;
+    padding: 4% 0;
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 14px;
+}
+ .shopcar-checkbox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 44px;
+    height: 100%;
+    background: url(../img/checktwo.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%
+}
+ .shopcar-checkbox .shopcar-checkd {
+    background: url(../img/checketwo.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.w-di_bottom{
+    padding: 5%;
+    border-bottom: 1px solid #dadada;
+}
+.W_addd{
+    background: url("../img/list-like-tinjia.png")no-repeat!important ;
+    background-size: 80%!important;
+    background-position: 50%!important;
+
+}
+.cover_count{
+    position: fixed;
+    bottom: 0;
+    background: #e5e5e5;
+    width: 100%;
+    padding-right: 0;
+}
+.cover_count ul{
+    clear: both;
+    overflow: hidden;
+    padding-left: 0!important;
+    margin-bottom: 0;
+}
+.cover_count ul li{
+    float: left;
+    list-style: none;
+    padding: 4%;
+}
+.cover_count ul li:nth-child(2){
+    margin-left: 10%;
+}
+.cover_count ul li:last-child{
+    float: right;
+    text-align: center;
+    background-color: orange;
+    color: #fff;
+}
+.f_icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 6%;
+    background: url(../img/list-alertsi-boy.png) no-repeat center center;
+    background-size: 100%
+}
+.order_type{
+    font-size: 14px;
+    padding: 3% 7%;
+    border-bottom: 1px solid #eee;
+    clear: both;
+    overflow: hidden;
+}
+.span_oo{
+    float: right;
+    display: inline-block;
+    margin-top: 10%;
+    font-size: 14px;
+}
+.order_box li{
+    float: left;
+    width: 33%;
+    border: 1px solid #dcdad3;
+    font-size: 20px;
+    list-style: none;
+    padding:3%;
+    text-align: center;
+}
+.order_box{
+    overflow: hidden;
+    display: inline-block;
+    width: 38%;
+    float: right;
+    margin: 3%;
+}
+.order_left0{
+    width: 90%;
+    display: inline-block;
+}
+.mui_back{
+    position: absolute;
+    left: 2%;
+    top: 2%;
+}
+.tupain_num{
+    position: absolute;
+    margin-top: 52%;
+    right: 5%;
+    background-color: #fff;
+    opacity: .5;
+    display: inline-block;
+    border-radius:50%;
+    padding: 1%;
+
+}
+.share_shop{
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    clear: both;
+    overflow: hidden;
+}
+.share_shop li{
+    float: left;
+}
+.place_shop{
+    padding: 3%;
+    position: relative;
+    clear: both;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0;
+}
+.place_shop li{
+    float: left;
+}
+.place_shop li:last-child{
+    border-left: 1px solid #ddd;
+    float: right;
+    width: 22%;
+}
+.place_shop li:last-child img{
+    margin: 0 37%;
+    width: 35%;
+
+}
+.fj_more{
+    clear: both;
+    overflow: hidden;
+    width: 70%;
+    float: left;
+}
+.fj_right{
+    float: right;
+    width: 18%;
+    text-align: right;
+    margin-top:5%;
+}
+
+.fj_right p:last-child{
+    border: 1px solid #ff0000;
+    color: #ff0000;
+    text-align: center;
+}
+.fj_right p{
+    margin-bottom: 0;
+    text-align: center;
+}
+.store_right p{
+    margin-bottom: 0;
+}
+.shop_type{
+    border-bottom: 1px solid #eee;
+    clear: both;
+    padding: 3%;
+    overflow: hidden;
+}
+.erweima{
+    padding-bottom: 4%;
+    text-align: center;
+}
+.erweima img{
+    width: 50%;
+}
+.sha_ww{
+    padding: 3%;
+    font-size: 14px;
+}
+.share_three{
+    padding: 3%;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+.third_inter{
+    clear: both;
+    overflow: hidden;
+    padding-left: 0;
+    margin: 0 9%;
+}
+.third_inter li{
+    float: left;
+    width: 33%;
+    text-align: center;
+}
+.third_inter li img{
+    width: 72%;
+}
+.share_another{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.5;
+}
+.share_inner{
+    background-color: #fff;
+    z-index: 103;
+    position: fixed;
+    top: 20%;
+    left: 0;
+    width: 100%;
+}
+.share_close{
+    text-align: center;
+    padding: 3%;
+    color: #ff0000;
+    clear: both;
+}
+.share_wai{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    display: none;
+}
+.photos_img {
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+    padding: 3%;
+    text-align: center;
+}
+.photos_img li{
+    float: left;
+    width: 50%;
+    margin-bottom: 3%;
+    position: relative;
+}
+.photos_img li img{
+    width: 99%;
+}
+.border {
+    border: 1px solid #F7F7F7;
+}
+.share_choice li{
+    width: 50%;
+    float: left;
+    padding: 3%;
+}
+.share_choice{
+    clear: both;
+    overflow: hidden;
+    text-align: center;
+    padding-left: 0;
+}
+.grades_inner{
+    margin-top: 44px;
+}
+.grades_img{
+    text-align: center;
+    padding: 3%;
+    position: relative;
+}
+.grades_img  span{
+    position: absolute;
+    text-align: center;
+    top: 42%;
+    left: 48%;
+    display: inline-block;
+    font-size: 22px;
+    font-weight: bold;
+}
+.grades_num{
+    padding: 3%;
+    text-align: center;
+}
+.progress_all{
+    padding: 3%;
+    clear: both;
+    overflow: hidden;
+}
+.progress_all li{
+    float: left;
+}
+.lv3{
+    width: 10%;
+}
+.progress{
+    width: 80%;
+}
+.congratu{
+    color: #ff0000;
+    text-align: center;
+    padding: 5%;
+}
+.live_img{
+    background-color: #00a0e9;
+    color: #fff;
+    display: inline-block;
+    padding: 1% 3%;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.wrap1 p{
+    margin-bottom: 0;
+}
+.tupian_cover{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+    clear: both;
+    overflow: hidden;
+    padding-left: 0;
+}
+.tupian_cover span,img{
+    float: left;
+}
+.tupian_cover img{
+    width: 15%!important;
+}
+.tupian_cover span{
+    font-size: 12px;
+    margin: 3% 6%;
+}
+.small_cover{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #101010;
+    opacity: 0.5;
+    width:100%;
+    height: 23%;
+}
+.w_qixiao{
+    padding: 3%;
+    text-align: center;
+    color: #ff0000;
+}
+.forbidden{
+    display: inline-block;
+    float: right;
+    width: 75%;
+    margin-top: 8%;
+}

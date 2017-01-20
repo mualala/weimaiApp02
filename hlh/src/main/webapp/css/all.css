@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+div{
+    font-family:"微软雅黑" ;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}

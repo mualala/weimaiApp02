@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/index.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=PUhcTa9ZepqnGGrtSPthVHr7"></script>
+    <link href="css/mui.indexedlist.css" rel="stylesheet" />
+    <script src="js/back.js"></script>
+    <style>
+        html,
+        body {
+            min-height: 100%;
+
+        }
+        .mui-bar {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .posCity2{
+            float: left;
+            font-size: 14px;
+            color: #000000;
+            margin-top: 10px;
+            display: inline-block
+
+        }
+    </style>
+
+
+    <style>
+
+        .mui-search{
+            position: relative;
+        }
+          .search_icon{
+              position: absolute !important;
+              left:5px;
+              top: 12px;
+          }
+
+        .Width>img{
+            height: 40px;
+            line-height: 40px;
+        }
+        .radios{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after {
+            font-family: Muiicons;
+            font-size: inherit;
+            line-height: 1;
+            position: absolute;
+            top: 50%;
+            left: 75%;
+            display: inline-block;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            text-decoration: none;
+            color: #bbb;
+            -webkit-font-smoothing: antialiased;
+        }
+        .mui-navigate-right{
+            padding-right: 22px;
+            float: right;
+        }
+
+        div.mui-indexed-list{
+            height: 500px;
+        }
+        .mui-input-row{
+            clear: none!important;
+        }
+        .mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body{
+            font-size: 14px;
+        }
+        .bottom-right>span{
+            color: #D8D8D8;
+            font-size: 1rem;
+            margin-left: 3px;
+        }
+        .pos_img>img{
+            position: absolute;
+            right: 0px;
+            top: 0;
+        }
+        .opacit{
+            position: absolute;
+            height: 30px;
+            right:0px;
+            bottom:0px;
+            width:80px;
+            background:black;
+            opacity: .3;
+            z-index: 6;
+            margin-bottom: 0 !important;
+        }
+        .num{
+            position: absolute;
+            height: 30px;
+            right: 0px;
+            bottom:0px;
+            width:80px;
+            color: #ffffff;
+            font-size: 12px;
+            text-align: center;
+            line-height: 30px;
+            z-index: 7;
+            margin-bottom: 0 !important;
+        }
+    </style>
+
+</head>
+<body style="background: #ffffff" >
+      <div class="big" style="width: 100%;height: 100%;margin: auto;overflow:Scroll;overflow-x:hidden;">
+          <header id="header" class="mui-bar " >
+              <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <div class="mui-input-row mui-search " style=";left:5px;float: left;width: 85%">
+                  <input type="search" class="mui-input-clear" placeholder="搜索帖子">
+              </div>
+              <a class="mui-action-back mui-icon  mui-pull-right" style=" font-size: 16px; color: #7A7A7A!important;margin-top: 5px; ">取消</a>
+          </header>
+      </div>
+      <!--内容部分-->
+       <div style="height: 10px;background: #F1F1F1;margin-top: 70px;"></div>
+       <div style="color: #DFDFDF;border-bottom: 1px solid #DFDFDF;height: 40px;line-height: 40px;">
+           <div class="container">热门文章</div>
+       </div>
+      <div class="container" style="padding: 10px 15px;border-bottom: 1px solid #E4E4E4">
+          <a href="dd">
+          <!--左边-->
+          <div class="col-xs-8" style="padding-left: 0">
+              <div class="col-xs-12" style="padding-left: 0">
+                  <img src="img/list-The-scenery-Head-portrait.png" alt="" class="radios">
+                  <span style="font-size: 12px;color: black">我要笑都</span>
+                  <span class="btn btn-warning btn-sm">LV.5</span>
+              </div>
+
+              <div class="LH">
+                  <p>xxxxxxxxxxxxxx</p>
+              </div>
+              <div class="LH">
+                  <p>xxxxxxxxxxxxxxxxx</p>
+              </div>
+          </div>
+          <div class="col-xs-4 pos_img" style="padding-right: 0">
+              <img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;">
+              <p class="opacit"></p>
+              <p class="num">还有四张</p>
+          </div>
+          <div class="col-xs-12" style="overflow: hidden;padding-left: 0;padding-right: 0">
+              <a href="" class="btn btn-primary btn-sm" style="background: #ffffff;color: #00a0e9">邻里论坛</a>
+              <span class="time">3小时前</span>
+              <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span style="font-size: 12px;margin-left: 3px">19993</span></span>
+          </div>
+          </a>
+      </div>
+      <!--第二行-->
+      <div class="container" style="padding: 10px 15px;border-bottom: 1px solid #E4E4E4">
+          <a href="dd">
+              <!--左边-->
+              <div class="col-xs-8" style="padding-left: 0">
+                  <div class="col-xs-12" style="padding-left: 0">
+                      <img src="img/list-The-scenery-Head-portrait.png" alt="" class="radios">
+                      <span style="font-size: 12px;color: black">我要笑都</span>
+                      <span class="btn btn-warning btn-sm">LV.5</span>
+                  </div>
+
+                  <div class="LH">
+                      <p>xxxxxxxxxxxxxx</p>
+                  </div>
+                  <div class="LH">
+                      <p>xxxxxxxxxxxxxxxxx</p>
+                  </div>
+              </div>
+              <div class="col-xs-4 pos_img" style="padding-right: 0">
+                  <img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;">
+                  <p class="opacit"></p>
+                  <p class="num">还有四张</p>
+              </div>
+              <div class="col-xs-12" style="overflow: hidden;padding-left: 0;padding-right: 0">
+                  <a href="" class="btn btn-primary btn-sm" style="background: #ffffff;color: #00a0e9">邻里论坛</a>
+                  <span class="time">3小时前</span>
+                  <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span style="font-size: 12px;margin-left: 3px">19993</span></span>
+              </div>
+          </a>
+      </div>
+      <!--底部导航-->
+      <nav class="mui-bar mui-bar-tab"style="z-index: 99999;">
+          <a class="mui-tab-item mui-active" href="">
+              <span class="mui-icon"><img src="img/home-page-square1.png" alt="" style="width:25px;height:25px;"></span>
+              <span class="mui-tab-label">广场</span>
+          </a>
+          <a class="mui-tab-item" href="">
+              <span class="mui-icon "><img src="img/home-page-Like-the-icon.png" alt="" style="width:25px;height:25px;"></span>
+              <span class="mui-tab-label">喜欢</span>
+          </a>
+          <a class="mui-tab-item" href="">
+              <span class="mui-icon "><img src="img/home-page-In-switching.png" alt="" style="width:25px;height:25px;"></span>
+              <span class="mui-tab-label">地区切换</span>
+          </a>
+          <a class="mui-tab-item" href="">
+              <span class="mui-icon"><img src="img/home-page-A-neighbor.png" alt="" style="width:25px;height:25px;"></span>
+              <span class="mui-tab-label">邻居</span>
+          </a>
+          <a class="mui-tab-item" href="">
+              <span class="mui-icon "><img src="img/p.png" alt="" style="width:25px;height:25px;"></span>
+              <span class="mui-tab-label">我</span>
+          </a>
+      </nav>
+
+      <script src="js/swiper-3.4.0.min.js"></script>
+      <script src="js/home.js"></script>
+     <script src="js/mui.min.js"></script>
+     <script src="js/mui.indexedlist.js"></script>
+      <!--轮播-->
+      <script language="javascript">
+          var mySwiper = new Swiper('.swiper-container',{
+              pagination : '.swiper-pagination',
+              paginationElement : 'li',
+              autoplay : 1000,
+          })
+      </script>
+     <script>
+
+         $(function () {
+             $(".one").html(localStorage.getItem("cc"));
+         })
+     </script>
+
+</body>
+</html>

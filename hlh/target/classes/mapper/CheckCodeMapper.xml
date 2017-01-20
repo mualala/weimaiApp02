@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.liancheng.it.dao.user.CheckCodeDao">
+ 	<insert id="saveCoder" parameterType="com.liancheng.it.entity.user.Coder">
+ 		insert into checkcode(id,code,creatime)
+ 		values(#{id},#{code},#{creatime})
+ 	</insert>
+ 	
+ 	<select id="findCheckCodeByPhoneNum" parameterType="string" resultType="com.liancheng.it.entity.user.Coder">
+ 		select * from checkcode
+ 		where id=#{phoneNum}
+ 	</select>
+ 	
+ 	<delete id="deleteCoderByPhoneNum" parameterType="string">
+ 		delete from checkcode where id=#{phoneNum}
+ 	</delete>
+ </mapper>

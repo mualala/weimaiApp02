@@ -1,0 +1,33 @@
+.tabMenue ul li{
+    width: 33.33%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    float: left;
+    list-style: none;
+}
+.tabMenue{
+    overflow: hidden;
+    border-bottom: 1px solid #c7c7cc;
+}
+.act{
+    border-bottom: 2px solid red;
+    color: red;
+}
+.content{
+    padding: 20px 0;
+}
+.p_left{
+    padding-left: 0!important;
+}
+.p_right{
+    padding-right: 0 !important;
+    text-align: right;
+}
+p {
+     margin: 0 !important;
+}
+.mui-btn-danger{
+    padding: 3px  10px;
+    font-size: 12px;
+}

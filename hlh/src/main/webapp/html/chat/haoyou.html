@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="css/messageIfon.css">
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/back.js"></script>
+    <link rel="stylesheet" href="css/face.css">
+
+    <style>
+
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding:0px 9px !important;
+            vertical-align: top;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding: 11px 15px;
+            vertical-align: top;
+             border-right: none!important;
+             border-bottom: none!important;
+        }
+        .mui-col-xs-3 {
+            width: 23% !important;
+        }
+        .mui-grid-9>li{
+            background:#E4E4E4 !important;
+            margin: 1% !important;
+
+        }
+        .mui-media-body{
+            margin-top: 0 !important;
+            font-size: 1rem !important;}
+
+        div{
+            font-size: 1.2rem;
+        }
+        .col-xs-7,.col-xs-3{
+            color: #BEBEBE;
+        }
+    </style>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff;font-size: 75px;overflow-x: hidden;">
+      <div class="wrap" style="min-height: 100%">
+          <header class="mui-bar mui-bar-nav">
+              <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <h1 class="mui-title">好友</h1>
+
+          </header>
+
+          <!--内容区域-->
+          <div class="row" style="margin-top: 100px;border-bottom:5px solid #F1F1F1;padding: 20px 0 ">
+               <div class="container" >
+                   <div class="col-xs-2">
+                       <img src="img/home-page-Head-portrait.png" alt="">
+                   </div>
+                   <div class="col-xs-7">
+                       <div class="col-xs-12"><span>回复都风</span></div>
+                       <div class="col-xs-12">美女想认识你</div>
+
+                   </div>
+                   <div class="col-xs-3" style="text-align: right">19:00</div>
+               </div>
+          </div>
+          <div class="row" style="padding:20px 0;border-bottom:5px solid #F1F1F1 ">
+              <div class="container" >
+                  <div class="col-xs-2">
+                      <img src="img/home-page-Head-portrait.png" alt="">
+                  </div>
+                  <div class="col-xs-7">
+                      <div class="col-xs-12"><span>回复都风</span></div>
+                      <div class="col-xs-12">美女想认识你</div>
+
+                  </div>
+                  <div class="col-xs-3" style="text-align: right">19:00</div>
+              </div>
+          </div>
+          <div class="row" style="padding:20px 0;border-bottom:5px solid #F1F1F1 ">
+              <div class="container" >
+                  <div class="col-xs-2">
+                      <img src="img/home-page-Head-portrait.png" alt="">
+                  </div>
+                  <div class="col-xs-7">
+                      <div class="col-xs-12"><span>回复都风</span></div>
+                      <div class="col-xs-12">美女想认识你</div>
+
+                  </div>
+                  <div class="col-xs-3" style="text-align: right">19:00</div>
+              </div>
+          </div>
+          <!--底部导航-->
+
+      </div>
+      <!--轮播-->
+      <script src="js/swiper-3.4.0.min.js"></script>
+      <script language="javascript">
+          var mySwiper = new Swiper('.swiper-container',{
+              pagination : '.swiper-pagination',
+              paginationElement : 'li',
+              autoplay : 1000,
+          })
+      </script>
+      <script type="text/javascript" src="js/jquery.qqFace.js"></script>
+
+      <script type="text/javascript">
+          $(function(){
+              $('.emotion').qqFace({
+                  id : 'facebox',
+                  assign:'saytext',
+                  path:'arclist/'	//表情存放的路径
+              });
+              $(".sub_btn").click(function(){
+                  var str = $("#saytext").val();
+                  $("#show").html(replace_em(str));
+              });
+          });
+          //查看结果
+          function replace_em(str){
+              str = str.replace(/\</g,'&lt;');
+              str = str.replace(/\>/g,'&gt;');
+              str = str.replace(/\n/g,'<br/>');
+              str = str.replace(/\[em_([0-9]*)\]/g,'<img src="arclist/$1.gif" border="0" />');
+              return str;
+          }
+      </script>
+</body>
+</html>

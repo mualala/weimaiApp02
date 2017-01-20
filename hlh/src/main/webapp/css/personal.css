@@ -1,0 +1,140 @@
+.p_info{
+    height: 240px;
+    position: relative;
+}
+.p_info>img{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.img_content{
+    text-align: center;
+    position: absolute;
+    top: 60px;
+    width: 100%;
+
+}
+.img_content>img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.second{
+    position: absolute;
+    top: 120px;
+    width: 100%;
+    left: 0;
+    text-align: center;
+}
+.icon{
+    display: inline-block;
+    width: 21px;
+    height: 20px;
+    background: url("../img/list-alertsi-boy.png") no-repeat center center;
+    background-size: 100%;
+}
+.third{
+    position: absolute;
+    top: 150px;
+    width: 100%;
+    left: 0;
+    color: #ffffff;
+    text-align: center;
+}
+.four1{
+    position: absolute;
+    top: 180px;
+    width: 100%;
+    left: 0;
+    color: #ffffff;
+    text-align: center;
+}
+.four1>p{
+     background: rgba(220,215,211,.3);
+     width: 80%;
+     height: 50px;
+    border: 0;
+    outline: 0;
+    margin: auto !important;
+    color: #ffffff;
+    box-shadow: 0;
+}
+.mui-table-view-cell:after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0px;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #c8c7cc;
+}
+
+.icon_img{
+    display: inline-block;
+    background: url("../img/list-p-center-I-shop.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    float: left;
+    margin-top: -5px;
+    height: 30px;
+
+}
+.two{
+    display: inline-block;
+    background: url("../img/list-p-center-I'm-Posting.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+
+}
+.three{
+    display: inline-block;
+    background: url("../img/list-p-center-My-collection.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+
+}
+.four{
+    display: inline-block;
+    background: url("../img/list-p-center-My-order.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+
+}
+.five{
+    display: inline-block;
+    background: url("../img/list-p-center-My-address.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+
+}
+.six{
+    display: inline-block;
+    background: url("../img/liat-p-center-Sharing-application.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+
+}
+.seven{
+    display: inline-block;
+    background: url("../img/list-p-center-.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+
+}
+
+.eight{
+    display: inline-block;
+    background: url("../img/list-p-center-Set-up-the.png") no-repeat center center ;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+
+}

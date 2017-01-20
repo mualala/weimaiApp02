@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.liancheng.it.dao.admin.AdminDao">
+ 
+ 	<!-- 查询admin账户 -->
+ 	<select id="checkAdmin" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.admin.Admin">
+ 		select * from admin where admin_name=#{adminame}
+ 	</select>
+ 	
+ 	<select id="queryBannerPics" 
+ 	resultType="com.liancheng.it.entity.admin.BannerPicReport">
+ 		select * from banner_pic
+ 	</select>
+ 	
+ 	<select id="TotalBannersCount" resultType="int">
+ 		select count(*) from banner_pic
+ 	</select>
+ 	
+ 	<update id="updateBanner" parameterType="map">
+ 		update banner_pic set 
+ 		ban_pic=#{ban_pic},ban_lastmodify_time=#{ban_lastmodify_time} 
+ 		where pic_id=#{pic_id} and type=#{type}
+ 	</update>
+ 	
+ 	<select id="queryBannerById" parameterType="int" 
+ 	resultType="com.liancheng.it.entity.admin.BannerPicReport">
+ 		select * from banner_pic where ban_id=#{ban_id}
+ 	</select>
+ 	
+ 	<update id="deleteBannerPicById" parameterType="map">
+ 		update banner_pic set 
+ 		ban_pic='',ban_lastmodify_time=#{ban_lastmodify_time} 
+ 		where pic_id=#{pic_id} and type=#{type}
+ 	</update>
+ 	
+ 	<update id="updateDunbaVal" parameterType="map">
+ 		update dunbar_circle set 
+ 		content=#{content},last_modify_time=#{last_modify_time}
+ 		where id=1
+ 	</update>
+ 	<select id="queryDunbar" resultType="com.liancheng.it.entity.admin.DunbarCircle">
+ 		select * from dunbar_circle 
+ 		where id=1
+ 	</select>
+ </mapper>

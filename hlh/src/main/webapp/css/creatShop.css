@@ -1,0 +1,43 @@
+html,body{
+    min-height: 100%;
+    overflow-x:hidden ;
+}
+.mtop{
+   margin-top: 44px;
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 40px;
+    font-size: 1.6rem;
+    line-height: 40px;
+    border-bottom: 1px solid #F1F1F1;
+}
+.img_div{
+    position: relative;
+    min-height: 55px;
+    overflow: hidden;
+}
+.img_div>input[type="file"]{
+    position: absolute;
+    left: 10px;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    z-index: 999;
+    height: 55px;
+}
+.plus_icon{
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    background: url("../img/list-To-create-the-store-Store-image.png") no-repeat center center;
+    background-size: 100%;
+}
+.number{
+    font-size: 1.2rem;
+    float: right;
+    margin-right: 20%;
+
+}

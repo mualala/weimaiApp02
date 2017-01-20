@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="../../css/all.css">
+    <link rel="stylesheet" href="../../css/creatShop.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../../js/back.js"></script>
+    <style>
+        input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+            line-height: 21px;
+            width: 100%;
+            height: 40px;
+             margin-bottom:0px!important;
+             padding: 0px 15px!important;
+            -webkit-user-select: text;
+            border: 1px solid rgba(0,0,0,.2);
+            border-radius: 3px;
+            outline: 0;
+            background-color: #fff;
+            -webkit-appearance: none;
+        }
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding:0px 9px !important;
+            vertical-align: top;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding: 11px 15px;
+            vertical-align: top;
+             border-right: none!important;
+             border-bottom: none!important;
+        }
+        .mui-col-xs-3 {
+            width: 23% !important;
+        }
+        .mui-grid-9>li{
+            background:#E4E4E4 !important;
+            margin: 1% !important;
+
+        }
+        .mui-media-body{
+            margin-top: 0 !important;
+            font-size: 1rem !important;
+        }
+        .mui-grid-9> .blue{
+            background: blue !important;
+        }
+        .pos_img{
+            position: relative;
+            height: 80px;
+        }
+        .pos_img>a>img{
+            position: absolute;
+            right: 15px;
+            top: 0;
+        }
+        .opacit{
+            position: absolute;
+            height: 30px;
+            right:15px;
+            bottom:0px;
+            width:80px;
+            background:black;
+            opacity: .3;
+            z-index: 6;
+            margin-bottom: 0 !important;
+        }
+
+        .num{
+            position: absolute;
+            height: 30px;
+            right: 15px;
+            bottom:0px;
+            width:80px;
+            color: #ffffff;
+            font-size: 12px;
+            text-align: center;
+            line-height: 30px;
+            z-index: 7;
+            margin-bottom: 0 !important;
+        }
+        .p_number{
+            font-size: 12px;
+            color: #D7D7D7;
+        }
+        .bottom-right>span {
+            color: #D8D8D8;
+            font-size: 1rem;
+            margin-left: 3px;
+        }
+        .time{
+            font-size: 14px;
+            color: #E3E3E3;
+        }
+        .radios{
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+      <div class="wrap" style="min-height: 100%">
+          <header class="mui-bar mui-bar-nav">
+              <a class="mui-action-back mui-icon  mui-pull-left" onClick="back()"><img src="../../img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <h1 class="mui-title">论坛</h1>
+
+              <div class="mui-action-back mui-icon  mui-pull-right" style="width: 25%;">
+                  <a href="luntan_fatie.html" style="display: inline-block"><img src="img/list-bbs-Create-a-post.png" alt="" style="height: 17px;float: left;"></a>
+                  <a href="lutan_search.html" style="display: inline-block"><img src="img/list-bbs--search.png" alt="" style="height: 17px;float:right;"></a>
+              </div>
+          </header>
+          <!--列表-->
+          <div class="mui-content" style="background: #ffffff;">
+              <div class="mui-content">
+                  <ul class="mui-table-view mui-grid-view mui-grid-9" style="background: #ffffff ;border-top: none;">
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+                          <div class="mui-media-body">甜点饮品</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">快餐</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">超市</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">五金杂货</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">川菜</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">风味小吃</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">海鲜</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="seeMore.html">
+
+                          <div class="mui-media-body">更多>></div></a></li>
+
+                  </ul>
+              </div>
+          </div>
+          <!--轮播-->
+          <div class="swiper-container swiper-container-horizontal" id="swiper-container1" style="height:200px;width: 100%;">
+              <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-400px, 0px, 0px);">
+                  <div class="swiper-slide blue-slide swiper-slide-prev" style="height: 200px;">
+                      <img src="img/list-bbs-The-picture.png" alt="" style="height: 200px;width: 100%"></div>
+                  <div class="swiper-slide red-slide swiper-slide-active" style="width: 100%;">
+                      <img src="img/list-bbs-The-picture.png" alt="" style="height: 200px"></div>
+                  <div class="swiper-slide orange-slide swiper-slide-next" style="width: 100%;">
+                      <img src="img/list-bbs-The-picture.png" alt="" style="height: 200px"></div>
+              </div>
+              <div class="swiper-pagination swiper-pagination-bullets"><li class="swiper-pagination-bullet"></li><li class="swiper-pagination-bullet swiper-pagination-bullet-active"></li><li class="swiper-pagination-bullet"></li></div>
+          </div>
+          <!--列表-->
+          <div class="row" style="padding: 20px 0;background: #ffffff">
+              <div class="container">
+                  <!--左边-->
+                  <div class="container" style="padding: 0">
+                      <div class="col-xs-8" style="padding-right: 0">
+                          <div class="">
+                              <a href="" class="btn-primary btn btn-sm">置顶</a>
+                              <img src="img/home-page-Head-portrait.png" alt="" class="radios">
+                              <span style="font-size: 12px">我要笑都</span>
+                              <span class="btn btn-warning btn-sm">LV.5</span>
+                          </div>
+                          <a href="seeTie.html" style="display: inline-block">
+                              <div  class="LH">
+                                  <p>xxxxxxxxxxxxxx</p>
+                              </div>
+                              <div class="LH">
+                                  <p>xxxxxxxxxxxxxxxxx</p>
+                              </div>
+                          </a>
+                      </div>
+                      <div class="col-xs-4 pos_img" >
+                          <a href="seeTie.html" style="display: inline-block"><img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;"/></a>
+                          <p class="opacit"></p>
+                          <p class="num">还有四张</p>
+                      </div>
+                  </div>
+                  <div class="col-sm-12" style="overflow: hidden">
+                      <a href="lingju_luntan.html" class="btn btn-primary btn-sm" style="background: #ffffff;color: #00a0e9">邻里论坛</a>
+                      <span class="time">3小时前</span>
+                      <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span>19993</span></span>
+
+                  </div>
+              </div>
+          </div>
+          <div class="row" style="padding: 20px 0;background: #ffffff">
+              <div class="container">
+                  <!--左边-->
+                  <div class="container" style="padding: 0">
+                      <div class="col-xs-8" style="padding-right: 0">
+                          <div class="">
+                              <a href="" class="btn-primary btn btn-sm">置顶</a>
+                              <a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="img/home-page-Head-portrait.png" alt="" class="radios"></a>
+                              <span style="font-size: 12px">我要笑都</span>
+                              <span class="btn btn-warning btn-sm">LV.5</span>
+                          </div>
+                          <a href="seeTie.html" style="display: inline-block">
+                              <div  class="LH">
+                                  <p>xxxxxxxxxxxxxx</p>
+                              </div>
+                              <div class="LH">
+                                  <p>xxxxxxxxxxxxxxxxx</p>
+                              </div>
+                          </a>
+
+                      </div>
+                      <div class="col-xs-4 pos_img" >
+                          <a href="seeTie.html" style="display: inline-block"><img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;"/></a>
+                          <p class="opacit"></p>
+                          <p class="num">还有四张</p>
+                      </div>
+                  </div>
+                  <div class="col-sm-12" style="overflow: hidden">
+                      <a href="lingju_luntan.html" class="btn btn-primary btn-sm" style="background: #ffffff;color: #00a0e9">邻里论坛</a>
+                      <span class="time">3小时前</span>
+                      <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span>19993</span></span>
+
+                  </div>
+              </div>
+          </div>
+           <!--底部导航-->
+          <nav class="mui-bar mui-bar-tab"style="z-index: 99999;">
+              <a class="mui-tab-item mui-active" href="index.html">
+                  <span class="mui-icon"><img src="img/home-page-square1.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">广场</span>
+              </a>
+              <a class="mui-tab-item" href="like.html">
+                  <span class="mui-icon "><img src="img/home-page-Like-the-icon.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">喜欢</span>
+              </a>
+              <a class="mui-tab-item" href="">
+                  <span class="mui-icon "><img src="img/home-page-In-switching.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">地区切换</span>
+              </a>
+              <a class="mui-tab-item" href="lingju_luntan.html">
+                  <span class="mui-icon"><img src="img/home-page-A-neighbor.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">邻居</span>
+              </a>
+              <a class="mui-tab-item" href="personal_info.html">
+                  <span class="mui-icon "><img src="img/p.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">我</span>
+              </a>
+          </nav>
+
+      </div>
+      <!--轮播-->
+      <script src="../../js/swiper-3.4.0.min.js"></script>
+      <script language="javascript">
+          var mySwiper = new Swiper('.swiper-container',{
+              pagination : '.swiper-pagination',
+              paginationElement : 'li',
+              autoplay : 1000,
+          })
+      </script>
+</body>
+</html>
