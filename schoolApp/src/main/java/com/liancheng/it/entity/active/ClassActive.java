@@ -18,6 +18,7 @@ public class ClassActive implements Serializable {
 	private String type_a;
 	private String type_b;
 	private String saysay;
+	private String title;
 	private String active_pic;
 	private String docum;
 	private String docum_size;
@@ -29,10 +30,12 @@ public class ClassActive implements Serializable {
 	private List<String> pics;//无关，返回图片的的集合
 	private List<String> docums;//文件的集合
 	private int totalCommont;//某条说说的评论数量总计
-	private String prifile;//用户的头像
+	private String profile;//用户的头像
 	private int totalLaud;//某条说说的点赞数量
 	private int isLaud;//用户对某条说说是否点赞
 	private int isVerify;//某用户是否通过了验证;0=不是认证用户；1是认证用户
+	private int isFavor;//用户是否收藏
+	private int favor_id;//收藏的id
 	
 	/**
 	 * @return the active_user_id
@@ -117,6 +120,18 @@ public class ClassActive implements Serializable {
 	 */
 	public void setSaysay(String saysay) {
 		this.saysay = saysay;
+	}
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	/**
 	 * @return the active_pic
@@ -239,16 +254,16 @@ public class ClassActive implements Serializable {
 		this.totalCommont = totalCommont;
 	}
 	/**
-	 * @return the prifile
+	 * @return the profile
 	 */
-	public String getPrifile() {
-		return prifile;
+	public String getProfile() {
+		return profile;
 	}
 	/**
-	 * @param prifile the prifile to set
+	 * @param profile the profile to set
 	 */
-	public void setPrifile(String prifile) {
-		this.prifile = prifile;
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 	/**
 	 * @return the totalLaud
@@ -286,6 +301,30 @@ public class ClassActive implements Serializable {
 	public void setIsVerify(int isVerify) {
 		this.isVerify = isVerify;
 	}
+	/**
+	 * @return the isFavor
+	 */
+	public int getIsFavor() {
+		return isFavor;
+	}
+	/**
+	 * @param isFavor the isFavor to set
+	 */
+	public void setIsFavor(int isFavor) {
+		this.isFavor = isFavor;
+	}
+	/**
+	 * @return the favor_id
+	 */
+	public int getFavor_id() {
+		return favor_id;
+	}
+	/**
+	 * @param favor_id the favor_id to set
+	 */
+	public void setFavor_id(int favor_id) {
+		this.favor_id = favor_id;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -294,14 +333,15 @@ public class ClassActive implements Serializable {
 		return "ClassActive [active_user_id=" + active_user_id + ", user_id="
 				+ user_id + ", level=" + level + ", user_nickname="
 				+ user_nickname + ", type_a=" + type_a + ", type_b=" + type_b
-				+ ", saysay=" + saysay + ", active_pic=" + active_pic
-				+ ", docum=" + docum + ", docum_size=" + docum_size
-				+ ", state=" + state + ", see=" + see + ", doc_down_count="
-				+ doc_down_count + ", active_creatime=" + active_creatime
-				+ ", pics=" + pics + ", docums=" + docums + ", totalCommont="
-				+ totalCommont + ", prifile=" + prifile + ", totalLaud="
-				+ totalLaud + ", isLaud=" + isLaud + ", isVerify=" + isVerify
-				+ "]";
+				+ ", saysay=" + saysay + ", title=" + title + ", active_pic="
+				+ active_pic + ", docum=" + docum + ", docum_size="
+				+ docum_size + ", state=" + state + ", see=" + see
+				+ ", doc_down_count=" + doc_down_count + ", active_creatime="
+				+ active_creatime + ", pics=" + pics + ", docums=" + docums
+				+ ", totalCommont=" + totalCommont + ", profile=" + profile
+				+ ", totalLaud=" + totalLaud + ", isLaud=" + isLaud
+				+ ", isVerify=" + isVerify + ", isFavor=" + isFavor
+				+ ", favor_id=" + favor_id + "]";
 	}
 	
 }

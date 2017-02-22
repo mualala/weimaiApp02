@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用户报表</title>
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.min.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+	<![endif]-->
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-table.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-editable.css">
+<link style="text/css" rel="stylesheet" href="css/style.css">
+<link style="text/css" rel="stylesheet" href="assets/css/codemirror.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/ace.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/font-awesome.min.css">
+<style type="text/css">
+
+</style>
+</head>
+<body>
+	<div class="page-content clearfix">
+	    <div class="search_style">
+	      <div class="title_names">搜索查询</div>
+	      <ul class="search_content clearfix">
+	      	<li>
+	      		<label class="l_f">校园号</label>
+	      		<input id="schoolID" type="text" class="text_add" placeholder="" style=" width:150px"/>
+	      	</li>
+	      	<li>
+	      		<label class="l_f">大学</label>
+	      		<input id="schoolName" type="text" class="text_add" placeholder="" style=" width:150px"/>
+	      	</li>
+	      	<li>
+	      		<label class="l_f">性别</label>
+	      		<select style=" width:150px" id="gender">
+	      			<option selected="selected">--请选择--</option>
+					<option>男</option> 
+					<option>女</option> 
+	      		</select>
+	      	</li>
+	      	<li>
+	      		<label class="l_f">行业</label>
+	      		<input id="profession" type="text" class="text_add" placeholder="" style=" width:150px"/>
+	      	</li>
+	      	<li>
+	      		<label class="l_f">是否认证</label>
+	      		<select style=" width:150px" id="verifyState">
+	      			<option>--请选择--</option>
+					<option>0</option> 
+					<option>1</option> 
+	      		</select>
+	      	</li>
+	       <li>
+			<label class="l_f">开始时间</label>
+			<input id="startDate" class="inline laydate-icon" style=" margin-left:10px;">
+	       </li>
+	       <li>
+			<label class="l_f">结束时间</label>
+			<input id="endDate" class="inline laydate-icon" style=" margin-left:10px;">
+	       </li>
+	       <br>
+	       <li style="width:90px;">
+	       	<button id="query" class="btn btn-xs btn-primary"><i class="icon-search"></i>查询</button>
+	       </li>
+	       <li>
+	       	<button onclick="user.delCondition();" class="btn btn-xs btn-primary"><i class="icon-remove-sign"></i>移除</button>
+	       </li>
+	      </ul>
+	    </div>
+	    <table id="userReportTable" class="table table-bordered table-hover"></table>
+    </div>
+    
+    <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="assets/js/tableExport.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-export.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-editable.js"></script>
+	<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript" src="assets/js/typeahead-bs2.min.js"></script>
+	<script type="text/javascript" src="assets/layer/layer.js"></script>
+	<script type="text/javascript" src="js/lrtk.js"></script>
+	<script type="text/javascript" src="assets/laydate/laydate.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="assets/myjs/datePlugin.js"></script>
+	<script type="text/javascript" src="assets/myjs/userReport.js"></script>
+	<script type="text/javascript">
+		//初始化日期控件	
+		initDate($("#startDate"));
+		initDate($("#endDate"));
+		//初始化报表
+		user.initUserReport();
+		$("#query").click(function(){
+			user.initUserReport();
+		});
+	</script>
+</body>
+</html>

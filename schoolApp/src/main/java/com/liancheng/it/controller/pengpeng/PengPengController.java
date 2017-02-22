@@ -24,7 +24,7 @@ public class PengPengController {
 	private PPService pPService;
 	
 	/**
-	 * 碰碰添加直接子回答
+	 * 碰碰添加直接子回答---1
 	 * @param user_id 登录用户的云信id
 	 */
 	@RequestMapping("/addAnswer.do")
@@ -33,6 +33,7 @@ public class PengPengController {
 			@RequestParam("ques_id") int ques_id, 
 			@RequestParam(value="content",required=false) String content, 
 			@RequestParam("name_type") String name_type){
+		System.out.println("user_id="+user_id+",content="+content+",name_type="+name_type);
 		System.out.println("进了碰碰添加直接子回答的请求。。。");
 		JSONObject jsonObject = pPService.addAswer(user_id, ques_id, content, name_type);
 		
@@ -68,11 +69,12 @@ public class PengPengController {
 	 */
 	@RequestMapping("/questionList.do")
 	@ResponseBody
-	public JSONObject questionList(@RequestParam("name_type") String name_type, 
+	public JSONObject questionList(@RequestParam("user_id") String user_id, 
+			@RequestParam("name_type") String name_type, 
 			@RequestParam("pageSize") int pageSize, 
 			@RequestParam("pageNumber") int pageNumber){
 		System.out.println("进了碰碰的问题列表...");
-		JSONObject jsonObject = pPService.questionList(name_type, pageSize, pageNumber);
+		JSONObject jsonObject = pPService.questionList(user_id, name_type, pageSize, pageNumber);
 		return jsonObject;
 	}
 	
@@ -95,6 +97,7 @@ public class PengPengController {
 	@ResponseBody
 	public JSONObject showCurrUserAnswer(@RequestParam("ques_id") int ques_id, 
 			@RequestParam("user_id") String user_id, 
+			@RequestParam("name_type") String name_type, 
 			@RequestParam("pageSize") int pageSize, 
 			@RequestParam("pageNumber") int pageNumber, 
 			HttpServletRequest request){
@@ -103,20 +106,22 @@ public class PengPengController {
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
-		JSONObject jsonObject = pPService.currUserAnswer(ques_id, user_id, pageSize, pageNumber, hostPath01);
+		JSONObject jsonObject = pPService.currUserAnswer(ques_id, user_id, name_type, pageSize, pageNumber, hostPath01);
 		return jsonObject;
 	}
 	
 	/**
-	 * 碰碰添加问题的评论的评论
+	 * 碰碰添加问题的评论的评论---2
 	 */
 	@RequestMapping("/addChildAnswer.do")
 	@ResponseBody
 	public JSONObject addChildAnswer(@RequestParam("user_id") String user_id, 
+			@RequestParam("other_user_id") String parent_user_id, 
 			@RequestParam("ans_id") int ans_id, 
 			@RequestParam("content") String content){
 		System.out.println("进了添加问题的评论的评论。。。");
-		JSONObject jsonObject = pPService.addChildAnswer(user_id, ans_id, content);
+		System.out.println("content="+content);
+		JSONObject jsonObject = pPService.addChildAnswer(user_id, parent_user_id, ans_id, content);
 		return jsonObject;
 	}
 	
@@ -128,14 +133,16 @@ public class PengPengController {
 	public JSONObject showOnlyChildAnswer(@RequestParam("ques_id") int ques_id, 
 			@RequestParam("own_user_id") String own_user_id, 
 			@RequestParam("other_user_id") String other_user_id, 
+			@RequestParam("name_type") String name_type, 
 			@RequestParam("pageSize") int pageSize, 
 			@RequestParam("pageNumber") int pageNumber, 
 			HttpServletRequest request){
+		System.out.println("own_user_id="+own_user_id+",other_user_id="+other_user_id+",name_type="+name_type);
 		System.out.println("进了展示仅双方可见的评论列表。。。");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
-		JSONObject jsonObject = pPService.onlyChildAnswer(ques_id, own_user_id, other_user_id, pageSize, pageNumber, hostPath01);
+		JSONObject jsonObject = pPService.onlyChildAnswer(ques_id, own_user_id, other_user_id, name_type, pageSize, pageNumber, hostPath01);
 		return jsonObject;
 	}
 	
@@ -150,6 +157,20 @@ public class PengPengController {
 		return jsonObject;
 	}
 	
-	
+	/**
+	 * 再次在列表中在添加评论---3
+	 * @param user_id 始终是评论人的uuid
+	 */
+	@RequestMapping("/addTwoChildAnswer.do")
+	@ResponseBody
+	public JSONObject addTwoChildAnswer(@RequestParam("user_id") String user_id, 
+			@RequestParam("other_user_id") String parent_user_id, 
+			@RequestParam("ans_id") int child_ans_id, 
+			@RequestParam("content") String content){
+		System.out.println("进了再次在列表中在添加评论。。。");
+		JSONObject jsonObject = pPService.addTwoChildAns(user_id, parent_user_id, child_ans_id, content);
+		
+		return jsonObject;
+	}
 	
 }

@@ -18,6 +18,7 @@ import com.liancheng.it.dao.friends.FriendsDao;
 import com.liancheng.it.dao.user.UserDao;
 import com.liancheng.it.entity.friends.Friends;
 import com.liancheng.it.entity.user.User;
+import com.liancheng.it.util.IMManager;
 
 @Service
 @Aspect
@@ -29,55 +30,139 @@ public class FriendsServiceImpl implements FriendsService {
 	@Resource(name="userDao")
 	private UserDao userDao;
 	
-	public JSONObject confirmAddFriends(String user_id, String f_user_id){
+	public JSONObject reqAddFriends(String user_id, String f_user_id, String msg, String type){
 		JSONObject jsonObject = new JSONObject();
-		
-		//查询当前用户的好友数量
-		int friendCount = friendsDao.queryFriendCount(user_id);
-		if(friendCount>=50){
-			jsonObject.put("status", false);
-			jsonObject.put("msg", "您当前核心好友数量已达到上限");
-			return jsonObject;
-		}else {
-			Friends friends01 = new Friends();
-			Friends friends02 = new Friends();
-			Timestamp u_reatime = new Timestamp(System.currentTimeMillis());
-			if(!"".equals(f_user_id)){
-				//先发起者加一条记录
-				friends01.setUser_id(user_id);
-				friends01.setF_user_id(f_user_id);
-				friends01.setF_creatime(u_reatime);
-				friendsDao.addFriend(friends01);
-				//被加的再追加一条记录
-				friends02.setUser_id(f_user_id);
-				friends02.setF_user_id(user_id);
-				friends02.setF_creatime(u_reatime);
-				friendsDao.addFriend(friends02);
-				
-				System.out.println("添加好友成功！！！");
-				jsonObject.put("status", true);
-				jsonObject.put("msg", "添加好友成功");
-				return jsonObject;
-			}else {
+		User user = new User();
+		if(user.getAdd_switch()==0){//1 直接加好友
+			try {
+				if(IMManager.addFriends(user_id, f_user_id, msg, "1")){
+					Friends friends01 = new Friends();
+					Friends friends02 = new Friends();
+					Timestamp u_reatime = new Timestamp(System.currentTimeMillis());
+					//先发起者加一条记录
+					friends01.setUser_id(user_id);
+					friends01.setF_user_id(f_user_id);
+					friends01.setF_creatime(u_reatime);
+					friendsDao.addFriend(friends01);
+					//被加的再追加一条记录
+					friends02.setUser_id(f_user_id);
+					friends02.setF_user_id(user_id);
+					friends02.setF_creatime(u_reatime);
+					friendsDao.addFriend(friends02);
+					
+					jsonObject.put("status", true);
+					jsonObject.put("msg", "添加好友成功");
+					return jsonObject;
+				}else {
+					jsonObject.put("status", false);
+					jsonObject.put("msg", "请求加好友失败");
+					return jsonObject;
+				}
+			} catch (Exception e) {
 				jsonObject.put("status", false);
-				jsonObject.put("msg", "添加好友失败,好友的云信id为空");
-				System.out.println("添加好友失败！！！！！");
+				jsonObject.put("msg", "请求加好友失败");
+				return jsonObject;
+			}
+		}else if(user.getAdd_switch()==1) {//2 请求加好友
+			try {
+				if(IMManager.addFriends(user_id, f_user_id, msg, "2")){
+					jsonObject.put("status", true);
+					jsonObject.put("msg", "请求加好友成功");
+					return jsonObject;
+				}else {
+					jsonObject.put("status", false);
+					jsonObject.put("msg", "请求加好友失败");
+					return jsonObject;
+				}
+			} catch (Exception e) {
+				jsonObject.put("status", false);
+				jsonObject.put("msg", "请求加好友失败");
+				return jsonObject;
+			}
+		}else if(user.getAdd_switch()==1 && "3".equals(type)) {//确认成为好友
+			try {
+				if(IMManager.addFriends(user_id, f_user_id, msg, type)){
+					Friends friends01 = new Friends();
+					Friends friends02 = new Friends();
+					Timestamp u_reatime = new Timestamp(System.currentTimeMillis());
+					//先发起者加一条记录
+					friends01.setUser_id(user_id);
+					friends01.setF_user_id(f_user_id);
+					friends01.setF_creatime(u_reatime);
+					friendsDao.addFriend(friends01);
+					//被加的再追加一条记录
+					friends02.setUser_id(f_user_id);
+					friends02.setF_user_id(user_id);
+					friends02.setF_creatime(u_reatime);
+					friendsDao.addFriend(friends02);
+					
+					jsonObject.put("status", true);
+					jsonObject.put("msg", "添加好友成功");
+					return jsonObject;
+				}else {
+					jsonObject.put("status", false);
+					jsonObject.put("msg", "请求加好友失败");
+					return jsonObject;
+				}
+			} catch (Exception e) {
+				jsonObject.put("status", false);
+				jsonObject.put("msg", "请求加好友失败");
+				return jsonObject;
+			}
+		}else {//不同意成为好友,type=4
+			try {
+				if(IMManager.addFriends(user_id, f_user_id, msg, type)){
+					jsonObject.put("status", true);
+					jsonObject.put("msg", "拒绝添加好友");
+					return jsonObject;
+				}else {
+					jsonObject.put("status", false);
+					jsonObject.put("msg", "拒绝加好友失败");
+					return jsonObject;
+				}
+			} catch (Exception e) {
+				jsonObject.put("status", false);
+				jsonObject.put("msg", "拒绝加好友失败");
 				return jsonObject;
 			}
 		}
 	}
 	
-	public JSONObject showfTof(String user_id){
-		JSONObject jsonObject = new JSONObject();
+	public List<Friends> showfTof(String user_id, String hostPath01){
+//		JSONObject jsonObject = new JSONObject();
 		List<Friends> friends = friendsDao.queryFriends(user_id);
 		if(friends!=null || friends.size()>0){//只要用户有朋友
-			ArrayList<Friends> fTof = (ArrayList<Friends>) friendsDao.queryfTof(user_id);
-			jsonObject.put("msg", "朋友的朋友查询成功！");
-			jsonObject.put("data", fTof);
-			return jsonObject;
+			for(Friends f:friends){
+				if(f.getProfile()==null){
+					f.setProfile(hostPath01+"avatar_def.png");
+				}else {
+					f.setProfile(hostPath01+f.getProfile());//添加朋友的朋友的头像
+				}
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("user_id", user_id);
+				params.put("f_user_id", f.getF_user_id());
+				List<Friends> friendList = friendsDao.queryfTof(params);//查询朋友的朋友
+				if(friendList!=null || friendList.size()>0){//只要朋友的朋友不为空
+					for(Friends ff:friendList){
+						if(ff.getProfile()==null){
+							ff.setProfile(hostPath01+"avatar_def.png");
+						}else {
+							ff.setProfile(hostPath01+ff.getProfile());//添加朋友的朋友的头像
+						}
+					}
+				}
+				f.setfTofriends(friendList);
+			}
+//			jsonObject.put("status", true);
+//			jsonObject.put("msg", "朋友的朋友查询成功！");
+//			jsonObject.put("data", friends);
+			//同时修改状态为已查看状态
+			friendsDao.updateFToFSee(user_id);
+			return friends;
 		}else {
-			jsonObject.put("msg", "朋友的朋友查询失败！");
-			return jsonObject;
+//			jsonObject.put("status", false);
+//			jsonObject.put("msg", "朋友的朋友查询失败！");
+			return friends;
 		}
 	}
 	
@@ -127,7 +212,11 @@ public class FriendsServiceImpl implements FriendsService {
 			for(Friends f:attentions){
 				User user = userDao.findByUserId(f.getF_user_id());
 				//添加用户信息
-				f.setProfile(hostPath01+user.getProfile());
+				if(user.getProfile()==null){
+					f.setProfile(hostPath01+"avatar_def.png");
+				}else {
+					f.setProfile(hostPath01+user.getProfile());
+				}
 				f.setUser_nickname(user.getUser_nickname());
 				f.setSchool(user.getSchool());
 				f.setMajor(user.getMajor());
@@ -156,7 +245,11 @@ public class FriendsServiceImpl implements FriendsService {
 			for(Friends f:fans){
 				User user = userDao.findByUserId(f.getUser_id());
 				//添加用户信息
-				f.setProfile(hostPath01+user.getProfile());
+				if(user.getProfile()==null){
+					f.setProfile(hostPath01+"avatar_def.png");
+				}else {
+					f.setProfile(hostPath01+user.getProfile());
+				}
 				f.setUser_nickname(user.getUser_nickname());
 				f.setSchool(user.getSchool());
 				f.setMajor(user.getMajor());
@@ -177,7 +270,11 @@ public class FriendsServiceImpl implements FriendsService {
 		List<Friends> friends = friendsDao.queryFriendList(user_id);
 		if(friends.size()>0 || friends!=null){
 			for(Friends f:friends){
-				f.setProfile(hostPath01+f.getProfile());//添加用户的url头像
+				if(f.getProfile()==null){
+					f.setProfile(hostPath01+"avatar_def.png");
+				}else {
+					f.setProfile(hostPath01+f.getProfile());
+				}
 			}
 		}
 		jsonObject.put("status", true);
@@ -197,5 +294,36 @@ public class FriendsServiceImpl implements FriendsService {
 		jsonObject.put("msg", "移除粉丝成功");
 		return jsonObject;
 	}
+	
+	public JSONObject deleteFriend(String user_id, String f_user_id){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			if(IMManager.delFriends(user_id, f_user_id)){
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("user_id", user_id);
+				params.put("f_user_id", f_user_id);
+				int delCount = friendsDao.deleteFriend(params);
+				if(delCount>0){
+					jsonObject.put("status", true);
+					jsonObject.put("msg", "删除好友成功");
+					return jsonObject;
+				}else {
+					jsonObject.put("status", false);
+					jsonObject.put("msg", "删除好友失败");
+					return jsonObject;
+				}
+			}else {
+				jsonObject.put("status", false);
+				jsonObject.put("msg", "删除好友失败");
+				return jsonObject;
+			}
+		} catch (Exception e) {
+			jsonObject.put("status", false);
+			jsonObject.put("msg", "删除好友失败");
+			return jsonObject;
+		}
+	}
+	
+	
 	
 }

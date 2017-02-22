@@ -23,7 +23,7 @@ public class ChildAnswer implements Serializable {
 	private String province;
 	private String city;
 	
-	private List<ChildAnswer> twoChildAns;
+	private List<TwoChildAnswer> twoChildAns;
 
 	/**
 	 * @return the child_ans_id
@@ -210,14 +210,14 @@ public class ChildAnswer implements Serializable {
 	/**
 	 * @return the twoChildAns
 	 */
-	public List<ChildAnswer> getTwoChildAns() {
+	public List<TwoChildAnswer> getTwoChildAns() {
 		return twoChildAns;
 	}
 
 	/**
 	 * @param twoChildAns the twoChildAns to set
 	 */
-	public void setTwoChildAns(List<ChildAnswer> twoChildAns) {
+	public void setTwoChildAns(List<TwoChildAnswer> twoChildAns) {
 		this.twoChildAns = twoChildAns;
 	}
 

@@ -25,22 +25,6 @@
 		<!-- 定义HandlerMapping mvc注解扫描 -->
 		
 		<mvc:annotation-driven />
-		<!-- 
-		<task:annotation-driven/>定时器开关 -->
-		<bean id="pollingActive" class="com.liancheng.it.task.PollingActives"></bean>
-		<!-- 配置定时器 -->
-		<task:scheduler id="scheduler" pool-size="10"/>
-		<task:executor id="executor" keep-alive="3600" pool-size="100-200" queue-capacity="500" 
-		rejection-policy="CALLER_RUNS"/>
-		<task:annotation-driven executor="executor" scheduler="scheduler"/>
-		
-		<task:scheduled-tasks>
-			<!-- 表示的是每隔五秒执行一次 -->
-			<task:scheduled ref="pollingActive" method="pollActive" cron="*/20 * * * * ?" />
-		</task:scheduled-tasks>
-		<!-- 自动扫描的包名 -->
-		<context:component-scan base-package="com.liancheng.it.task" />
-		
 		
 		<!-- 组件扫描 -->
 		<context:component-scan base-package="com.liancheng.it">
@@ -73,5 +57,13 @@
 			<property name="prefix" value="/WEB-INF/html/" />
 			<property name="suffix" value=".html" />
 		</bean>
-
+		
+		<mvc:interceptors>
+			<mvc:interceptor>
+				<mvc:mapping path="/admin/*"/>
+				<mvc:exclude-mapping path="/admin/login.do"/>
+				<bean class="com.liancheng.it.controller.admin.interceptor.AdminInterceptor"></bean>
+			</mvc:interceptor>
+		</mvc:interceptors>
+		
 </beans>	

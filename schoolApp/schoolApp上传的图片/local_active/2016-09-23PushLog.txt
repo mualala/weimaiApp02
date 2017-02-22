@@ -1,0 +1,12 @@
+2016-09-23 14:19:32  d  24422    RongLog[RongPushClient]    init. the push type is:
+2016-09-23 14:19:32  d  24422    RongLog[RongPushClient]    send to pushService.
+2016-09-23 14:20:05  d  24436    RongLog[NavigationClient]    request n19jmcy59ulo9
+2016-09-23 14:27:10  d  27029    RongLog[RongPushClient]    init. the push type is:
+2016-09-23 14:27:10  d  27029    RongLog[RongPushClient]    send to pushService.
+2016-09-23 14:30:10  d  27045    RongLog[NavigationClient]    request n19jmcy59ulo9
+2016-09-23 14:40:04  d  4138    RongLog[RongPushClient]    init. the push type is:
+2016-09-23 14:40:04  d  4138    RongLog[RongPushClient]    send to pushService.
+2016-09-23 15:57:50  d  28131    RongLog[RongPushClient]    init. the push type is:
+2016-09-23 15:57:50  d  28131    RongLog[RongPushClient]    send to pushService.
+2016-09-23 16:18:45  d  32542    RongLog[RongPushClient]    init. the push type is:
+2016-09-23 16:18:45  d  32542    RongLog[RongPushClient]    send to pushService.

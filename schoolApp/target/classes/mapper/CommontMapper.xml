@@ -24,13 +24,18 @@
  	 	(#{com_user_id},#{active_user_id},'2',#{com_creatime})
  	 </insert>
  	 
+ 	 <delete id="deleteLaud" parameterType="map">
+ 	 	delete * from commont 
+ 	 	where com_user_id=#{com_user_id} and active_user_id=#{active_user_id} and type='2'
+ 	 </delete>
+ 	 
  	 <select id="totalLaud" parameterType="int" resultType="java.lang.Integer">
  	 	select count(*) from commont where active_user_id=#{active_user_id} and type='2'
  	 </select>
  	 
  	 <select id="totalChildComLaud" parameterType="string" 
  	 resultType="java.lang.Integer">
- 	 	select count(*) from ChildCommont 
+ 	 	select count(*) from child_commont  
  	 	where parent_user_id=#{parent_user_id} and type='2'
  	 </select>
  	 
@@ -42,7 +47,7 @@
  	 
  	 <select id="queryChildComIsLaud" parameterType="map" 
  	 resultType="com.liancheng.it.entity.commont.ChildCommont">
- 	 	select * from ChildCommont 
+ 	 	select * from child_commont  
  	 	where parent_user_id=#{parent_user_id} and child_user_id=#{child_user_id} and type='2'
  	 </select>
  	 
@@ -65,15 +70,15 @@
  	 <insert id="addChildCom" parameterType="com.liancheng.it.entity.commont.ChildCommont" 
  	 keyProperty="child_id">
  	 	insert into child_commont 
- 	 	(child_user_id,com_id,parent_user_id,child_content,child_creatime) 
+ 	 	(child_user_id,com_id,parent_user_id,type,child_content,child_creatime) 
  	 	values 
- 	 	(#{child_user_id},#{com_id},#{parent_user_id},#{child_content},#{child_creatime})
+ 	 	(#{child_user_id},#{com_id},#{parent_user_id},'1',#{child_content},#{child_creatime})
  	 </insert>
  	 
- 	 <select id="queryChildComms" parameterType="string" 
+ 	 <select id="queryChildComms" parameterType="map" 
  	 resultType="com.liancheng.it.entity.commont.ChildCommont">
  	 	select * from child_commont 
- 	 	where parent_user_id=#{parent_user_id} and com_id=#{com_id} 
+ 	 	where parent_user_id=#{parent_user_id} and com_id=#{com_id} and type='1' 
  	 	order by child_creatime desc
  	 </select>
  	 
@@ -97,7 +102,7 @@
  	 <select id="queryTotalComNoSee" parameterType="string" resultType="int">
  	 	select count(*) from active A inner join commont C 
  	 	on A.active_user_id=C.active_user_id 
- 	 	where A.user_id=#{user_id} and A.state='1' and C.see_state='0'
+ 	 	where A.user_id=#{user_id} and A.state='1' and C.see_state='0' and C.type='1'
  	 </select>
  	 
  	 <update id="batchModifyComNoSee">
@@ -112,5 +117,24 @@
  	 		</if>
  	 	</where>
  	 </update>
+ 	 
+ 	 <select id="queryCommontsByActId" parameterType="int" 
+ 	 resultType="com.liancheng.it.entity.commont.Commont">
+ 	 	select * from commont where active_user_id=#{active_user_id}
+ 	 </select>
+ 	 
+ 	 <delete id="deleteCommsByActId" parameterType="int">
+ 	 	delete from commont where active_user_id=#{active_user_id}
+ 	 </delete>
+ 	 
+ 	 <delete id="deleteChildCommsByCommId">
+ 	 	delete from child_commont 
+ 	 	where com_id in 
+ 	 	<foreach collection="list" item="com_id" index="index" open="(" close=")" separator=",">
+ 	 		${com_id}
+ 	 	</foreach>
+ 	 </delete>
+ 	 
+ 	 
  	 
  </mapper>

@@ -15,10 +15,30 @@
 	<select id="questionReport" parameterType="java.util.Map" 
 	resultType="com.liancheng.it.entity.pengpeng.Questions">
 		select * from questions 
+		<where>
+			<if test="searchText != null and searchText != ''">
+				CONCAT(ques_id,question) like #{searchText}
+			</if>
+			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and ques_creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="sortName != null and sortName == 'ques_id'">ORDER BY ques_id ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'strQues_creatime'">ORDER BY ques_creatime ${sortOrder}</if>
+		</where>
 		limit #{start},#{end}
 	</select>
-	<select id="totalQuestions" resultType="int">
-		select count(*) from questions
+	<select id="totalQuestions" parameterType="map" resultType="int">
+		select count(ques_id) from questions 
+		<where>
+			<if test="searchText != null and searchText != ''">
+				CONCAT_WS(ques_id,question) like #{searchText}
+			</if>
+			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and ques_creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="sortName != null and sortName == 'ques_id'">ORDER BY ques_id ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'strQues_creatime'">ORDER BY ques_creatime ${sortOrder}</if>
+		</where>
 	</select>
 	
 	
@@ -85,9 +105,9 @@
 	<insert id="addChildAnswer" parameterType="map" 
 	keyProperty="child_ans_id">
 		insert into child_answer 
-		(user_id,ans_id,child_type,content,child_ans_creatime) 
+		(user_id,ans_id,parent_user_id,child_type,content,child_ans_creatime) 
 		values 
-		(#{user_id},#{ans_id},'1',#{content},#{child_ans_creatime})
+		(#{user_id},#{ans_id},#{parent_user_id},'1',#{content},#{child_ans_creatime})
 	</insert>
 	
 	<select id="queryIsLaud" parameterType="map" 
@@ -103,7 +123,7 @@
 	<select id="queryCurrUserAnswer" parameterType="map" 
 	resultType="com.liancheng.it.entity.pengpeng.Answer">
 		select * from answer 
-		where ques_id=#{ques_id} and user_id=#{user_id}
+		where ques_id=#{ques_id} and user_id=#{user_id} and name_type=#{name_type}
 	</select>
 	
 	<select id="queryOwnAnswer" parameterType="map" 
@@ -112,7 +132,7 @@
 			A.ques_id,A.ans_id,A.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city,
 			A.type,A.name_type,A.content,A.see,A.ans_creatime 
 		from answer A INNER JOIN user U ON A.user_id=U.user_id
-		where A.ques_id=#{ques_id} and A.user_id=#{user_id}
+		where A.ques_id=#{ques_id} and A.user_id=#{user_id} and A.name_type=#{name_type}
 	</select>
 	<select id="queryOwnChildAnswers" parameterType="map" 
 	resultType="com.liancheng.it.entity.pengpeng.ChildAnswer">
@@ -148,13 +168,44 @@
 		where ans_id=#{ans_id} and user_id not in (#{user_id})
 	</select>
 	
-	<select id="queryTwoChildAns" parameterType="map" 
-	resultType="com.liancheng.it.entity.pengpeng.ChildAnswer">
-		select 
-			C.child_ans_id,C.user_id,U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city,
-			C.ans_id,C.child_type,C.content,C.child_ans_creatime 
-		from child_answer C INNER JOIN user U on C.user_id=U.user_id 
-		where parent_user_id=#{parent_user_id} and ans_id=#{ans_id} and child_type='1'
+	<select id="queryUserIsAns" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.Answer">
+		select * from answer 
+		where ques_id=#{ques_id} and user_id=#{user_id} and name_type=#{name_type} and type='1'
 	</select>
+	
+	<insert id="addTwoChildAns" parameterType="map" keyProperty="two_child_id">
+		insert into two_child_answer 
+		(user_id,child_ans_id,grand_user_id,content,two_child_ans_creatime) 
+		values 
+		(#{user_id},#{child_ans_id},#{grand_user_id},#{content},#{two_child_ans_creatime})
+	</insert>
+	
+	<select id="queryTwoChildAns" parameterType="int" 
+	resultType="com.liancheng.it.entity.pengpeng.TwoChildAnswer">
+		select 
+			T.two_child_id,T.user_id,T.child_ans_id,T.grand_user_id,T.content,T.two_child_ans_creatime,
+			U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city 
+		from two_child_answer T inner join user U on T.user_id=U.user_id 
+		where T.child_ans_id=#{child_ans_id}
+	</select>
+	
+	<select id="queryOnlyTwoChildAns" parameterType="map" 
+	resultType="com.liancheng.it.entity.pengpeng.TwoChildAnswer">
+		select 
+			T.two_child_id,T.user_id,T.child_ans_id,T.grand_user_id,T.content,T.two_child_ans_creatime,
+			U.profile,U.user_nickname,U.gender,U.birthday,U.province,U.city 
+		from two_child_answer T inner join user U on T.user_id=U.user_id 
+		where T.child_ans_id=#{child_ans_id} and T.user_id in (#{own_user_id},#{other_user_id})
+		order by T.two_child_id asc
+	</select>
+	
+	<delete id="batchDelQuestions">
+		delete from questions
+		where ques_id in 
+		<foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+ 			#{id}
+ 		</foreach>
+	</delete>
 	
  </mapper>

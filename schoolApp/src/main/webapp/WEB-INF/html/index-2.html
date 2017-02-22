@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin</title>
+    <!--[if lt IE 9]>
+      <script src="plugins/bootstrap/js/html5shiv.min.js"></script>
+      <script src="plugins/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap-table.min.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap-editable.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap-switch.min.css">
+<link style="text/css" rel="stylesheet" href="plugins/bootstrap/css/fileinput.min.css">
+
+<style type="text/css">
+    body {
+        font-family: "微软雅黑,Arial,sans-serif";
+    }
+    a {
+        color: black;
+    }
+    .head {
+    	background:rgb(67, 142, 185);
+    }
+    /*
+    #activeTable {
+    	table-layout: fixed;
+    }
+    */
+    .img-rounded {
+    	width: 80px;
+    	height: 50px;
+    }
+</style>
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-default head" role="navigation">
+        <div class="container-fluid">
+            <!-- 响应式设置 -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <span class="glyphicon glyphicon-home"></span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a class="icon-bar" href="#"><strong>系统首页</strong></a>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a><span class="glyphicon glyphicon-user"></span>欢迎您,admin</a></li>
+                    <li><a id="exit">安全退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <!-- 导航栏下的菜单栏 -->
+        <div class="row">
+
+            <!-- 左侧边栏 -->
+            <div class="col-sm-2">
+                
+                <!--手风琴侧边栏-->
+                <div class="panel-group" id="accordion">
+                    <a href="#" class="list-group-item active"><strong>功能项目</strong></a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa7" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>后台账号管理<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa7">
+                            <a href="#a08" data-toggle="tab" id="aa001" onclick="">
+                                <div class="panel-body">后台账号
+                                   	<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa5" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>全网用户<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa5">
+                            <a href="#a06" data-toggle="tab" id="aa001" onclick="initUserReport();">
+                                <div class="panel-body">用户报表
+                                   	<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa1" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>朋友圈<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa1">
+                            <a href="#a01" data-toggle="tab" id="aa001" onclick="initActiveTable();">
+                                <div class="panel-body"> 动态审核
+                                   	<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                            <a href="#a02" data-toggle="tab" onclick="initActiveVertify();">
+                                <div class="panel-body">发动态的权限
+                                    <span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa2" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>用户认证审核<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa2">
+                            <a href="#a03" data-toggle="tab" onclick="initUserVertifyTable();">
+                                <div class="panel-body">
+                                   	 信息验证审核<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa3" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>碰碰<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa3">
+                            <a href="#a04" data-toggle="tab" onclick="initQuestionTable();">
+                                <div class="panel-body">
+                                    	发布问题管理<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa4" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>banner管理<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa4">
+                            <a href="#a05" data-toggle="tab">
+                                <div class="panel-body">
+                                    	图片管理<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="#aa6" data-toggle="collapse" data-parent="#accordion">
+                                <h4 class="panel-title">
+                                    <strong>顿巴数同心圆<span class="glyphicon glyphicon-chevron-down pull-right"></span></strong>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse" id="aa6">
+                            <a href="#a07" data-toggle="tab">
+                                <div class="panel-body">
+                                   	内容管理<span class="glyphicon glyphicon-menu-right pull-right"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+            <!-- 
+                	右侧主体内容边栏
+             -->
+            <div class="col-sm-10">
+                
+                <!-- 主体内容，使用tab标签嵌入 -->
+                <div class="tab-content">
+
+                    <div class="tab-pane fade" id="a01">   
+
+                        <!-- 列表展示，主体内容，相当于以前的ifram -->
+                        <div>
+                            <div class="row">
+                                <div id="toolbar" class="col-xs-12">
+                                    <a href="#addUserModel" class="btn btn-warning" data-toggle="modal" id="batchActive">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>批量审核
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <table id="activeTable" class="table table-bordered table-hover"></table>
+                        </div>
+
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a02">
+                    	<h4><b>用户发动态的权限控制</b></h4>
+                    	<hr />
+                    	<div>
+	                    	<div class="row">
+                                <div id="toolbar02" class="col-xs-12" style="color: red;font-size: 11px;">
+                                	<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>修改权限：0表示关闭;1表示开启
+                                </div>
+                            </div>
+	                    	<table id="activeVertify" class="table table-bordered table-hover"></table>
+                    	</div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a03">
+                    	<h4><b>身份待审核用户</b></h4>
+                    	<hr />
+                    	<div>
+                    		<div class="row">
+                                <div id="toolbar03" class="col-xs-12" style="color: red;font-size: 11px;">
+                                	<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>修改权限：0表示审核中;1表示审核通过;2表示审核不通过
+                                </div>
+                            </div>
+	                    	<table id="userVertify" class="table table-bordered table-hover"></table>
+                    	</div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a04">
+                   		<button id="subquestion" class="btn btn-warning" style="margin-right: 50px;"><span class="glyphicon glyphicon-star"></span>发布问题</button>
+                   		<textarea id="questionArea" class="form-control" rows="3" style="width:550px;margin-top: 3px;"></textarea>
+                   		<hr />
+                   		<table id="questionTable" class="table table-bordered table-hover"></table>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a05">
+                   		<h4><b>banner图片管理</b></h4>
+                   		<hr />
+					  	<form action="upOneBannerPic.do" class="form-horizontal" role="form" id="uploadForm">
+						  <div class="form-group">
+						  	<label for="input3" class="col-sm-2 control-label">banner图位置</label>
+						  	<div class="col-sm-3">
+							    <select class="form-control" id="input3"> 
+							      <option>1</option> 
+							      <option>2</option> 
+							      <option>3</option> 
+							      <option>4</option> 
+							      <option>5</option> 
+							      </select>
+						     </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="input1" class="col-sm-2 control-label">上传的图片</label>
+						    <div class="col-sm-3">
+						      <input type="file" class="form-control" id="input1" placeholder="请输入您的邮箱地址">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label for="input2" class="col-sm-2 control-label">第三方url路径</label>
+						    <div class="col-sm-3">
+						      <input type="text" class="form-control" id="input2" placeholder="请输入第三方url路径">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-sm-offset-2 col-sm-1">
+						      <button type="submit" id="submit" class="btn btn-success">上传/修改</button>
+						    </div>
+						    <div class="col-sm-1">
+						      <button id="delPic" class="btn btn-danger">删除图片</button>
+						    </div>
+						  </div>
+						</form>
+                    </div>
+					
+					<div class="tab-pane fade" id="a06">
+                   		<table id="userReportTable" class="table table-bordered table-hover"></table>
+                    </div>
+					
+					<div class="tab-pane fade" id="a07">
+						<h4><b>顿巴数同心圆内容管理</b></h4>
+                   		<hr />
+                   		<div class="row">
+                            <div id="toolbar07" class="col-xs-12" style="color: red;font-size: 11px;">
+                            	<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>提示：如果是更新的内容为空,相当于删除顿巴同心圆的内容
+                            </div>
+                        </div>
+                   		<textarea id="dunbaArea" class="form-control" rows="5" style="width:650px;margin-top: 3px;"></textarea>
+                   		<button id="dunbarUpdate" class="btn btn-warning" style="margin-right: 50px;margin-top: 20px;"><span class="glyphicon glyphicon-star"></span>更新内容</button>
+                   		<button id="dunbarRemove" class="btn btn-info" style="margin-right: 50px;margin-top: 20px;"><span class="glyphicon glyphicon-star-empty"></span>移除重填内容</button>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="a08">
+						<h4><b>后台账号管理</b></h4>
+                   		<hr />
+                   		<form class="form-horizontal" role="form">
+                   			<div class="form-group">
+							    <label for="admin1" class="col-sm-2 control-label">后台账户名</label>
+							    <div class="col-sm-3">
+							      <input type="text" class="form-control" id="admin1" placeholder="请输入您要更换的账户名">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="admin2" class="col-sm-2 control-label">密码</label>
+							    <div class="col-sm-3">
+							      <input type="password" class="form-control" id="admin2" placeholder="请输入您要更换的密码">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <div class="col-sm-offset-2 col-sm-3">
+							      <button type="submit" id="submitEditAdmin" class="btn btn-success">修改账户</button>
+							    </div>
+							</div>
+                   		</form>
+                    </div>
+					
+                </div>
+
+            </div>
+
+
+        </div>
+        
+    </div>
+	
+
+
+	<script type="text/javascript" src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/tableExport.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-table-export.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-editable.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/js/fileinput.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/myjs/activeVerify.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/myjs/verifies.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/myjs/userVerify.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/myjs/questions.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap/myjs/userReport.js"></script>
+	
+    <script type="text/javascript">
+        $(function(){
+            //动态切换侧边栏图标
+            $(".panel-heading").click(function(){
+                $(this).find('span').toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+            });
+            
+          	//清空file域中的值
+			var file = $("#input1");
+			file.after(file.clone().val(""));
+			file.remove();
+            
+            /*用于banner图片管理的form表单*/
+            var submitBtn = document.getElementById("submit");
+            submitBtn.onclick = function(event){
+            	return false;//移除form表单submit事件
+            };
+            //用ajax提交
+            $submitBtn = $(submitBtn);
+            $submitBtn.click(function(){
+            	var formData = new FormData();//通过FormData对象提交流和文本数据
+            	console.log($("#input1")[0].files[0]);
+            	formData.append("bannerPic",$("#input1")[0].files[0]);
+            	formData.append("picId",$("#input3 option:selected").val());
+            	formData.append("thirdURL",$("#input2").val());
+            	$.ajax({
+            		url:"upOneBannerPic.do",
+            		type:"post",
+            		data:formData,
+            		processData: false,
+            		contentType: false,
+            		success:function(data){
+            			alert(data.msg);
+            			//清空file域中的值
+            			var file = $("#input1");
+            			file.after(file.clone().val(""));
+            			file.remove();
+            			//清空控件中的值
+            			$("#input3 option:first").attr("selected",true);
+            			$("#input2").val("");
+            		},
+            		error:function(data){
+            			alert(data.msg);
+            		}
+            	});
+            });
+            /*用于banner图片管理的form表单*/
+            var deleteBtn = document.getElementById("delPic");
+            deleteBtn.onclick = function(event){
+            	return false;//移除form表单submit事件
+            };
+            //删除banner图
+            $("#delPic").click(function(){
+            	$.ajax({
+            		url:"deleteBannerPic.do",
+            		type:"post",
+            		data:{"picId":$("#input3 option:selected").val()},
+            		success:function(data){
+            			alert(data.msg);
+            			//清空控件中的值
+            			$("#input3 option:first").attr("selected",true);
+            		},
+            		error:function(data){
+            			alert(data.msg);
+            		}
+            	});
+            });
+            
+            //提交顿巴同心圆的内容
+            $("#dunbarUpdate").click(function(){
+            	var dunbaVal = $("#dunbaArea").val();
+            	$.ajax({
+            		url:"updateDunbaVal.do",
+            		data:{dunba:dunbaVal},
+            		type:"post",
+            		success:function(data){
+            			alert(data.msg);
+            			$("#dunbaArea").val("");
+            		},
+            		error:function(data){
+            			alert(data.msg);
+            			$("#dunbaArea").val("");
+            		}
+            	});
+            });
+            //移除同心圆的内容,不提交
+            $("#dunbarRemove").click(function(){
+            	$("#dunbaArea").val("");
+            });
+            
+            //移除修改后台账号的submit事件
+            var submitAdmin = document.getElementById("submitEditAdmin");
+            submitAdmin.onclick = function(event){
+            	return false;//移除form表单submit事件
+            }
+            //修改后台账号
+            $submitAdmin = $(submitAdmin);
+            $submitAdmin.click(function(){
+            	var adminParams = {
+            			adminName:$("#admin1").val(),
+            			adminPassword:$("#admin2").val()
+            	};
+            	$.ajax({
+            		url:"editAdminUser.do",
+            		data:adminParams,
+            		type:"post",
+            		success:function(data){
+            			if(data.status){
+            				alert(data.msg);
+            			}
+            		},
+            		error:function(){
+            			alert("修改后台账号或密码失败,请联系系统管理员");
+            		}
+            	});
+            });
+            
+            //退出后台登录
+            $("#exit").click(function(){
+            	$.ajax({
+            		url:"exitAdmin.do",
+            		success:function(data){
+            			location.href=data.url;
+            		},
+            		error:function(){
+            			alert("退出登录失败,请联系 系统管理员");
+            		}
+            	});
+            });
+            
+        })
+		//所有模态框可拖动
+        $(document).on("show.bs.modal",".modal",function(){
+        	$(this).draggable({
+	//		   handle: ".modal-header"   //只能点击头部拖动
+		    });
+        	$(this).css("overflow","hidden");
+        });
+        
+    </script>
+	
+</body>
+</html>

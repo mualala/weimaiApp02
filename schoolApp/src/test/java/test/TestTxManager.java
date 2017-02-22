@@ -1,6 +1,9 @@
 package test;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.Test;
@@ -47,6 +50,25 @@ public class TestTxManager extends TestBase {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Test
+	public void testDaySort(){
+		Map<String, String> treeMap = new TreeMap<String, String>(new Comparator<String>() {  
+		    public int compare(String o1, String o2) {  
+		        // return o1.compareTo(o2); // 默认：升序排列  
+		        return o1.compareTo(o2);  // 降序排列  
+		        // return 0;    // 只返回存储的第一个key的值，这里是"ccccc"  
+		    }  
+		});
+		treeMap.put(String.valueOf(System.currentTimeMillis()+1), "1");  
+		treeMap.put(String.valueOf(System.currentTimeMillis()+2), "2");  
+		treeMap.put(String.valueOf(System.currentTimeMillis()+3), "3");  
+		treeMap.put(String.valueOf(System.currentTimeMillis()+4), "4");  
+		  
+		for (String key : treeMap.keySet()) {  
+		    System.out.println(key+" : "+treeMap.get(key));  
+		}
 	}
 	
 }

@@ -14,7 +14,7 @@ public class CycFriendsActvie implements Serializable {
 	private int active_user_id;
 	private String user_id;
 	private String user_nickname;
-	private String f_user_id;
+	private String profile;//用户的头像
 	private int level;
 	private String type_a;
 	private String type_b;
@@ -29,11 +29,9 @@ public class CycFriendsActvie implements Serializable {
 	private List<String> pics;//无关，返回图片的的集合
 	private List<String> docums;
 	private int totalCommont;//某条说说的评论数量总计
-	private String prifile;//用户的头像
 	private int totalLaud;//某条说说的点赞数量
-	private String isLaud;//用户对某条说说的点赞状态
+	private int isLaud;//用户对某条说说的点赞状态
 	private int isVerify;//某用户是否通过了验证;0=不是认证用户；1是认证用户
-	
 	/**
 	 * @return the active_user_id
 	 */
@@ -71,16 +69,16 @@ public class CycFriendsActvie implements Serializable {
 		this.user_nickname = user_nickname;
 	}
 	/**
-	 * @return the f_user_id
+	 * @return the profile
 	 */
-	public String getF_user_id() {
-		return f_user_id;
+	public String getProfile() {
+		return profile;
 	}
 	/**
-	 * @param f_user_id the f_user_id to set
+	 * @param profile the profile to set
 	 */
-	public void setF_user_id(String f_user_id) {
-		this.f_user_id = f_user_id;
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 	/**
 	 * @return the level
@@ -239,18 +237,6 @@ public class CycFriendsActvie implements Serializable {
 		this.totalCommont = totalCommont;
 	}
 	/**
-	 * @return the prifile
-	 */
-	public String getPrifile() {
-		return prifile;
-	}
-	/**
-	 * @param prifile the prifile to set
-	 */
-	public void setPrifile(String prifile) {
-		this.prifile = prifile;
-	}
-	/**
 	 * @return the totalLaud
 	 */
 	public int getTotalLaud() {
@@ -265,13 +251,13 @@ public class CycFriendsActvie implements Serializable {
 	/**
 	 * @return the isLaud
 	 */
-	public String getIsLaud() {
+	public int getIsLaud() {
 		return isLaud;
 	}
 	/**
 	 * @param isLaud the isLaud to set
 	 */
-	public void setIsLaud(String isLaud) {
+	public void setIsLaud(int isLaud) {
 		this.isLaud = isLaud;
 	}
 	/**
@@ -293,15 +279,14 @@ public class CycFriendsActvie implements Serializable {
 	public String toString() {
 		return "CycFriendsActvie [active_user_id=" + active_user_id
 				+ ", user_id=" + user_id + ", user_nickname=" + user_nickname
-				+ ", f_user_id=" + f_user_id + ", level=" + level + ", type_a="
+				+ ", profile=" + profile + ", level=" + level + ", type_a="
 				+ type_a + ", type_b=" + type_b + ", saysay=" + saysay
 				+ ", active_pic=" + active_pic + ", docum=" + docum
 				+ ", state=" + state + ", fans_see_state=" + fans_see_state
 				+ ", see=" + see + ", active_creatime=" + active_creatime
 				+ ", pics=" + pics + ", docums=" + docums + ", totalCommont="
-				+ totalCommont + ", prifile=" + prifile + ", totalLaud="
-				+ totalLaud + ", isLaud=" + isLaud + ", isVerify=" + isVerify
-				+ "]";
+				+ totalCommont + ", totalLaud=" + totalLaud + ", isLaud="
+				+ isLaud + ", isVerify=" + isVerify + "]";
 	}
 	
 }

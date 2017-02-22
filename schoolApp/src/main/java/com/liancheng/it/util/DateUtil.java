@@ -2,6 +2,7 @@ package com.liancheng.it.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
@@ -24,6 +25,23 @@ public class DateUtil {
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		 return sdf.format(date); 
 	 }
+	 
+	 //2017-02-01日期格式的月的最大天数
+	 public static int maxOfMonth(String strDate){
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		 int maxDay = 0;
+		try {
+			Date date = sdf.parse(strDate);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+			return maxDay;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return maxDay;
+	 }
+	 
 	 public static void main(String[] args) throws ParseException {
 //		 Long time = System.currentTimeMillis();
 //			Date date = new Date(time);
@@ -31,9 +49,10 @@ public class DateUtil {
 //		System.out.println(DateUtil.strDate(date)+time);
 //		System.out.println(DateUtil.parse(strDate));
 //		System.out.println(DateUtil.formatDate(date));
-		String strArr = "["+"\""+"\""+"]";
-		System.out.println(strArr);
+//		String strArr = "["+"\""+"\""+"]";
+//		System.out.println(strArr);
 //		System.out.println(currToDate((Long)1481010503000));
+		System.out.println(parse("2017-02-01 00:00:00").getTime());
 	}
 }
 

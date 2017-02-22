@@ -29,5 +29,9 @@ public interface CommontDao {
 	
 	public int queryTotalComNoSee(String user_id);//查询某用户直接子评论的未查看数量
 	public void batchModifyComNoSee(Map<String, Object> params);//朋友圈直接子评论改成用户已查看状态
+	public List<Commont> queryCommontsByActId(int active_user_id);//根据act的id查询子评论
+	public void deleteCommsByActId(int active_user_id);//根据act的id删除子评论
+	public void deleteChildCommsByCommId(List<Integer> com_id);//删除子评论的评论
+	public int deleteLaud(Map<String, Object> params);//取消点赞
 	
 }

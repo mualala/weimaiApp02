@@ -51,6 +51,17 @@ public class CommontController {
 	}
 	
 	/**
+	 * 移除点赞
+	 */
+	@RequestMapping("/cancelLaud.do")
+	@ResponseBody
+	public JSONObject cancelLaud(@RequestParam("com_user_id") String com_user_id, 
+			@RequestParam("active_user_id") int active_user_id){
+		JSONObject jsonObject = commontService.cancelLaud(com_user_id, active_user_id);
+		return jsonObject;
+	}
+	
+	/**
 	 * 某条说说的点赞用户列表
 	 */
 	@RequestMapping(value="/laudList.do")
@@ -77,7 +88,7 @@ public class CommontController {
 	public JSONObject addcToc(@RequestParam("child_user_id") String child_user_id, 
 			@RequestParam("com_id") int com_id, 
 			@RequestParam("parent_user_id") String parent_user_id, 
-			@RequestParam("content") String content){
+			@RequestParam("child_content") String content){
 		System.out.println("进了添加子评论！！！！");
 		JSONObject jsonObject = commontService.addcToc(child_user_id, com_id, parent_user_id, content);
 		
@@ -89,7 +100,8 @@ public class CommontController {
 	 */
 	@RequestMapping(value="/detailActive.do")
 	@ResponseBody
-	public JSONObject detailActive(@RequestParam("com_user_id") String com_user_id, 
+	public JSONObject detailActive(@RequestParam("user_id") String user_id, 
+			@RequestParam("com_user_id") String com_user_id, 
 			@RequestParam("active_user_id") int active_user_id, 
 			HttpServletRequest request){
 		System.out.println("进了详情页。。");
@@ -98,7 +110,7 @@ public class CommontController {
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
 		String hostPath02 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_active/";
-		JSONObject jsonObject = commontService.cToc(com_user_id, active_user_id, hostPath01, hostPath02);		
+		JSONObject jsonObject = commontService.cToc(user_id, com_user_id, active_user_id, hostPath01, hostPath02);		
 		
 		return jsonObject;
 	}

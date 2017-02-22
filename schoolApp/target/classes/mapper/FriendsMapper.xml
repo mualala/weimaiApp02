@@ -12,19 +12,20 @@
  		(#{user_id},#{f_user_id},'0',#{f_creatime})
  	</insert>
  	
- 	<select id="queryfTof" parameterType="string" 
+ 	<select id="queryfTof" parameterType="map" 
  	resultType="com.liancheng.it.entity.friends.Friends">
- 		select F.user_id,F.f_user_id,F.f_see_state,F.f_creatime from friends F INNER JOIN
- 		(SELECT f_user_id from friends where user_id=#{user_id}) Q
- 		ON F.user_id=Q.f_user_id 
-		where F.user_id NOT in (#{user_id}) AND F.f_user_id NOT in (#{user_id})
-		and F.user_id &lt;&gt; F.f_user_id and F.type='0'
+ 		select 
+			F.f_id,F.user_id,F.f_user_id,U.user_nickname,U.profile,U.gender,U.birthday,F.type,F.see_type,F.f_creatime 
+		from friends F INNER JOIN user U on F.f_user_id=U.user_id
+		where F.user_id=#{f_user_id} and F.f_user_id not in (#{f_user_id},#{user_id}) and F.type='0'
  	</select>
  	
  	<select id="queryFriends" parameterType="string" 
  	resultType="com.liancheng.it.entity.friends.Friends">
- 		select * from friends 
- 		where user_id=#{user_id} and f_user_id &lt;&gt; #{user_id} and type='0'
+ 		select 
+ 			F.f_id,F.user_id,F.f_user_id,U.user_nickname,U.profile,U.gender,U.birthday,F.type,F.see_type,F.f_creatime 
+ 		from friends F INNER JOIN user U on F.f_user_id=U.user_id 
+ 		where F.user_id=#{user_id} and F.f_user_id not in (#{user_id}) and F.type='0' and F.see_type='0'
  	</select>
  	
  	<insert id="addAttention" parameterType="java.util.Map" keyProperty="f_id">
@@ -76,7 +77,9 @@
  	
  	<select id="queryFriendList" parameterType="string" 
  	resultType="com.liancheng.it.entity.friends.Friends">
- 		select F.f_user_id,U.profile,U.user_nickname from friends F INNER JOIN user U 
+ 		select 
+ 			F.user_id,F.f_user_id,U.profile,U.user_nickname,U.school,U.major,U.gender,U.birthday 
+ 		from friends F INNER JOIN user U 
  		on F.f_user_id=U.user_id 
  		where F.user_id=#{user_id} and F.f_user_id not in (#{user_id}) and type='0'
  	</select>
@@ -86,5 +89,31 @@
  		where type='1' and user_id=#{f_user_id} and f_user_id=#{user_id}
  	</delete>
  	
+ 	<update id="updateFToFSee" parameterType="string">
+ 		update friends set 
+ 		see_type='1' 
+ 		where user_id=#{user_id} and type='0'
+ 	</update>
+ 	
+ 	<select id="queryIsFriend" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select * from friends where user_id=#{user_id} and f_user_id=#{other_user_id} and type='0'
+ 	</select>
+ 	<select id="queryIsAttention" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select * from friends 
+ 		where user_id=#{user_id} and f_user_id=#{other_user_id} and type='1'
+ 	</select>
+ 	
+ 	<delete id="deleteFriend" parameterType="map">
+ 		delete from friends 
+ 		where ((user_id=#{user_id} and f_user_id=#{f_user_id}) or (user_id=#{f_user_id} and f_user_id=#{user_id})) and type='0'
+ 	</delete>
+ 	
+ 	<select id="queryIsFans" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.friends.Friends">
+ 		select * from friends 
+ 		where user_id=#{user_id} and f_user_id=#{f_user_id} and type='1'
+ 	</select>
  	
  </mapper>

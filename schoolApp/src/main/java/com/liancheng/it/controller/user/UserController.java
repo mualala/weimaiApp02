@@ -2,6 +2,7 @@ package com.liancheng.it.controller.user;
 
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.liancheng.it.service.user.UserService;
+import com.liancheng.it.util.IMManager;
+import com.liancheng.it.util.StringUtil;
+import com.liancheng.it.util.StringUtil02;
 
 import net.minidev.json.JSONObject;
 /**
@@ -39,17 +42,15 @@ public class UserController {
 	@ResponseBody
 	public JSONObject doLogin(@RequestParam("phoneNum") String phoneNum, 
 			@RequestParam("password") String password, 
-			ModelMap model, 
 			HttpServletRequest request){
 //		String phoneNum = request.getParameter("phoneNum");
 //		String password = request.getParameter("password");
 //		String token =request.getParameter("schoolId");
-		String username = (String) request.getServletContext().getAttribute("username");
-		System.out.println("2---登录时A的值="+username);
-		request.getServletContext().setAttribute("username", phoneNum);
-		System.out.println("登录！！！。。。。");
+		//项目环境下的图片路径
+		String path = request.getContextPath();
+		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
 		JSONObject result = new JSONObject();
-		result = userService.checkLogin(phoneNum, password, request);//调用service方法实现业务逻辑
+		result = userService.checkLogin(phoneNum, password, request, hostPath01);//调用service方法实现业务逻辑
 		return result;
 	}
 	
@@ -58,18 +59,16 @@ public class UserController {
 	 */
 	@RequestMapping(value="/checkPhoneNum.do",produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject checkCode(HttpServletRequest request){
+	public JSONObject checkCode(@RequestParam("codeType") int codeType, 
+			@RequestParam("phoneNum") String phoneNum){
 		JSONObject result = new JSONObject();
-		System.out.println("请求的电话号码："+request.getParameter("phoneNum"));
-		if(request.getParameter("phoneNum") == null || "".equals(request.getParameter("phoneNum"))){
-			System.out.println("失败!!!!电话号码为空");
-			System.out.println("aaaa");
-			result.put("msg", "手机号位空，请输入手机号码");
+		System.out.println("请求的电话号码："+phoneNum);
+		if(phoneNum == null || "".equals(phoneNum)){
+			result.put("status", false);
+			result.put("msg", "手机号位空,请输入手机号码");
 			return result;
 		}else {
-			result = userService.checkUserRegist(request.getParameter("phoneNum"));
-			System.out.println("进入短信验证码请求,电话号码:"+request.getParameter("phoneNum"));
-			System.out.println("bbbb");
+			result = userService.checkUserRegist(phoneNum, codeType);
 			return result;
 		}
 	}
@@ -112,7 +111,7 @@ public class UserController {
 		System.out.println("basePath="+basePath);
 		
 		//获取保存本地用户头像的路径
-		String localBasePath = request.getSession().getServletContext().getRealPath("/")+"images\\local_user_profile\\";//获取本地磁盘路径
+		String localBasePath = request.getSession().getServletContext().getRealPath("/")+"images/local_user_profile/";//获取本地磁盘路径
 		
 		String picName = String.valueOf(System.currentTimeMillis());//设置图片唯一的名称
 		String suffix = pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));//获取文件的后缀名
@@ -133,6 +132,7 @@ public class UserController {
 	@RequestMapping("/showUserInfo.do")
 	@ResponseBody
 	public JSONObject showUserInfo(@RequestParam("user_id") String user_id, 
+			@RequestParam("other_user_id") String other_user_id, 
 			HttpServletRequest request){
 		System.out.println("进了用户信息展示.....");
 		//项目环境下的图片路径
@@ -140,7 +140,7 @@ public class UserController {
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
 		String hostPath02 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_active/";
 		
-		JSONObject result = userService.userInfo(user_id, hostPath01, hostPath02);
+		JSONObject result = userService.userInfo(user_id, other_user_id, hostPath01, hostPath02);
 		return result;
 	}
 	
@@ -188,7 +188,7 @@ public class UserController {
 		String user_id = multipartRequest.getParameter("user_id");
 		
 		//保存文件的本地路径
-		String localBasePath = request.getSession().getServletContext().getRealPath("/")+"images\\local_verify\\";
+		String localBasePath = request.getSession().getServletContext().getRealPath("/")+"images/local_verify/";
 		String picName = String.valueOf(System.currentTimeMillis());//设置图片唯一的名称
 		//获取文件的后缀名
 		String suffix = verify.getOriginalFilename().substring(verify.getOriginalFilename().lastIndexOf("."));
@@ -313,10 +313,28 @@ public class UserController {
 	/**
 	 * 返回学校api数据的接口
 	 */
-	@RequestMapping("/schoolAPI.do")
+	@RequestMapping(value="/schoolAPI.do",produces="application/json;charset=utf-8")
 	@ResponseBody
-	public net.sf.json.JSONObject schoolAPI(){
-//		JSONObject jsonObject = new JSONObject();
+	public JSONObject schoolAPI(){
+		JSONObject jsonObject = new JSONObject();
+		Properties prop = new Properties();
+		try {
+			InputStreamReader in= new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("/json/json.properties"),"UTF-8");
+			prop.load(in);
+			jsonObject.put("status", true);
+//			jsonObject.put("data", StringUtil02.compress("abcdefghijklmn"));
+			jsonObject.put("data", StringUtil02.compress(prop.getProperty("university")));
+//			jsonObject.put("length01=", prop.getProperty("university").length());
+//			jsonObject.put("length02=", StringUtil02.compress(prop.getProperty("university")).length());
+			jsonObject.put("msg", "学校数据读取成功");
+		} catch (Exception e) {
+			System.out.println("学校数据读取失败");
+			jsonObject.put("status", false);
+			jsonObject.put("msg", "学校数据读取失败");
+			return jsonObject;
+		}
+		return jsonObject;
+		/*
 		net.sf.json.JSONObject j = new net.sf.json.JSONObject();
 		Properties prop = new Properties();
 		InputStream in= this.getClass().getClassLoader().getResourceAsStream("/json/json.properties");
@@ -331,7 +349,134 @@ public class UserController {
 		j.accumulate("data", prop.getProperty("university"));
 		j.accumulate("status", true);
 		j.accumulate("msg", "学校的api数据读取成功");
-		return j;
+		return j;*/
+		
 	}
+	
+	/**
+	 * 用户的认证状态
+	 */
+	@RequestMapping("/checkUserVerify.do")
+	@ResponseBody
+	public JSONObject checkUserVerify(@RequestParam("user_id") String user_id){
+		System.out.println("进了用户的认证状态");
+		JSONObject jsonObject = userService.checkUserVrify(user_id);
+		return jsonObject;
+	}
+	
+	/**
+	 * 重置密码
+	 */
+	@RequestMapping("/rePassword.do")
+	@ResponseBody
+	public JSONObject rePassword(@RequestParam("phoneNum") String phoneNum, 
+			@RequestParam("code") String code, 
+			@RequestParam("password") String password){
+		System.out.println("进了重置密码");
+		JSONObject jsonObject = userService.editPassword(phoneNum, code, password);
+		return jsonObject;
+	}
+	
+	/**
+	 * 动态可不可见的开关
+	 */
+	@RequestMapping("/seeSwitch.do")
+	@ResponseBody
+	public JSONObject seeSwitch(@RequestParam("user_id") String user_id, 
+			@RequestParam("f_user_id") String f_user_id){
+		JSONObject jsonObject = userService.seeState(user_id, f_user_id);
+		return jsonObject;
+	}
+	
+	/**
+	 * 控制是否可以发消息
+	 * @param send_msg 开关：0关闭 1开启
+	 * @return
+	 */
+	@RequestMapping("/controlSendMsg.do")
+	@ResponseBody
+	public JSONObject controlSendMsg(@RequestParam("user_id") String user_id, 
+			@RequestParam("send_msg") int send_msg){
+		JSONObject jsonObject = userService.controlSendMsg(user_id, send_msg);
+		return jsonObject;
+	}
+	
+	/**
+	 * 拉黑用户
+	 * @param user_id
+	 * @param other_user_id
+	 * @param value
+	 * @return
+	 */
+	@RequestMapping("/specialRelation.do")
+	@ResponseBody
+	public JSONObject specialRelation(@RequestParam("user_id") String user_id, 
+			@RequestParam("other_user_id") String other_user_id, 
+			@RequestParam("value") String value){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			if(IMManager.setSpecialRelation(user_id, other_user_id, value)){
+				jsonObject.put("status", true);
+				jsonObject.put("msg", "加入黑名单成功");
+				return jsonObject;
+			}else {
+				jsonObject.put("status", false);
+				jsonObject.put("msg", "加入黑名单失败");
+				return jsonObject;
+			}
+		} catch (Exception e) {
+			jsonObject.put("status", false);
+			jsonObject.put("msg", "加入黑名单失败");
+			return jsonObject;
+		}
+	}
+	
+	/**
+	 * 加好友时是否需要验证的开关
+	 * @param user_id
+	 * @param other_user_id
+	 * @return
+	 */
+	@RequestMapping("/addFriendIsVerify.do")
+	@ResponseBody
+	public JSONObject addFriendIsVerify(@RequestParam("user_id") String user_id, 
+			@RequestParam("switchVal") int switchVal){
+		JSONObject jsonObject = userService.addFriendIsVerify(user_id, switchVal);
+		return jsonObject;
+	}
+	
+	/**
+	 * 控制 --不让TA看我的动态-- 和 --不看TA的动态的开关--
+	 * @param user_id
+	 * @param other_user_id
+	 * @param type
+	 * @param state
+	 * @return
+	 */
+	@RequestMapping("/taNoSeeOwnActive.do")
+	@ResponseBody
+	public JSONObject taNoSeeOwnActive(@RequestParam("user_id") String user_id, 
+			@RequestParam("other_user_id") String other_user_id, 
+			@RequestParam("type") String type, 
+			@RequestParam("switchVal") int state){
+		JSONObject jsonObject = userService.taNoSeeOwnActive(user_id, other_user_id, type, state);
+		return jsonObject;
+	}
+	
+	/**
+	 * 生活圈动态粉丝可见否
+	 * @param user_id
+	 * @param switchVal
+	 * @return
+	 */
+	@RequestMapping("/lifeSeeControl.do")
+	@ResponseBody
+	public JSONObject lifeSeeControl(@RequestParam("user_ui") String user_id, 
+			@RequestParam("switchVal") int switchVal){
+		JSONObject jsonObject = userService.lifeSeeControl(user_id, switchVal);
+		return jsonObject;
+	}
+	
+	
 	
 }

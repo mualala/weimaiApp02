@@ -14,10 +14,10 @@ public class Questions implements Serializable {
 	
 	private String strQues_creatime;
 	private int ans_id;//直接回答的id
-	private String user_id;//直接回答用户的uuid
 	private int count;//问题回答的次数
 	private String type;//点赞还是评论
 	private String name_type;//实名还是匿名
+	private int ansState;//登录用户是否回答的状态,0=没回答过 1=已回答过
 	
 	/**
 	 * @return the ques_id
@@ -92,18 +92,6 @@ public class Questions implements Serializable {
 		this.ans_id = ans_id;
 	}
 	/**
-	 * @return the user_id
-	 */
-	public String getUser_id() {
-		return user_id;
-	}
-	/**
-	 * @param user_id the user_id to set
-	 */
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-	/**
 	 * @return the count
 	 */
 	public int getCount() {
@@ -139,6 +127,18 @@ public class Questions implements Serializable {
 	public void setName_type(String name_type) {
 		this.name_type = name_type;
 	}
+	/**
+	 * @return the ansState
+	 */
+	public int getAnsState() {
+		return ansState;
+	}
+	/**
+	 * @param ansState the ansState to set
+	 */
+	public void setAnsState(int ansState) {
+		this.ansState = ansState;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -147,9 +147,9 @@ public class Questions implements Serializable {
 		return "Questions [ques_id=" + ques_id + ", question=" + question
 				+ ", ques_creatime=" + ques_creatime + ", ques_lastmodifytime="
 				+ ques_lastmodifytime + ", strQues_creatime="
-				+ strQues_creatime + ", ans_id=" + ans_id + ", user_id="
-				+ user_id + ", count=" + count + ", type=" + type
-				+ ", name_type=" + name_type + "]";
+				+ strQues_creatime + ", ans_id=" + ans_id + ", count=" + count
+				+ ", type=" + type + ", name_type=" + name_type + ", ansState="
+				+ ansState + "]";
 	}
 	
 }

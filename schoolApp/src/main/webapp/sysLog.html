@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>系统日志报表</title>
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.min.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+	<![endif]-->
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-table.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-editable.css">
+<link style="text/css" rel="stylesheet" href="css/style.css">
+<link style="text/css" rel="stylesheet" href="assets/css/codemirror.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/ace.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link style="text/css" rel="stylesheet" href="font/css/font-awesome.min.css">
+<style type="text/css">
+
+</style>
+<script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="assets/js/tableExport.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-export.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-editable.js"></script>
+	<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript" src="assets/js/typeahead-bs2.min.js"></script>
+	<script type="text/javascript" src="assets/layer/layer.js"></script>
+	<script type="text/javascript" src="js/lrtk.js"></script>
+	<script type="text/javascript" src="assets/laydate/laydate.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="assets/myjs/datePlugin.js"></script>
+	<script type="text/javascript" src="assets/myjs/adminLog.js"></script>
+</head>
+<body>
+	<div class="page-content clearfix">
+	    <div class="search_style">
+	      <div class="title_names">搜索查询</div>
+	      <ul class="search_content clearfix">
+	       <li><label class="l_f">登录用户名</label><input id="admin_id" type="text" class="text_add" placeholder="" style=" width:200px"/></li>
+	       <li>
+			<label class="l_f">登录时间</label>
+			<input id="date" class="inline laydate-icon" style=" margin-left:10px;">
+	       </li>
+	       <li style="width:90px;">
+	       	<button type="button" class="btn_search" onclick="adminLog.report();"><i class="fa fa-search"></i>查询</button>
+	       </li>
+	      </ul>
+	    </div>
+	    <div class="row">
+	    	<div id="adminLogtool" class="col-xs-12" font-size: 11px;">
+	    		<a id="deleteAdminLog" class="btn btn-danger btn-xs" onclick="adminLog.batchDelLog();">
+	    			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除日志
+	    		</a>
+	    	</div>
+	    </div>
+	    <table id="adminLog" class="table table-bordered table-hover"></table>
+    </div>
+    
+    
+	<script type="text/javascript">
+		var date = $("#date");
+		//初始化日期控件	
+		initDate(date);
+		//初始化报表
+		adminLog.report();
+	</script>
+</body>
+</html>

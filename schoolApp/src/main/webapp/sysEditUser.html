@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>后台修改账户</title>
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.min.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+	<![endif]-->
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="css/style.css">
+<link style="text/css" rel="stylesheet" href="assets/css/codemirror.css">
+<link style="text/css" rel="stylesheet" href="assets/css/ace.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link style="text/css" rel="stylesheet" href="font/css/font-awesome.min.css">
+<style type="text/css">
+
+</style>
+</head>
+<body>
+	<div class="page-content clearfix">
+	    <form class="form-horizontal" role="form" style="margin-top: 20px;">
+			<div class="form-group">
+				<label for="admin1" class="col-sm-2 control-label">账户名</label>
+	    		<div class="col-sm-3">
+	      			<input type="text" class="form-control" id="admin1" placeholder="请输入新的账户名">
+	    		</div>
+			</div>
+			<div class="form-group">
+			    <label for="admin2" class="col-sm-2 control-label">原始密码</label>
+			    <div class="col-sm-3">
+			      <input type="password" class="form-control" id="admin2" placeholder="请输入原始密码">
+			    </div>
+			    <div class="col-sm-3">
+				    <span id="errorTiShi" style="height:34px;line-height:34px;color: red;"></span>
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label for="admin2" class="col-sm-2 control-label">新密码</label>
+			    <div class="col-sm-3">
+			      <input type="password" class="form-control" id="admin3" placeholder="请输入您的新密码">
+			    </div>
+			</div>
+			<div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-3" style="margin-left: 205px;">
+			      <button type="submit" id="submitEditAdmin" class="btn btn-success disabled">修改账户</button>
+			    </div>
+			</div>
+		</form>
+    </div>
+    
+    <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript" src="assets/js/typeahead-bs2.min.js"></script>
+	<script type="text/javascript" src="assets/layer/layer.js"></script>
+	<script type="text/javascript" src="js/lrtk.js"></script>
+	<script type="text/javascript" src="assets/laydate/laydate.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.cookie.min.js"></script>
+	<script type="text/javascript">
+		$("#admin2").blur(function(){
+			//检查原始密码
+			var param = {
+					adminUser: $.cookie('adminName'),
+					originalPwd: $("#admin2").val()
+			};
+			$.ajax({
+				url:'admin/checkOriginalPwd.do',
+				data:param,
+				dataType:'json',
+				success:function(data){
+					if(!data.status){
+						$("#errorTiShi").html(data.msg);
+						if(!($("#submitEditAdmin").hasClass("disabled"))){
+							$("#submitEditAdmin").addClass("disabled");
+						}
+					}else {
+						$("#errorTiShi").html("");
+						$("#submitEditAdmin").removeClass("disabled");
+					}
+				},
+				error:function(){
+					layer.alert(
+    						'原始密码检查失败,请联系系统管理员\r\n',
+    						{
+    							title: '提示框',
+    							icon:0
+    				 		}
+    					);
+				}
+			});
+		});
+		//提交修改账户和密码
+		$("#submitEditAdmin").click(function(){
+			return false;
+		});
+		$("#submitEditAdmin").click(function(){
+			if(!($("#submitEditAdmin").hasClass("disabled"))){
+				var newAdmin = $("#admin1").val();
+				var newPwd = $("#admin3").val();
+				if(newAdmin ==''){
+					layer.alert(
+    						'新账户名不能为空\r\n',
+    						{
+    							title: '提示框',
+    							icon:0
+    				 		}
+    					);
+				}else if (newPwd == '') {
+					layer.alert(
+    						'新密码不能为空\r\n',
+    						{
+    							title: '提示框',
+    							icon:0
+    				 		}
+    					);
+				}else {
+					$.ajax({
+						url:'admin/editAdminUser.do',
+						data:{newAdmin:newAdmin,newPwd:newPwd},
+						dataType:'',
+						success:function(data){
+							layer.msg(data.msg+'\r\n', {icon: 1});
+							$("#admin1").val("");
+							$("#admin2").val("");
+							$("#admin3").val("");
+							$.cookie('adminName',newAdmin);//重新设置cookie值
+						},
+						error:function(){
+							layer.alert(
+		    						'修改后台账户失败,请联系系统管理员\r\n',
+		    						{
+		    							title: '提示框',
+		    							icon:0
+		    				 		}
+		    					);
+						}
+					});
+				}
+			}
+		});
+		
+	</script>
+</body>
+</html>

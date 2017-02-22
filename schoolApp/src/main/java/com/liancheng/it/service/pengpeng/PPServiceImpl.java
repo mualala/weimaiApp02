@@ -20,6 +20,7 @@ import com.liancheng.it.entity.pengpeng.AnswerUsers;
 import com.liancheng.it.entity.pengpeng.ChildAnswer;
 import com.liancheng.it.entity.pengpeng.OwnAnswer;
 import com.liancheng.it.entity.pengpeng.Questions;
+import com.liancheng.it.entity.pengpeng.TwoChildAnswer;
 import com.liancheng.it.util.DateUtil;
 
 import net.minidev.json.JSONObject;
@@ -32,27 +33,35 @@ public class PPServiceImpl implements PPService {
 	@Resource(name="pengPengDao")
 	private PengPengDao pengPengDao;
 	
-	public JSONObject questionsReport(int pageSize, int pageNumber) {
+	public JSONObject questionsReport(int pageSize, int pageNumber, String searchText, 
+			String startDate, String endDate, String sortName, String sortOrder) {
 		JSONObject jsonObject = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
 		int start = (pageNumber-1)*pageSize;
 		int end = pageSize;
 		params.put("start", start);
 		params.put("end", end);
-		
+		if (searchText != null) {
+			params.put("searchText", "%"+searchText+"%");
+		}else {
+			params.put("searchText", searchText);
+		}
+		params.put("sortName", sortName);
+		params.put("sortOrder", sortOrder);
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
 		List<Questions> questions = pengPengDao.questionReport(params);
 		if(questions.size()>0){
 			for(Questions ques:questions){
 				try {
 					ques.setStrQues_creatime(DateUtil.formatDate(ques.getQues_creatime()));
 				} catch (Exception e) {
-					System.out.println("返回后台问题管理报表的创建时间转换失败!");
+					System.out.println("后台问题管理报表的创建时间转换失败!");
 				}
 			}
 		}
-		int counts = pengPengDao.totalQuestions();
 		jsonObject.put("rows", questions);
-		jsonObject.put("total", counts);
+		jsonObject.put("total", pengPengDao.totalQuestions(params));
 		return jsonObject;
 	}
 	
@@ -73,6 +82,9 @@ public class PPServiceImpl implements PPService {
 		params.put("user_id", user_id);
 		params.put("ques_id", ques_id);
 		params.put("content", content);
+		if("".equals(name_type)){
+			name_type = "实名";
+		}
 		params.put("name_type", name_type);
 		params.put("ans_creatime", new Timestamp(System.currentTimeMillis()));
 		pengPengDao.saveAnswer(params);
@@ -108,7 +120,11 @@ public class PPServiceImpl implements PPService {
 		List<AnswerUsers> answerUsers = pengPengDao.queryAnswers(params);
 		if(answerUsers!=null || answerUsers.size()>0){
 			for(AnswerUsers ans:answerUsers){
-				ans.setProfile(hostPath+ans.getProfile());
+				if(ans.getProfile()==null){
+					ans.setProfile(hostPath+"avatar_def.png");
+				}else {
+					ans.setProfile(hostPath+ans.getProfile());
+				}
 				Map<String, Object> params02 = new HashMap<String, Object>();
 				params02.put("user_id", user_id);
 				params02.put("ans_id", ans.getAns_id());
@@ -125,6 +141,11 @@ public class PPServiceImpl implements PPService {
 		Map<String, Object> params03 = new HashMap<String, Object>();
 		params03.put("ques_id", question.getQues_id());
 		params03.put("user_id", user_id);
+		if("".equals(name_type)){
+			name_type = "实名";
+		}
+		params03.put("name_type", name_type);
+		System.out.println("params03="+params03);
 		Answer answer = pengPengDao.queryCurrUserAnswer(params03);
 		if(answer != null){
 			//添加当前登录用户对问题的回答
@@ -135,7 +156,7 @@ public class PPServiceImpl implements PPService {
 		return jsonObject;
 	}
 	
-	public JSONObject questionList(String name_type, int pageSize, int pageNumber){
+	public JSONObject questionList(String user_id, String name_type, int pageSize, int pageNumber){
 		JSONObject jsonObject = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
 		int start = (pageNumber-1)*pageSize;
@@ -144,6 +165,22 @@ public class PPServiceImpl implements PPService {
 		params.put("start", start);
 		params.put("end", end);
 		List<Questions> questionList = pengPengDao.queryTypeQuestions(params);
+		if(questionList!=null || questionList.size()>0){
+			for(Questions q:questionList){
+				Map<String, Object> params02 = new HashMap<String, Object>();
+				params02.put("ques_id", q.getQues_id());
+				params02.put("user_id", user_id);
+				params02.put("name_type", q.getName_type());
+				if(pengPengDao.queryUserIsAns(params02)!=null){
+					q.setAnsState(1);
+				}else {
+					q.setAnsState(0);
+				}
+				if(q.getName_type()==null){
+					q.setName_type(name_type);
+				}
+			}
+		}
 		System.out.println("questionList="+questionList);
 		jsonObject.put("status", true);
 		jsonObject.put("data", questionList);
@@ -164,17 +201,25 @@ public class PPServiceImpl implements PPService {
 		return jsonObject;
 	}
 	
-	public JSONObject currUserAnswer(int ques_id, String user_id, int pageSize, 
+	public JSONObject currUserAnswer(int ques_id, String user_id, String name_type, int pageSize, 
 			int pageNumber, String hostPath01){
 		JSONObject jsonObject = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("ques_id", ques_id);
 		params.put("user_id", user_id);
+		if("".equals(name_type)){
+			name_type = "实名";
+		}
+		params.put("name_type", name_type);
 		OwnAnswer ownAnswer =  pengPengDao.queryOwnAnswer(params);
 		
 		List<ChildAnswer> childAns = new ArrayList<ChildAnswer>();
 		if(ownAnswer != null){//添加评论的评论
-			ownAnswer.setProfile(hostPath01+ownAnswer.getProfile());
+			if(ownAnswer.getProfile()==null){
+				ownAnswer.setProfile(hostPath01+"avatar_def.png");
+			}else {
+				ownAnswer.setProfile(hostPath01+ownAnswer.getProfile());
+			}
 			Map<String, Object> params02 = new HashMap<String, Object>();
 			int start = (pageNumber-1)*pageSize;
 			int end = pageSize;
@@ -185,15 +230,20 @@ public class PPServiceImpl implements PPService {
 			childAns = pengPengDao.queryOwnChildAnswers(params02);
 			if(childAns!=null || childAns.size()>0){
 				for(ChildAnswer c:childAns){//添加用户头像的url地址
-					c.setProfile(hostPath01+c.getProfile());
+					if(c.getProfile()==null){
+						c.setProfile(hostPath01+"avatar_def.png");
+					}else {
+						c.setProfile(hostPath01+c.getProfile());
+					}
 					//查出添加子评论的评论
-					Map<String, Object> params03 = new HashMap<String, Object>();
-					params03.put("parent_user_id", c.getUser_id());
-					params03.put("ans_id", c.getAns_id());
-					List<ChildAnswer> twoChildAns = pengPengDao.queryTwoChildAns(params03);
+					List<TwoChildAnswer> twoChildAns = pengPengDao.queryTwoChildAns(c.getChild_ans_id());
 					if(twoChildAns!=null || twoChildAns.size()>0){
-						for(ChildAnswer twoChild:twoChildAns){
-							twoChild.setProfile(hostPath01+twoChild.getProfile());//添加头像url
+						for(TwoChildAnswer twoChild:twoChildAns){
+							if(twoChild.getProfile()==null){
+								twoChild.setProfile(hostPath01+"avatar_def.png");//添加头像url
+							}else {
+								twoChild.setProfile(hostPath01+twoChild.getProfile());//添加头像url
+							}
 						}
 					}
 					//添加子评论的评论
@@ -216,10 +266,11 @@ public class PPServiceImpl implements PPService {
 		return jsonObject;
 	}
 	
-	public JSONObject addChildAnswer(String user_id, int ans_id, String content){
+	public JSONObject addChildAnswer(String user_id, String parent_user_id, int ans_id, String content){
 		JSONObject jsonObject = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("user_id", user_id);
+		params.put("parent_user_id", parent_user_id);
 		params.put("ans_id", ans_id);
 		params.put("content", content);
 		params.put("child_ans_creatime", new Timestamp(System.currentTimeMillis()));
@@ -230,15 +281,16 @@ public class PPServiceImpl implements PPService {
 	}
 	
 	public JSONObject onlyChildAnswer(int ques_id, String own_user_id, String other_user_id, 
-			int pageSize, int pageNumber, String hostPath01){
+			String name_type, int pageSize, int pageNumber, String hostPath01){
 		JSONObject jsonObject = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("ques_id", ques_id);
-		params.put("user_id", own_user_id);
-		OwnAnswer ownAnswer =  pengPengDao.queryOwnAnswer(params);
-		System.out.println(ownAnswer);
+		params.put("user_id", other_user_id);
+		params.put("name_type", name_type);
+		OwnAnswer otherAnswer =  pengPengDao.queryOwnAnswer(params);
+		System.out.println(otherAnswer);
 		List<ChildAnswer> childAns = new ArrayList<ChildAnswer>();
-		if(ownAnswer != null){//添加评论的评论
+		if(otherAnswer != null){//添加评论的评论
 			Map<String, Object> params02 = new HashMap<String, Object>();
 			int start = (pageNumber-1)*pageSize;
 			int end = pageSize;
@@ -246,26 +298,47 @@ public class PPServiceImpl implements PPService {
 			params02.put("end", end);
 			params02.put("own_user_id", own_user_id);
 			params02.put("other_user_id", other_user_id);
-			params02.put("ans_id", ownAnswer.getAns_id());
+			params02.put("ans_id", otherAnswer.getAns_id());
 			childAns = pengPengDao.queryOnlyChildAnswers(params02);
 			if(childAns!=null || childAns.size()>0){
 				for(ChildAnswer c:childAns){//添加用户头像的url地址
-					c.setProfile(hostPath01+c.getProfile());
+					if(c.getProfile()==null){
+						c.setProfile(hostPath01+"avatar_def.png");
+					}else {
+						c.setProfile(hostPath01+c.getProfile());
+					}
+					//查出评论的评论，再相互的评论数据
+					Map<String, Object> params03 = new HashMap<String, Object>();
+					params03.put("child_ans_id", c.getChild_ans_id());
+					params03.put("own_user_id", own_user_id);
+					params03.put("other_user_id", other_user_id);
+					List<TwoChildAnswer> twoChildAns = pengPengDao.queryOnlyTwoChildAns(params03);
+					if(twoChildAns!=null || twoChildAns.size()>0){
+						for(TwoChildAnswer twoChild:twoChildAns){
+							if(twoChild.getProfile()==null){
+								twoChild.setProfile(hostPath01+"avatar_def.png");//添加头像url
+							}else {
+								twoChild.setProfile(hostPath01+twoChild.getProfile());//添加头像url
+							}
+						}
+					}
+					//再添加评论的评论，再相互的评论数据
+					c.setTwoChildAns(twoChildAns);
 				}
+				//添加子评论
+				otherAnswer.setChild_answers(childAns);
 			}
 		}
-		//添加子评论
-		ownAnswer.setChild_answers(childAns);
 		//添加点赞数量
-		ownAnswer.setTotalLaud(pengPengDao.countAnswerLaud(ownAnswer.getAns_id()));
+		otherAnswer.setTotalLaud(pengPengDao.countAnswerLaud(otherAnswer.getAns_id()));
 		//添加评论总数
 		Map<String, Object> params03 = new HashMap<String, Object>();
-		params03.put("ans_id", ownAnswer.getAns_id());
+		params03.put("ans_id", otherAnswer.getAns_id());
 		params03.put("user_id", own_user_id);
-		ownAnswer.setTotalCom(pengPengDao.countChildAnswer(params03));
+		otherAnswer.setTotalCom(pengPengDao.countChildAnswer(params03));
 		
 		jsonObject.put("status", true);
-		jsonObject.put("data", ownAnswer);
+		jsonObject.put("data", otherAnswer);
 		return jsonObject;
 	}
 	
@@ -284,6 +357,35 @@ public class PPServiceImpl implements PPService {
 		return jsonObject;
 	}
 	
+	public JSONObject addTwoChildAns(String user_id, String parent_user_id, int child_ans_id, 
+			String content){
+		JSONObject jsonObject = new JSONObject();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("user_id", user_id);
+		params.put("child_ans_id", child_ans_id);
+		params.put("grand_user_id", parent_user_id);
+		params.put("content", content);
+		params.put("two_child_ans_creatime", new Timestamp(System.currentTimeMillis()));
+		pengPengDao.addTwoChildAns(params);
+		
+		jsonObject.put("status", true);
+		jsonObject.put("msg", "再次添加评论的评论成功");
+		return jsonObject;
+	}
 	
+	public JSONObject batchDelQuestions(String ids){
+		JSONObject jsonObject = new JSONObject();
+		List<Integer> idList = new ArrayList<Integer>();
+		if(!"".equals(ids)){
+			String[] spIds = ids.split(",");
+			for(int i=0;i<spIds.length;i++){
+				idList.add(Integer.valueOf(spIds[i]));
+			}
+		}
+		int count = pengPengDao.batchDelQuestions(idList);
+		jsonObject.put("status", true);
+		jsonObject.put("msg", "成功删除了"+count+"条问题");
+		return jsonObject;
+	}
 	
 }

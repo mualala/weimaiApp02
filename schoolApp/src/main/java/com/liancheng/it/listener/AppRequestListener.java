@@ -30,27 +30,25 @@ public class AppRequestListener implements ServletRequestListener {
 //		sre.getServletContext().setAttribute("username", request.getParameter("phoneNum"));
 //		String phoneNum = (String) sre.getServletContext().getAttribute("username");
 //		System.out.println("1---监听器中获取的登录用户名="+phoneNum);
-		String user = (String) sre.getServletContext().getAttribute("aa");
-		System.out.println("1.2---监听器中获取的aa="+sre.getServletContext().getAttribute("aa"));
-		System.out.println("1.3---监听器中获取的user="+user);
-		if(user != null){
-			userList.add(user);
-		}
-		sre.getServletContext().setAttribute("userList", userList);
-		System.out.println("1.3---监听器中获取的userList大小="+userList.size());
-		System.out.println("requestDestroyed....");
+//		System.out.println(request.getRemoteAddr());
+//		System.out.println(request.getRemoteHost());
+//		System.out.println(request.getLocalAddr());
+//		System.out.println(request.getMethod());
+//		System.out.println(request.getRemoteUser());
+//		System.out.println(request.getRequestURI());
+//		System.out.println(request.getRequestURL());
+//		String user = (String) sre.getServletContext().getAttribute("aa");
+//		System.out.println("1.2---监听器中获取的aa="+sre.getServletContext().getAttribute("aa"));
+//		System.out.println("1.3---监听器中获取的user="+user);
+//		if(user != null){
+//			userList.add(user);
+//		}
+//		sre.getServletContext().setAttribute("userList", userList);
+//		System.out.println("1.3---监听器中获取的userList大小="+userList.size());
+//		System.out.println("requestDestroyed....");
 	}
 
 	public void requestInitialized(ServletRequestEvent sre) {
 		
-	}
-	public void aa(){
-		System.out.println("，，执行监听器中的aa方法");
-		System.out.println("，，userLis="+userList);
-		if (userList!=null && userList.size()>0) {
-			for (int i = 0; i < userList.size(); i++) {
-				System.out.println("第i个在线用户="+userList.get(i));
-			}
-		}
 	}
 }

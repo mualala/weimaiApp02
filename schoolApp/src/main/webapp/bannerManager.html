@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>banner图管理</title>
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.min.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+	<![endif]-->
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/font-awesome.min.css" />
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-table.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-editable.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-select.min.css">
+<link style="text/css" rel="stylesheet" href="css/style.css">
+<link style="text/css" rel="stylesheet" href="assets/css/codemirror.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/ace.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link style="text/css" rel="stylesheet" href="font/css/font-awesome.min.css">
+<style type="text/css">
+.img-rounded {
+    	width: 80px;
+    	height: 50px;
+    }
+</style>
+</head>
+<body>
+	<div class="page-content clearfix">
+	    <div class="row">
+	    	<div id="bannerTool" class="col-xs-12">
+			    <a class="btn btn-success btn-xs" onclick="banner.addBannerPic.addBannerPicModal();">
+	    			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加/更新
+	    		</a>
+			    <a class="btn btn-danger btn-xs" onclick="banner.batchDelBanner();">
+	    			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
+	    		</a>
+			</div>
+	    </div>
+	    <table id="bannerTable" class="table table-bordered table-hover"></table>
+    </div>
+    
+    <!-- 添加主题的弹出框 -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="addBannerPic">
+	    <div class="modal-dialog">
+	    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">添加/修改banner图</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="selectPicId" class="col-sm-3 control-label">选择位置</label>
+							<div class="col-sm-6">
+								<select class="form-control" id="selectPicId"></select>
+							</div>
+						</div>
+						<div class="form-group" >
+							<label for="title" class="col-sm-3 control-label" style="margin-left: 0">标题</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="title" style="margin-left:0">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bannerPic" class="col-sm-3 control-label">选择图片</label>
+							<div class="col-sm-6">
+								<input type="file" class="form-control" id="bannerPic">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="thredURL" class="col-sm-3 control-label">三方路径</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="thredURL" placeholder="请填入第三方跳转路径" style="margin-left: 0px;">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" onclick="banner.addBannerPic.submitAddBannerPic();">
+						<i class="icon-save"></i> 提交添加
+					</button>
+					<button class="btn btn-danger" data-dismiss="modal">
+						<i class="icon-remove"></i> 关闭
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="assets/js/tableExport.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-export.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-editable.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-editable.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript" src="assets/js/typeahead-bs2.min.js"></script>
+	<script type="text/javascript" src="assets/layer/layer.js"></script>
+	<script type="text/javascript" src="js/lrtk.js"></script>
+	<script type="text/javascript" src="assets/laydate/laydate.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="assets/myjs/datePlugin.js"></script>
+	<script type="text/javascript" src="assets/myjs/banner.js"></script>
+	<script type="text/javascript">
+		//初始化日期控件	
+		initDate($("#startDate"));
+		initDate($("#endDate"));
+		//初始化报表
+		banner.initBannerReport();
+	</script>
+</body>
+</html>

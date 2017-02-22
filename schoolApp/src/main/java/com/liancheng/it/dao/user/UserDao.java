@@ -3,7 +3,9 @@ package com.liancheng.it.dao.user;
 import java.util.List;
 import java.util.Map;
 
+import com.liancheng.it.entity.user.SeeControl;
 import com.liancheng.it.entity.user.User;
+import com.liancheng.it.entity.user.UserChart;
 import com.liancheng.it.entity.user.Visitor;
 
 public interface UserDao {
@@ -27,7 +29,7 @@ public interface UserDao {
 	public void saveStuVerify(Map<String, Object> params);//保存用户学生证验证信息
 	public void saveCertiVerify(Map<String, Object> params);//保存用户毕业证验证信息
 	public List<User> queryAdminVerify(Map<String, Object> params);//用于后台审核身份验证信息查询
-	public int queryCountVerifies();//身份验证的条数
+	public int queryCountVerifies(Map<String, Object> params);//身份验证的条数
 	public void modifyStuAdmin(Map<String, Object> params);//修改学生证验证状态
 	public void modifyCertiAdmin(Map<String, Object> params);//修改毕业证验证状态
 	
@@ -41,5 +43,18 @@ public interface UserDao {
 	public void saveVisitor(Map<String, Object> params);//保存访客
 	public int totalVisitors(String user_id);//查询访客数量
 	public List<Visitor> queryVisitorList(Map<String, Object> params);//查询访客的用户列表
+	public List<User> queryUserList(Map<String, Object> params);//用于后台用户报表
+	public int totalUserCount(Map<String, Object> params);//查询有多少用户数
+	public void ModifyPassword(Map<String, Object> params);//修改用户的密码
+	public List<UserChart> queryChartControlYM();//home.html页面chart的筛选框的值
+	public List<UserChart> queryChartData(String selectDate);//home.html页面chart的数据
+	public int queryAllNetPeople();//全网用户数
+	public int totalNoVerifyUser();//所有未审核的用户
+	public void modifySendMsg(Map<String, Object> params);//是否可以发消息
+	public void modifyAddSwitch(Map<String, Object> params);
+	public void modifyLifeSee(Map<String, Object> params);
+	
+	public void saveTaNoSeeOwnActive(Map<String, Object> params);//保存不让他看我动态的关系
+	public List<SeeControl> querySeeControlState(Map<String, Object> params);
 	
 }

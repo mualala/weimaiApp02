@@ -40,12 +40,16 @@ public class User implements Serializable {
 	private String highschool;//高中
 	private String lable;//个人签名
 	private String skill;//个人技能
+	private int life_see;//生活圈动态粉丝可见
+	private int add_switch;//加好友是否需要验证
+	private int send_msg;//是否可以发消息
 	private String token;//接入云信所需的token
 	private Timestamp creatime;//注册时间
 	private Timestamp lastmodifytime;//最后一次更新时间
 	
 	private List<String> skills;
 	private List<Active> actives;
+	private String reportCreaTime;//用于后台报表
 	private String reportLastTime;//用于后台报表
 	
 	private List<String> pics;//用于个人信息展示的4张图片
@@ -271,18 +275,6 @@ public class User implements Serializable {
 		this.county = county;
 	}
 	/**
-	 * @return the home
-	 */
-	public String getHome() {
-		return home;
-	}
-	/**
-	 * @param home the home to set
-	 */
-	public void setHome(String home) {
-		this.home = home;
-	}
-	/**
 	 * @return the birthday
 	 */
 	public String getBirthday() {
@@ -379,6 +371,42 @@ public class User implements Serializable {
 		this.skill = skill;
 	}
 	/**
+	 * @return the life_see
+	 */
+	public int getLife_see() {
+		return life_see;
+	}
+	/**
+	 * @param life_see the life_see to set
+	 */
+	public void setLife_see(int life_see) {
+		this.life_see = life_see;
+	}
+	/**
+	 * @return the add_switch
+	 */
+	public int getAdd_switch() {
+		return add_switch;
+	}
+	/**
+	 * @param add_switch the add_switch to set
+	 */
+	public void setAdd_switch(int add_switch) {
+		this.add_switch = add_switch;
+	}
+	/**
+	 * @return the send_msg
+	 */
+	public int getSend_msg() {
+		return send_msg;
+	}
+	/**
+	 * @param send_msg the send_msg to set
+	 */
+	public void setSend_msg(int send_msg) {
+		this.send_msg = send_msg;
+	}
+	/**
 	 * @return the token
 	 */
 	public String getToken() {
@@ -437,6 +465,18 @@ public class User implements Serializable {
 	 */
 	public void setActives(List<Active> actives) {
 		this.actives = actives;
+	}
+	/**
+	 * @return the reportCreaTime
+	 */
+	public String getReportCreaTime() {
+		return reportCreaTime;
+	}
+	/**
+	 * @param reportCreaTime the reportCreaTime to set
+	 */
+	public void setReportCreaTime(String reportCreaTime) {
+		this.reportCreaTime = reportCreaTime;
 	}
 	/**
 	 * @return the reportLastTime
@@ -498,6 +538,18 @@ public class User implements Serializable {
 	public void setFans(int fans) {
 		this.fans = fans;
 	}
+	/**
+	 * @return the home
+	 */
+	public String getHome() {
+		return home;
+	}
+	/**
+	 * @param home the home to set
+	 */
+	public void setHome(String home) {
+		this.home = home;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -511,16 +563,18 @@ public class User implements Serializable {
 				+ certi_verify + ", verify_state=" + verify_state + ", gender="
 				+ gender + ", star=" + star + ", e_state=" + e_state
 				+ ", level=" + level + ", province=" + province + ", city="
-				+ city + ", county=" + county + ", home=" + home
-				+ ", birthday=" + birthday + ", grade=" + grade
-				+ ", profession=" + profession + ", major=" + major
-				+ ", school=" + school + ", highschool=" + highschool
-				+ ", lable=" + lable + ", skill=" + skill + ", token=" + token
-				+ ", creatime=" + creatime + ", lastmodifytime="
-				+ lastmodifytime + ", skills=" + skills + ", actives="
-				+ actives + ", reportLastTime=" + reportLastTime + ", pics="
-				+ pics + ", oneActCount=" + oneActCount + ", visit=" + visit
-				+ ", fans=" + fans + "]";
+				+ city + ", county=" + county + ", birthday=" + birthday
+				+ ", grade=" + grade + ", profession=" + profession
+				+ ", major=" + major + ", school=" + school + ", highschool="
+				+ highschool + ", lable=" + lable + ", skill=" + skill
+				+ ", life_see=" + life_see + ", add_switch=" + add_switch
+				+ ", send_msg=" + send_msg + ", token=" + token + ", creatime="
+				+ creatime + ", lastmodifytime=" + lastmodifytime + ", skills="
+				+ skills + ", actives=" + actives + ", reportCreaTime="
+				+ reportCreaTime + ", reportLastTime=" + reportLastTime
+				+ ", pics=" + pics + ", oneActCount=" + oneActCount
+				+ ", visit=" + visit + ", fans=" + fans + ", home=" + home
+				+ "]";
 	}
 	
 }

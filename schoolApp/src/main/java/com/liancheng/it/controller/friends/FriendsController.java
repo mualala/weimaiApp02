@@ -22,29 +22,32 @@ public class FriendsController {
 	private FriendsService friendsService;
 	
 	/**
-	 * 确认成为好友
-	 * @param f_user_id要添加好友的uuid
+	 * 请求加好友
 	 */
-	@RequestMapping(value="/addFriends.do")
+	@RequestMapping("/reqAddFriends.do")
 	@ResponseBody
-	public JSONObject addFriends(@RequestParam("user_id") String user_id, 
-			@RequestParam("f_user_id") String f_user_id){
-		System.out.println("进了确认添加好友。。。。");
-		JSONObject jsonObject = friendsService.confirmAddFriends(user_id, f_user_id);
+	public JSONObject reqAddFriends(@RequestParam("user_id") String user_id, 
+			@RequestParam("f_user_id") String f_user_id, 
+			@RequestParam("msg") String msg, 
+			@RequestParam(value="type",required=false) String type){
+		JSONObject jsonObject = friendsService.reqAddFriends(user_id, f_user_id, msg, type);
 		return jsonObject;
 	}
 	
-	/**
-	 * 展示朋友的朋友
-	 */
-	@RequestMapping(value="/fTof.do")
-	@ResponseBody
-	public JSONObject showfTof(@RequestParam("user_id") String user_id){
-		
-		System.out.println("进了展示朋友的朋友的请求。。");
-		JSONObject jsonObject = friendsService.showfTof(user_id);
-		return jsonObject;
-	}
+//	/**
+//	 * 展示朋友的朋友
+//	 */
+//	@RequestMapping(value="/fTof.do")
+//	@ResponseBody
+//	public JSONObject showfTof(@RequestParam("user_id") String user_id, 
+//			HttpServletRequest request){
+//		System.out.println("进了展示朋友的朋友的请求。。");
+//		//项目环境下的图片路径
+//		String path = request.getContextPath();
+//		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
+//		JSONObject jsonObject = friendsService.showfTof(user_id, hostPath01);
+//		return jsonObject;
+//	}
 	
 	/**
 	 * 用户添加关注用户
@@ -53,7 +56,6 @@ public class FriendsController {
 	@ResponseBody
 	public JSONObject addAttention(@RequestParam("user_id") String user_id, 
 			@RequestParam("f_user_id") String f_user_id){
-		System.out.println("进了用户添加关注用户。。。");
 		JSONObject jsonObject = friendsService.addAttention(user_id, f_user_id);
 		return jsonObject;
 	}
@@ -65,7 +67,6 @@ public class FriendsController {
 	@ResponseBody
 	public JSONObject cancelAttention(@RequestParam("user_id") String user_id, 
 			@RequestParam("f_user_id") String f_user_id){
-		System.out.println("进了用户取消关注。。。");
 		JSONObject jsonObject = friendsService.cancelAttention(user_id, f_user_id);
 		return jsonObject;
 	}
@@ -79,7 +80,6 @@ public class FriendsController {
 			@RequestParam("pageSize") int pageSize, 
 			@RequestParam("pageNumber") int pageNumber, 
 			HttpServletRequest request){
-		System.out.println("进了"+user_id+"用户关注的用户列表。。。");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
@@ -96,7 +96,6 @@ public class FriendsController {
 			@RequestParam("pageSize") int pageSize, 
 			@RequestParam("pageNumber") int pageNumber, 
 			HttpServletRequest request){
-		System.out.println("进了"+user_id+"的fans的用户列表。。。");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
@@ -111,8 +110,6 @@ public class FriendsController {
 	@ResponseBody
 	public JSONObject showFriendList(@RequestParam("user_id") String user_id, 
 			HttpServletRequest request){
-		
-		System.out.println("进了"+user_id+"的朋友列表。。。");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
@@ -127,12 +124,23 @@ public class FriendsController {
 	@ResponseBody
 	public JSONObject cancelFans(@RequestParam("user_id") String user_id, 
 			@RequestParam("f_user_id") String f_user_id){
-		System.out.println("user_id="+user_id+",f_user_id="+f_user_id);
-		System.out.println("进了用户取消fans。。。");
 		JSONObject jsonObject = friendsService.cancelFans(user_id, f_user_id);
 		return jsonObject;
 	}
 	
+	/**
+	 * 删除朋友
+	 * @param user_id 登录用户的id
+	 * @param f_user_id 要删除朋友的id
+	 * @return
+	 */
+	@RequestMapping("/deleteFriend.do")
+	@ResponseBody
+	public JSONObject deleteFriend(@RequestParam("user_id") String user_id, 
+			@RequestParam("f_user_id") String f_user_id){
+		JSONObject jsonObject = friendsService.deleteFriend(user_id, f_user_id);
+		return jsonObject;
+	}
 	
 	
 }

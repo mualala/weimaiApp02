@@ -29,18 +29,11 @@ public class UUIDUtil {
 	 * @throws NoSuchAlgorithmException 
 	 */
 	public static String md5(String src) throws Exception {
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			byte[] output = md.digest(src.getBytes());
-			//将加密结果output转成字符串输出
-			String srr = Base64.encodeBase64String(output);
-			return new String(srr);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			throw new Exception("密码加密失败",e);
-		}
-		
-		
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		byte[] output = md.digest(src.getBytes());
+		//将加密结果output转成字符串输出
+		String srr = Base64.encodeBase64String(output);
+		return new String(srr);
 	}
 	public static void main(String[] args) {
 		

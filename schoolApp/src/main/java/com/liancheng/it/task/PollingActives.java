@@ -1,19 +1,11 @@
 package com.liancheng.it.task;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.liancheng.it.dao.user.UserDao;
 import com.liancheng.it.listener.AppRequestListener;
@@ -38,7 +30,7 @@ public class PollingActives implements ServletContextAware {
 //			
 //		}
 		AppRequestListener appRequestListener = new AppRequestListener();
-		appRequestListener.aa();
+//		appRequestListener.aa();
 	}
 
 	public void setServletContext(ServletContext arg0) {

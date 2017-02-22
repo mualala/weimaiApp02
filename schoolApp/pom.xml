@@ -58,6 +58,11 @@
   		<version>1.9</version>
   	</dependency>
   	<dependency>
+  	<dependency>
+    <groupId>com.alibaba</groupId>
+    	<artifactId>druid</artifactId>
+    	<version>1.0.26</version>
+	</dependency>
   	<groupId>commons-dbcp</groupId>
 	  <artifactId>commons-dbcp</artifactId>
 	  <version>1.4</version>

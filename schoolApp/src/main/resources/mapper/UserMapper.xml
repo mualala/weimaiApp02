@@ -104,23 +104,78 @@
  	<select id="queryAdminVerify" parameterType="java.util.Map" 
  	resultType="com.liancheng.it.entity.user.User">
  		select * from user 
- 		where (stu_state='0' or certi_state='0') and (stu_verify is not NULL or certi_verify is not null) 
- 		ORDER BY lastmodifytime desc 
+ 		<where>
+ 			((stu_state='0' or certi_state='0' or stu_state='2' or certi_state='2') and (stu_verify is not NULL or certi_verify is not null)) 
+ 			<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(schoolId,phoneNum,user_nickname,verify_state,city,county,school) like #{searchText}
+ 			</if>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="schoolID != null and schoolID != ''">and schoolId=#{schoolID}</if>
+			<if test="phoneNum != null and phoneNum != ''">and phoneNum=#{phoneNum}</if>
+			<if test="sortName != null and sortName == 'schoolId'">ORDER BY schoolId ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'phoneNum'">ORDER BY phoneNum ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'reportCreaTime'">ORDER BY creatime ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'verify_state'">ORDER BY verify_state ${sortOrder}</if>
+ 		</where>
  		limit #{start},#{end}
  	</select>
- 	<select id="queryCountVerifies" resultType="int">
- 		select count(*) from user 
- 		where stu_state='0' and certi_state='0' and stu_verify is not NULL or certi_verify is not null
+ 	<select id="queryCountVerifies" parameterType="map" resultType="int">
+ 		select count(schoolId) from user 
+ 		<where>
+ 			((stu_state='0' or certi_state='0' or stu_state='2' or certi_state='2') and (stu_verify is not NULL or certi_verify is not null)) 
+ 			<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(schoolId,phoneNum,user_nickname,verify_state,city,county,school) like #{searchText}
+ 			</if>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="schoolID != null and schoolID != ''">and schoolId=#{schoolID}</if>
+			<if test="phoneNum != null and phoneNum != ''">and phoneNum=#{phoneNum}</if>
+			<if test="sortName != null and sortName == 'schoolId'">ORDER BY schoolId ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'phoneNum'">ORDER BY phoneNum ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'reportCreaTime'">ORDER BY creatime ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'verify_state'">ORDER BY verify_state ${sortOrder}</if>
+ 		</where>
  	</select>
  	
  	<update id="modifyStuAdmin" parameterType="java.util.Map">
  		update user set 
- 		stu_state=#{stu_state},verify_state='1'  
+ 		<if test="stu_state == 1 and (otherState == 0 or otherState == 1 or otherState == 2)">
+ 			stu_state=#{stu_state},verify_state='1' 
+ 		</if>
+ 		<if test="stu_state == 0 and (otherState == 0 or otherState == 2)">
+ 			stu_state=#{stu_state},verify_state='0' 
+ 		</if>
+ 		<if test="stu_state == 0 and (otherState == 1)">
+ 			stu_state=#{stu_state},verify_state='1' 
+ 		</if>
+ 		<if test="stu_state == 2 and (otherState == 0 or otherState == 2)">
+ 			stu_state=#{stu_state},verify_state='0' 
+ 		</if>
+ 		<if test="stu_state == 2 and (otherState == 1)">
+ 			stu_state=#{stu_state},verify_state='1' 
+ 		</if>
  		where schoolId=#{schoolId}
  	</update>
  	<update id="modifyCertiAdmin" parameterType="java.util.Map">
  		update user set 
- 		certi_state=#{certi_state},verify_state='1' 
+ 		<if test="certi_state == 1 and (otherState == 0 or otherState == 1 or otherState == 2)">
+ 			certi_state=#{certi_state},verify_state='1' 
+ 		</if>
+ 		<if test="certi_state == 0 and (otherState == 0 or otherState == 2)">
+ 			certi_state=#{certi_state},verify_state='0' 
+ 		</if>
+ 		<if test="certi_state == 0 and (otherState == 1)">
+ 			certi_state=#{certi_state},verify_state='1' 
+ 		</if>
+ 		<if test="certi_state == 2 and (otherState == 0 or otherState == 2)">
+ 			certi_state=#{certi_state},verify_state='0' 
+ 		</if>
+ 		<if test="certi_state == 2 and (otherState == 1)">
+ 			certi_state=#{certi_state},verify_state='1' 
+ 		</if>
  		where schoolId=#{schoolId}
  	</update>
  	
@@ -185,5 +240,102 @@
 		select * from visitor where v_user_id=#{v_user_id} 
 		limit #{start},#{end}
 	</select>
-	 	
+	
+	<select id="queryUserList" parameterType="map" 
+	resultType="com.liancheng.it.entity.user.User">
+		select * from user 
+		<where>
+			<if test="searchText != null and searchText != ''">
+				CONCAT_WS(schoolId,phoneNum,user_nickname,verify_state,gender,star,e_state,province,city,county,birthday,grade,profession,major,school,highschool,lable,skill) like #{searchText}
+			</if>
+			<if test="verifyState == 1 or verifyState == 0">and verify_state=#{verifyState}</if>
+			<if test="school != null and school != ''">and school=#{school}</if>
+			<if test="gender != null and gender != '--请选择--'">and gender=#{gender}</if>
+			<if test="profession != null and profession != ''">and profession=#{profession}</if>
+			<if test="schoolID != null and schoolID != ''">and schoolId=#{schoolID}</if>
+			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="sortName != null and sortName == 'schoolId'">ORDER BY schoolId ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'phoneNum'">ORDER BY phoneNum ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'verify_state'">ORDER BY verify_state ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'reportCreaTime'">ORDER BY creatime ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'level'">ORDER BY level ${sortOrder}</if>
+		</where>
+		limit #{start},#{end}
+	</select>
+	
+	<select id="totalUserCount" parameterType="map" resultType="int">
+		select count(schoolId) from user 
+		<where>
+			<if test="searchText != null and searchText != ''">
+				CONCAT_WS(schoolId,phoneNum,user_nickname,verify_state,gender,star,e_state,province,city,county,birthday,grade,profession,major,school,highschool,lable,skill) like #{searchText}
+			</if>
+			<if test="verifyState == 1 or verifyState == 0">and verify_state=#{verifyState}</if>
+			<if test="school != null and school != ''">and school=#{school}</if>
+			<if test="gender != null and gender != '--请选择--'">and gender=#{gender}</if>
+			<if test="profession != null and profession != ''">and profession=#{profession}</if>
+			<if test="schoolID != null and schoolID != ''">and schoolId=#{schoolID}</if>
+			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="sortName != null and sortName == 'schoolId'">ORDER BY schoolId ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'phoneNum'">ORDER BY phoneNum ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'verify_state'">ORDER BY verify_state ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'reportCreaTime'">ORDER BY creatime ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'level'">ORDER BY level ${sortOrder}</if>
+		</where>
+	</select>
+	
+	<select id="ModifyPassword" parameterType="map">
+		update user set 
+		password=#{password} 
+		where phoneNum=#{phoneNum}
+	</select>
+	
+	<select id="queryChartControlYM" resultType="com.liancheng.it.entity.user.UserChart">
+		select DISTINCT DATE_FORMAT(creatime,'%Y-%m') ym from user GROUP BY ym
+	</select>
+	
+	<select id="queryChartData" parameterType="string" 
+	resultType="com.liancheng.it.entity.user.UserChart">
+		select DATE_FORMAT(creatime,'%Y-%m') ym,DATE_FORMAT(creatime,'%Y-%m-%d') ymd, COUNT(*) countAddUser 
+		from user 
+		where DATE_FORMAT(creatime,'%Y-%m')=#{selectDate} 
+		GROUP BY ymd
+	</select>
+	
+	<select id="queryAllNetPeople" resultType="int">
+		select count(0) from user
+	</select>
+	
+	<select id="totalNoVerifyUser" resultType="int">
+		select count(user_id) from user 
+		where (stu_state='0' or certi_state='0' or stu_state='2' or certi_state='2') and (stu_verify is not NULL or certi_verify is not null)
+	</select>
+	
+	<select id="modifySendMsg" parameterType="map">
+		update user set send_msg=#{send_msg} where user_id=#{user_id}
+	</select>
+	
+	<update id="modifyAddSwitch" parameterType="map">
+		update user set add_switch=#{add_switch} where user_id=#{user_id}
+	</update>
+	
+	<insert id="saveTaNoSeeOwnActive" parameterType="map" keyProperty="see_id">
+		insert into see_control 
+		(user_id,other_user_id,type,state,see_creatime) 
+		values 
+		(#{user_id},#{other_user_id},#{type},#{state},#{see_creatime})
+	</insert>
+	
+	<select id="querySeeControlState" parameterType="map" 
+	resultType="com.liancheng.it.entity.user.SeeControl">
+		select * from see_control where user_id=#{user_id} and other_user_id=#{other_user_id}
+	</select>
+	
+	<update id="modifyLifeSee" parameterType="map">
+		update user set life_see=#{life_see} where user_id=#{user_id}
+	</update>
+	
  </mapper>

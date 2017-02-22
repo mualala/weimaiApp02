@@ -18,6 +18,7 @@ public class Active implements Serializable{
 	private String type_a;//首页动态大类，校园生活、工作生活、秀一秀等
 	private String type_b;//用于扩展分类
 	private String saysay;//发表的说说
+	private String title;//标题
 	private String active_pic;//说说发表的图片
 	private String docum;//上传的资源文件
 	private String docum_size;//docum_size
@@ -33,9 +34,12 @@ public class Active implements Serializable{
 	private String prifile;//用户的头像
 	private int totalLaud;//某条说说的点赞数量
 	private String user_nickname;//用户的昵称
+	private int level;
 	private String c_time;//用于后台报表
 	private int isLaud;//用户对某条说说是否点赞
 	private int isVerify;//某用户是否通过了验证;0=不是认证用户；1是认证用户
+	private int favor_id;//收藏夹的id
+	
 	
 	/**
 	 * @return the active_user_id
@@ -96,6 +100,18 @@ public class Active implements Serializable{
 	 */
 	public void setSaysay(String saysay) {
 		this.saysay = saysay;
+	}
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	/**
 	 * @return the active_pic
@@ -266,6 +282,18 @@ public class Active implements Serializable{
 		this.user_nickname = user_nickname;
 	}
 	/**
+	 * @return the level
+	 */
+	public int getLevel() {
+		return level;
+	}
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	/**
 	 * @return the c_time
 	 */
 	public String getC_time() {
@@ -301,6 +329,18 @@ public class Active implements Serializable{
 	public void setIsVerify(int isVerify) {
 		this.isVerify = isVerify;
 	}
+	/**
+	 * @return the favor_id
+	 */
+	public int getFavor_id() {
+		return favor_id;
+	}
+	/**
+	 * @param favor_id the favor_id to set
+	 */
+	public void setFavor_id(int favor_id) {
+		this.favor_id = favor_id;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -308,15 +348,16 @@ public class Active implements Serializable{
 	public String toString() {
 		return "Active [active_user_id=" + active_user_id + ", user_id="
 				+ user_id + ", type_a=" + type_a + ", type_b=" + type_b
-				+ ", saysay=" + saysay + ", active_pic=" + active_pic
-				+ ", docum=" + docum + ", docum_size=" + docum_size
-				+ ", state=" + state + ", see=" + see + ", doc_down_count="
-				+ doc_down_count + ", f_see_state=" + f_see_state
-				+ ", active_creatime=" + active_creatime + ", pics=" + pics
-				+ ", docums=" + docums + ", totalCommont=" + totalCommont
-				+ ", prifile=" + prifile + ", totalLaud=" + totalLaud
-				+ ", user_nickname=" + user_nickname + ", c_time=" + c_time
-				+ ", isLaud=" + isLaud + ", isVerify=" + isVerify + "]";
+				+ ", saysay=" + saysay + ", title=" + title + ", active_pic="
+				+ active_pic + ", docum=" + docum + ", docum_size="
+				+ docum_size + ", state=" + state + ", see=" + see
+				+ ", doc_down_count=" + doc_down_count + ", f_see_state="
+				+ f_see_state + ", active_creatime=" + active_creatime
+				+ ", pics=" + pics + ", docums=" + docums + ", totalCommont="
+				+ totalCommont + ", prifile=" + prifile + ", totalLaud="
+				+ totalLaud + ", user_nickname=" + user_nickname + ", level="
+				+ level + ", c_time=" + c_time + ", isLaud=" + isLaud
+				+ ", isVerify=" + isVerify + ", favor_id=" + favor_id + "]";
 	}
 	
 }

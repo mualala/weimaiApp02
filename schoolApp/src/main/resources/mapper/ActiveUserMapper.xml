@@ -7,10 +7,10 @@
  	<insert id="addActive" parameterType="com.liancheng.it.entity.active.Active" 
  	keyProperty="active_user_id">
 	 	insert into active
-	 	(user_id,type_a,type_b,saysay,
+	 	(user_id,type_a,type_b,saysay,title,
 	 	active_pic,docum,docum_size,doc_down_count,active_creatime) 
 	 	values
-	 	(#{user_id},#{type_a},#{type_b},#{saysay},
+	 	(#{user_id},#{type_a},#{type_b},#{saysay},#{title},
 	 	#{active_pic},#{docum},#{docum_size},#{doc_down_count},#{active_creatime})
  	</insert>
  	
@@ -22,21 +22,47 @@
  	<select id="queryOwnActive" parameterType="java.util.Map" 
  	resultType="com.liancheng.it.entity.active.Active">
  		select * from active 
+ 		where user_id=#{user_id} and state='1' and type_a not in ('生活圈#')
+ 		order by active_creatime DESC
+ 		limit #{start},#{end}
+ 	</select>
+ 	<select id="queryOwnActiveAndSee" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select * from active 
  		where user_id=#{user_id} and state='1' order by active_creatime DESC
  		limit #{start},#{end}
  	</select>
+ 	 <select id="queryOtherOneActive" parameterType="map" 
+ 	 resultType="com.liancheng.it.entity.active.Active">
+ 	 	select * from active 
+ 	 	<where>
+ 	 		user_id=#{user_id} and state='1' 
+ 	 		<if test="fanSeeState == 0 and fanSeeState != null">and type_a not in ('生活圈#')</if>
+ 	 	</where>
+ 		order by active_creatime DESC
+ 		limit #{start},#{end}
+ 	 </select>
  	 
  	 <select id="queryClassActive" parameterType="java.util.Map" 
  	 resultType="com.liancheng.it.entity.active.ClassActive">
  	 	select * from class_active 
- 	 	where type_a=#{type_a}
+ 	 	where type_a=#{type_a} and user_id not in 
+ 	 	(
+ 	 		select * from 
+ 	 			(select other_user_id from see_control where other_user_id=#{user_id} and type='1' and state=1) A 
+ 	 		UNION
+ 	 			(select other_user_id from see_control where user_id=#{user_id} and type='2' and state=1)
+ 	 	)
  	 	limit #{start},#{end}
  	 </select>
  	 
  	 <select id="queryFriendsActvie" parameterType="java.util.Map" 
  	 resultType="com.liancheng.it.entity.active.CycFriendsActvie">
  	 	select * from cycle_friends_active 
- 	 	where user_id=#{user_id} 
+ 	 	where user_id in (select f_user_id from friends where user_id=#{user_id}) and user_id not in 
+ 	 	(
+ 	 		select other_user_id from see_control where user_id=#{user_id} and type='2' and state=1
+ 	 	)
  	 	limit #{start},#{end}
  	 </select>
  	 
@@ -53,7 +79,7 @@
  	 
  	 <select id="queryActiveId" parameterType="int" 
  	 resultType="com.liancheng.it.entity.active.ClassActive">
- 	 	select * from active where active_user_id=#{active_user_id}
+ 	 	select * from class_active where active_user_id=#{active_user_id}
  	 </select>
  	 
 
@@ -66,15 +92,35 @@
  	 </resultMap>
  	 <select id="queryAdmin" parameterType="java.util.Map"
  	 resultMap="aa">
- 	 	select active_user_id,user_id,type_a,saysay,active_pic,docum,active_creatime 
- 	 	from active 
- 	 	where state='0' order by active_creatime desc 
+ 	 	select * from active 
+ 	 	<where>
+ 	 		state='0' 
+ 	 		<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(active_user_id,type_a,type_b,saysay,title) like #{searchText}
+ 			</if>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and active_creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="sortName != null and sortName == 'active_user_id'">ORDER BY active_user_id ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'c_time'">ORDER BY active_creatime ${sortOrder}</if>
+ 	 	</where>
  	 	limit #{start},#{end}
  	 </select>
 
 
- 	 <select id="queryAdminTotal" resultType="int">
- 	 	select count(*) from active where state='0'
+ 	 <select id="queryAdminTotal" parameterType="map" resultType="int">
+ 	 	select count(active_user_id) from active 
+ 	 	<where>
+ 	 		state='0' 
+ 	 		<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(active_user_id,type_a,type_b,saysay,title) like #{searchText}
+ 			</if>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and active_creatime BETWEEN #{startDate} AND #{endDate} 
+			</if>
+			<if test="sortName != null and sortName == 'active_user_id'">ORDER BY active_user_id ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'c_time'">ORDER BY active_creatime ${sortOrder}</if>
+ 	 	</where>
  	 </select>
  	 
  	 <update id="oneActiveVerify" parameterType="int">
@@ -90,10 +136,32 @@
  	 
  	 <select id="activeVerifies" parameterType="java.util.Map" 
  	 resultType="com.liancheng.it.entity.active.ActiveVerify">
- 		select * from active_verify limit #{start},#{end}
+ 		select * from active_verify 
+ 		<where>
+ 			<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(act_verify_id,class_active,stu_verify,certi_verify) like #{searchText}
+ 			</if>
+ 			<if test="sortName != null and sortName == 'act_creatime'">ORDER BY act_creatime ${sortOrder}</if>
+ 			<if test="sortName != null and sortName == 'act_verify_id'">ORDER BY act_verify_id ${sortOrder}</if>
+ 		</where>
+ 		group by class_active,two_class 
+ 		limit #{start},#{end}
  	</select>
+ 	<select id="allActiveVerifies" resultType="com.liancheng.it.entity.active.ActiveVerify">
+ 		select * from active_verify GROUP BY class_active
+ 	</select>
+ 	<select id="allTwoActiveVerifies" resultType="com.liancheng.it.entity.active.ActiveVerify">
+ 		select * from active_verify where class_active=#{class_active}
+ 	</select>
+ 	
  	<select id="activeVerifiesTotal" resultType="int">
- 		select count(*) from active_verify
+ 		select count(act_verify_id) from active_verify 
+ 		<where>
+ 			<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(act_verify_id,class_active,stu_verify,certi_verify) like #{searchText}
+ 			</if>
+ 			<if test="sortName != null and sortName == 'act_creatime'">ORDER BY act_creatime ${sortOrder}</if>
+ 		</where>
  	</select>
  	
  	<update id="modifyStuVerify" parameterType="java.util.Map">
@@ -109,12 +177,14 @@
  	
  	<select id="queryStuAndCertiVerify" parameterType="string" 
  	resultType="com.liancheng.it.entity.active.ActiveVerify">
- 		select * from active_verify where class_active=#{classActive}
+ 		select * from active_verify where class_active=#{classActive} 
+ 		GROUP BY class_active
  	</select>
  	
- 	<select id="queryKeyActive" parameterType="string" 
+ 	<select id="queryKeyActive" parameterType="map" 
  	resultType="com.liancheng.it.entity.active.Active">
- 		select * from active where saysay like #{text}
+ 		select * from active where saysay like #{text} 
+ 		limit #{start},#{end}
  	</select>
  	
  	<select id="queryDownCount" parameterType="int" 
@@ -129,9 +199,9 @@
  		where active_user_id=#{active_user_id}
  	</update>
  	
- 	<select id="queryOneActive" parameterType="int" 
+ 	<select id="queryOneActive" parameterType="map" 
  	resultType="com.liancheng.it.entity.active.Active">
- 		select * from active where active_user_id=#{active_user_id}
+ 		select * from active where active_user_id=#{active_user_id} and user_id=#{user_id}
  	</select>
  	
  	<update id="batchModifyAcvtive">
@@ -144,7 +214,7 @@
  	
  	<select id="queryActForUserInfo" parameterType="string" 
  	resultType="com.liancheng.it.entity.active.Active">
- 		select * from active where user_id=#{user_id} 
+ 		select * from active where user_id=#{user_id} and type_a not in ('匿名#')
  		ORDER BY active_creatime DESC 
 		LIMIT 0,15
  	</select>
@@ -152,5 +222,131 @@
  	<select id="queryTotalActs" parameterType="string" resultType="int">
  		select count(*) from active where user_id=#{user_id} and state='1'
  	</select>
+ 	
+ 	<select id="queryActiveByActId" parameterType="int" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select * from active where active_user_id=#{active_user_id}
+ 	</select>
+ 	
+ 	<delete id="deleteOneActive" parameterType="int">
+ 		delete from active where active_user_id=#{active_user_id}
+ 	</delete>
+ 	
+ 	<insert id="saveTextKey" parameterType="string" keyProperty="text_id">
+ 		insert into textkey 
+ 		(text,text_creatime) 
+ 		values 
+ 		(#{text},#{text_creatime})
+ 	</insert>
+ 	
+ 	<select id="hotTextKey" resultType="com.liancheng.it.entity.active.TextKey">
+ 		select text_id,text,text_creatime,COUNT(0) rank 
+ 		FROM textkey GROUP BY text ORDER BY rank desc 
+		LIMIT 0,7
+ 	</select>
+ 	
+ 	<insert id="saveFavorites" parameterType="map" keyProperty="favor_id">
+ 		insert into favorites 
+ 		(user_id,active_user_id,favor_creatime) 
+ 		values 
+ 		(#{user_id},#{active_user_id},#{favor_creatime})
+ 	</insert>
+ 	
+ 	<select id="queryFavoritesList" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select 
+			W.active_user_id,W.user_id,W.profile,W.user_nickname,W.verify_state,W.level,W.type_a,W.type_b,
+			W.saysay,W.title,W.active_pic,W.docum,W.docum_size,W.doc_down_count,W.active_creatime,F.favor_id 
+		from 
+		(select 
+			A.active_user_id,A.user_id,U.profile,U.user_nickname,U.verify_state,U.gender,U.level,
+			A.type_a,A.type_b,A.saysay,A.title,A.active_pic,A.docum,A.docum_size,A.doc_down_count,A.active_creatime
+		from active A INNER JOIN user U on A.user_id=U.user_id) W INNER JOIN favorites F 
+		on F.active_user_id=W.active_user_id
+		where W.active_user_id in (select active_user_id from favorites where user_id=#{user_id}) 
+		ORDER BY F.favor_creatime desc 
+		LIMIT #{start},#{end}
+ 	</select>
+ 	
+ 	<delete id="deleteOneFavor" parameterType="int">
+ 		delete from favorites where favor_id=#{favor_id}
+ 	</delete>
+ 	
+ 	<select id="queryOneFavor" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.active.Favorites">
+ 		select * from favorites where user_id=#{user_id} and active_user_id=#{active_user_id}
+ 	</select>
+ 	
+ 	<delete id="batchDelThemeCateg">
+ 		delete from active_verify 
+ 		where act_verify_id in 
+ 		<foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+ 			#{id}
+ 		</foreach>
+ 	</delete>
+ 	
+ 	<insert id="saveThemeCateg" parameterType="map" keyProperty="act_verify_id">
+ 		insert into active_verify 
+ 		(class_active,theme_pic,act_creatime) 
+ 		values 
+ 		(#{class_active},#{theme_pic},#{act_creatime})
+ 	</insert>
+ 	
+ 	<select id="queryAllNetActive" resultType="int">
+ 		select count(0) from active
+ 	</select>
+ 	
+ 	<select id="totalNoVerifyActive" resultType="int">
+ 		select count(active_user_id) from active 
+ 		where state='0'
+ 	</select>
+ 	
+ 	<insert id="saveTwoCateg" parameterType="map" keyProperty="act_verify_id">
+ 		insert into active_verify 
+ 		(class_active,two_class,two_pic,act_creatime) 
+ 		values 
+ 		(#{class_active},#{two_class},#{two_pic},#{act_creatime})
+ 	</insert>
+ 	
+ 	<select id="queryActiveCategReport" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.active.ActiveCategReport">
+ 		select type_a themeType,type_b twoType,count(0) activeCount from active 
+ 		<where>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and active_creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+ 		</where>
+ 		GROUP BY type_a 
+ 		limit #{start},#{end}
+ 	</select>
+ 	
+ 	<select id="totalActiveCategReport" parameterType="map" 
+ 	resultType="int">
+ 		select count(0) from 
+ 		(select type_a themeType,type_b twoType,count(0) activeCount from active 
+ 		<where>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and active_creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+ 		</where> GROUP BY type_a) cc
+ 	</select>
+ 	
+ 	<select id="queryCurrFriendProfile" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.active.CycFriendsActvie">
+ 		select * from cycle_friends_active 
+ 		where user_id in (select f_user_id from friends where user_id=#{user_id}) 
+		ORDER BY active_creatime DESC limit 0,1;
+ 	</select>
+ 	
+ 	<select id="queryByThemeName" parameterType="string" 
+ 	resultType="int">
+ 		select count(0) from active_verify where class_active=#{class_active}
+ 	</select>
+ 	
+ 	<update id="updateThemeCateg" parameterType="map">
+ 		update active_verify 
+ 		set theme_pic=#{theme_pic},act_lastmodifytime=#{act_lastmodifytime} 
+ 		where class_active=#{class_active}
+ 	</update>
  	
  </mapper>

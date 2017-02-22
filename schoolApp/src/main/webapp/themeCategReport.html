@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用户认证审核</title>
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.min.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+	<![endif]-->
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/font-awesome.min.css" />
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-table.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-editable.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-select.min.css">
+<link style="text/css" rel="stylesheet" href="css/style.css">
+<link style="text/css" rel="stylesheet" href="assets/css/codemirror.css">
+<link style="text/css" rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/ace.min.css">
+<link style="text/css" rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link style="text/css" rel="stylesheet" href="font/css/font-awesome.min.css">
+<style type="text/css">
+.img-rounded {
+    	width: 70px;
+    	height: 40px;
+    }
+</style>
+</head>
+<body>
+	<div class="page-content clearfix">
+	    <div class="row">
+	    	<div id="userVerifyTool" class="col-xs-12" style="color: red;font-size: 12px;">
+	    	</div>
+	    	<div id="themeCategTool" class="col-xs-12">
+			    <a class="btn btn-success btn-xs" onclick="active.themeCategReport.addThemeCateg.addThemeModal();">
+	    			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加主题大类
+	    		</a>
+	    		<a class="btn btn-success btn-xs" onclick="active.themeCategReport.addTwoCateg.addTwoModal();">
+	    			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加二级分类
+	    		</a>
+			    <a class="btn btn-danger btn-xs" onclick="active.themeCategReport.batchDeleteThemeCateg();">
+	    			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
+	    		</a>
+	    		<a style="color: red;font-size: 12px;text-decoration:none">
+	    			<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>修改权限：0 关闭主题权限;1 开启主题权限
+	    		</a>
+			</div>
+	    </div>
+	    <table id="themeCategTable" class="table table-bordered table-hover"></table>
+    </div>
+    
+    <!-- 添加主题的弹出框 -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="addThemeCateg">
+	    <div class="modal-dialog">
+	    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">添加主题分类</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="themeCateg" class="col-sm-2 control-label">主题大类</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="themeCateg" placeholder="请输入主题大类">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="themePic" class="col-sm-2 control-label">选择UI图</label>
+							<div class="col-sm-6" style="margin-left: 10px;">
+								<input type="file" class="form-control" id="themePic">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" onclick="active.themeCategReport.addThemeCateg.submitAddTheme();">
+						<i class="icon-save"></i> 提交添加
+					</button>
+					<button class="btn btn-danger" data-dismiss="modal">
+						<i class="icon-remove"></i> 关闭
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 添加二级分类的弹出框 -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="addTwoCateg">
+	    <div class="modal-dialog">
+	    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">添加二级分类</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="themeCateg" class="col-sm-2 control-label">主题大类</label>
+							<div class="col-sm-6">
+								<select class="form-control" id="selecThemeCateg"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="themeCateg" class="col-sm-2 control-label">二级分类</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="twoCateg" placeholder="请填入二级分类" style="margin-left: 0px;">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="themePic" class="col-sm-2 control-label">选择UI图</label>
+							<div class="col-sm-6">
+								<input type="file" class="form-control" id="twoPic">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" onclick="active.themeCategReport.addTwoCateg.submitTwoCateg();">
+						<i class="icon-save"></i> 提交添加
+					</button>
+					<button class="btn btn-danger" data-dismiss="modal">
+						<i class="icon-remove"></i> 关闭
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="assets/js/tableExport.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-export.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-table-editable.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-editable.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
+	<script type="text/javascript" src="assets/js/typeahead-bs2.min.js"></script>
+	<script type="text/javascript" src="assets/layer/layer.js"></script>
+	<script type="text/javascript" src="js/lrtk.js"></script>
+	<script type="text/javascript" src="assets/laydate/laydate.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="assets/myjs/datePlugin.js"></script>
+	<script type="text/javascript" src="assets/myjs/active.js"></script>
+	<script type="text/javascript">
+		//初始化日期控件	
+		initDate($("#startDate"));
+		initDate($("#endDate"));
+		//初始化报表
+		active.themeCategReport.initActiveVerifyTable();
+		Array.prototype.del = function() { 
+    		var a = {}, c = [], l = this.length; 
+    		for (var i = 0; i < l; i++) {
+	    		var b = this[i]; 
+	    		var d = (typeof b) + b; 
+	    		if (a[d] === undefined) { 
+		    		c.push(b); 
+		    		a[d] = 1; 
+	    		} 
+    		} 
+    		return c; 
+    	},
+    	console.log([1, 1, 2, 3, 4, 5, 4, 3, 4, 4, 5, 5, 6, 7].del());
+	</script>
+</body>
+</html>

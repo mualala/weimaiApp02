@@ -60,7 +60,7 @@ public class Service  {
 		String[] conf={"conf/spring-mybatis.xml","conf/spring-mvc.xml","conf/spring-aop.xml"};
 		ApplicationContext ac = new ClassPathXmlApplicationContext(conf);
 		UserDao userDao = ac.getBean("userDao",UserDao.class);
-		String i = userDao.queryUserProfile("181d4d3239e449b2938821243327048c");
+		String i = userDao.queryUserProfile("181d4d3239e449b2938821243327048caaaaa");
 		System.out.println(i);
 	}
 	
@@ -78,7 +78,7 @@ public class Service  {
 		String[] conf={"conf/spring-mybatis.xml","conf/spring-mvc.xml","conf/spring-aop.xml"};
 		ApplicationContext ac = new ClassPathXmlApplicationContext(conf);
 		UserService userService = ac.getBean("userService",UserService.class);
-		JSONObject result = userService.checkUserRegist("13883261153");
+		JSONObject result = userService.checkUserRegist("15680078351",1);
 		System.out.println(result);
 	}
 	

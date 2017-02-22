@@ -8,21 +8,22 @@ import com.liancheng.it.entity.pengpeng.AnswerUsers;
 import com.liancheng.it.entity.pengpeng.ChildAnswer;
 import com.liancheng.it.entity.pengpeng.OwnAnswer;
 import com.liancheng.it.entity.pengpeng.Questions;
+import com.liancheng.it.entity.pengpeng.TwoChildAnswer;
 
 public interface PengPengDao {
 	
 	public void addQuestion(Map<String, Object> params);//添加问题
 	public List<Questions> questionReport(Map<String, Object> params);//admin中的问题报表
-	public int totalQuestions();//问题列表的总数
+	public int totalQuestions(Map<String, Object> params);//问题列表的总数
 	
-	public void saveAnswer(Map<String, Object> params);//添加问题的直接回答
+	public void saveAnswer(Map<String, Object> params);//添加问题的直接回答---1
 	public Answer queryOneAnswer(Map<String, Object> params);//查询用户的回答
 	public Questions randOneQuestion();//随机查询某条问题
 	public List<AnswerUsers> queryAnswers(Map<String, Object> params);//查询某条问题的直接子回答
 	public Questions queryQuestion(int ques_id);//查询某条问题
 	public List<Questions> queryTypeQuestions(Map<String, Object> params);//查实名或匿名问题列表
 	public void addChildAnsLaud(Map<String, Object> params);//直接子评论的点赞
-	public void addChildAnswer(Map<String, Object> params);//添加问题的评论的评论
+	public void addChildAnswer(Map<String, Object> params);//添加问题的评论的评论---2
 	public ChildAnswer queryIsLaud(Map<String, Object> params);//查询某个点赞用户
 	public int countAnswerLaud(int ans_id);//统计碰碰某回答的点赞数
 	public Answer queryCurrUserAnswer(Map<String, Object> params);//查询当前登录用户对某问题的回答
@@ -35,6 +36,12 @@ public interface PengPengDao {
 	public void saveAnswerSee(Map<String, Object> params);//增加碰碰评论的查看数量
 	
 	public int countChildAnswer(Map<String, Object> params);//统计碰碰某评论的子评论数量
-	public List<ChildAnswer> queryTwoChildAns(Map<String, Object> params);//查询评论里面的评论
+	public Answer queryUserIsAns(Map<String, Object> params);//查询登录用户是否回答过
+	
+	public void addTwoChildAns(Map<String, Object> params);//再次添加回答的回答---3
+	public List<TwoChildAnswer> queryTwoChildAns(int child_ans_id);//查询评论里面的评论
+	public List<TwoChildAnswer> queryOnlyTwoChildAns(Map<String, Object> params);//查询评论里面的评论,仅好友可见
+	public int batchDelQuestions(List<Integer> ids);//批量删除问题
+	
 	
 }

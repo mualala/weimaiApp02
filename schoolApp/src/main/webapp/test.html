@@ -6,6 +6,15 @@
 </head>
 <body>
 	<hr>
+	<h2>碰碰再次添加评论的评论</h2>
+	<form action="pengpeng/addTwoChildAnswer.do" method="post">
+		user_id<input type="text" name="user_id">
+		parent_user_id<input type="text" name="parent_user_id">
+		child_ans_id<input type="text" name="child_ans_id">
+		content<input type="text" name="content">
+		<input type="submit" value="碰碰再次添加评论的评论">
+	</form>
+	<hr>
 	<h2>碰碰增加回答的浏览量</h2>
 	<form action="pengpeng/addSee.do" method="post">
 		ans_id<input type="text" name="ans_id">
@@ -17,6 +26,7 @@
 		ques_id<input type="text" name="ques_id">
 		own_user_id<input type="text" name="own_user_id">
 		other_user_id<input type="text" name="other_user_id">
+		name_type<input type="text" name="name_type">
 		pageNumber<input type="text" name="pageNumber">
 		pageSize<input type="text" name="pageSize">
 		<input type="submit" value="展示only的列表">
@@ -34,6 +44,7 @@
 	<form action="pengpeng/showCurrUserAnswer.do" method="post">
 		ques_id<input type="text" name="ques_id">
 		user_id<input type="text" name="user_id">
+		name_type<input type="text" name="name_type">
 		pageNumber<input type="text" name="pageNumber">
 		pageSize<input type="text" name="pageSize">
 		<input type="submit" value="展示已回答问题的用户列表">
@@ -59,6 +70,7 @@
 	<hr>
 	<h2>碰碰的问题列表</h2>
 	<form action="pengpeng/questionList.do" method="post">
+		user_id<input type="text" name="user_id">
 		name_type<input type="text" name="name_type">
 		pageNumber<input type="text" name="pageNumber">
 		pageSize<input type="text" name="pageSize">
@@ -215,7 +227,7 @@
 		type_b<input type="text" name="type_b">
 		saysay<input type="text" name="saysay">
 		user_id<input type="text" name="user_id"><br />
-		pageSize<input type="text" name="pageSize"><br />
+		title<input type="text" name="title"><br />
 		<input type="submit" value="发表动态">
 	</form>
 	<hr />
@@ -320,11 +332,18 @@
 		<input type="submit" value="添加子评论">
 	</form>
 	<hr />
-	<h2>测试评论及子评论的展示</h2>
+	<h2>动态的详情页</h2>
 	<form action="commont/detailActive.do" method="post">
 		com_user_id<input type="text" name="com_user_id"><br />
 		active_user_id<input type="text" name="active_user_id"><br />
-		<input type="submit" value="展示评论及子评论">
+		<input type="submit" value="动态的详情页">
+	</form>
+	<h2>用户的动态收藏列表</h2>
+	<form action="active/showFavoritesList.do" method="post">
+		user_id<input type="text" name="user_id"><br />
+		pageNumber<input type="text" name="pageNumber"><br />
+		pageSize<input type="text" name="pageSize"><br />
+		<input type="submit" value="用户的动态收藏列表">
 	</form>
 	
 </body>
