@@ -39,7 +39,7 @@ public interface UserService {
 	public JSONObject visitorList(String user_id, int pageSize, int pageNumber, 
 			String hostPath01);//访客的用户列表
 	public JSONObject userReport(int pageSize, int pageNumber, String searchText, String verifyState, 
-			String school, String gender, String profession, String startDate, String endDate, 
+			String blockState, String school, String gender, String profession, String startDate, String endDate, 
 			String sortName, String sortOrder, String schoolID, String hostPath01, String hostPath02);//后台的用户报表
 	public JSONObject checkUserVrify(String user_id);//检查用户认证是否通过
 	public JSONObject editPassword(String phoneNum, String code, String password);//修改密码
@@ -50,5 +50,7 @@ public interface UserService {
 	public JSONObject addFriendIsVerify(String user_id, int switchVal);
 	public JSONObject taNoSeeOwnActive(String user_id, String other_user_id, String type, int state);
 	public JSONObject lifeSeeControl(String user_id, int switchVal);
+	public JSONObject blockUser(String user_id, int lock);
+	
 	
 }

@@ -196,19 +196,21 @@ public class CommontServiceimpl implements CommontService {
 		activeUserDao.updateSee(seeActive);//更新说说查看的数量
 		//添加某条说说的信息
 		ClassActive classOneAct = activeUserDao.queryActiveId(active_user_id);
-		if(classOneAct.getProfile()==null || "".equals(classOneAct.getProfile())){
+		if(classOneAct.getProfile()==null || "匿名#".equals(classOneAct.getType_a())){
 			classOneAct.setProfile(hostPath01+"avatar_def.png");//设置头像路径
 		}else {
 			classOneAct.setProfile(hostPath01+classOneAct.getProfile());//设置头像路径
+		}
+		//设置用户头像
+		if("匿名#".equals(classOneAct.getType_a())){
+			classOneAct.setUser_nickname("匿名");
 		}
 		String pics = classOneAct.getActive_pic();
 		String resultPicName = "";//url地址的图片
 		List<String> aa = new ArrayList<String>();
 		if(pics != null){//只要用户有图片
 			String[] picsName = pics.split(",");
-			System.out.println("图片的数量"+(picsName.length));
 			for(String pic:picsName){
-				System.out.println("picname="+pic);
 				aa.add(resultPicName+hostPath02+pic);
 			}
 		}

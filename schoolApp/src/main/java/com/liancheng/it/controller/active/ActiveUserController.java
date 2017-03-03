@@ -5,23 +5,18 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.minidev.json.JSONObject;
-import net.sf.json.JSON;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,11 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.liancheng.it.dao.active.ActiveUserDao;
 import com.liancheng.it.entity.active.Active;
-import com.liancheng.it.entity.active.ThemeCateg;
 import com.liancheng.it.service.active.ActiveUserService;
 import com.liancheng.it.service.admin.AdminService;
 import com.liancheng.it.service.friends.FriendsService;
-import com.liancheng.it.util.UUIDUtil;
 
 /**
  * 用户动态
@@ -71,11 +64,12 @@ public class ActiveUserController {
 		String type_b = multipartRequest.getParameter("type_b");
 		String saysay = multipartRequest.getParameter("saysay");
 		String title = multipartRequest.getParameter("title");
+		String position = multipartRequest.getParameter("position");
 		System.out.println("进了发动态的请求");
 //			System.out.println("user_id="+user_id+",type_a="+type_a+",type_b="+",saysay="+saysay);
 		//保存文件的本地路径
 		String localBasePath = request.getSession().getServletContext().getRealPath("/")+"images/local_active/";
-		jsonObject = activeUserService.addActive(pics, docum, user_id, type_a, type_b, saysay, title, localBasePath);
+		jsonObject = activeUserService.addActive(pics, docum, user_id, type_a, type_b, saysay, title, position, localBasePath);
 		return jsonObject;
 	}
 	
@@ -112,9 +106,9 @@ public class ActiveUserController {
 	@ResponseBody
 	public JSONObject friendsActive(@RequestParam("user_id") String user_id, 
 			@RequestParam("type_a") String type_a, 
+			@RequestParam(value="type_b",required=false) String type_b, 
 			@RequestParam("pageSize") int pageSize, 
 			@RequestParam("pageNumber") int pageNumber, 
-			@RequestParam("com_user_id") String com_user_id, 
 			HttpServletRequest request){
 		System.out.println("进了展示大类的请求");
 		System.out.println("type_a="+type_a+",pageSize="+pageSize+",pageNumber="+pageNumber);
@@ -124,11 +118,10 @@ public class ActiveUserController {
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
 		String hostPath02 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_active/";
 		System.out.println("进了首页大类的动态展示"+hostPath02);
-		JSONObject jsonObject = activeUserService.showClassActive(user_id, type_a, pageSize, 
-				pageNumber, hostPath01, hostPath02, com_user_id);
+		JSONObject jsonObject = activeUserService.showClassActive(user_id, type_a, type_b, pageSize, 
+				pageNumber, hostPath01, hostPath02);
 //		HttpSession session = request.getSession();
 //		System.out.println("动态里面获取session="+session.getAttribute("username"));
-		System.out.println("active中A的属性值="+request.getServletContext().getAttribute("username"));
 		return jsonObject;
 	}
 	
@@ -351,6 +344,16 @@ public class ActiveUserController {
 		return jsonObject;
 	}
 	
-	
+	/**
+	 * 根据主题大类得到某分类下的二级分类
+	 * @param class_active
+	 * @return
+	 */
+	@RequestMapping("/oneThemeTwoClass.do")
+	@ResponseBody
+	public JSONObject oneThemeTwoClass(@RequestParam("type_a") String class_active){
+		JSONObject jsonObject = activeUserService.oneThemeTwoClass(class_active);
+		return jsonObject;
+	}
 	
 }

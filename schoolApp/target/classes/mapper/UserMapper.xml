@@ -249,6 +249,7 @@
 				CONCAT_WS(schoolId,phoneNum,user_nickname,verify_state,gender,star,e_state,province,city,county,birthday,grade,profession,major,school,highschool,lable,skill) like #{searchText}
 			</if>
 			<if test="verifyState == 1 or verifyState == 0">and verify_state=#{verifyState}</if>
+			<if test="blockState == 1 or blockState == 0">and block_status=#{blockState}</if>
 			<if test="school != null and school != ''">and school=#{school}</if>
 			<if test="gender != null and gender != '--请选择--'">and gender=#{gender}</if>
 			<if test="profession != null and profession != ''">and profession=#{profession}</if>
@@ -272,6 +273,7 @@
 				CONCAT_WS(schoolId,phoneNum,user_nickname,verify_state,gender,star,e_state,province,city,county,birthday,grade,profession,major,school,highschool,lable,skill) like #{searchText}
 			</if>
 			<if test="verifyState == 1 or verifyState == 0">and verify_state=#{verifyState}</if>
+			<if test="blockState == 1 or blockState == 0">and block_status=#{blockState}</if>
 			<if test="school != null and school != ''">and school=#{school}</if>
 			<if test="gender != null and gender != '--请选择--'">and gender=#{gender}</if>
 			<if test="profession != null and profession != ''">and profession=#{profession}</if>
@@ -328,6 +330,16 @@
 		values 
 		(#{user_id},#{other_user_id},#{type},#{state},#{see_creatime})
 	</insert>
+	<select id="queryTaNoSeeOwnActive" parameterType="map" 
+	resultType="com.liancheng.it.entity.user.SeeControl">
+		select * from see_control 
+		where user_id=#{user_id} and other_user_id=#{other_user_id} and type=#{type}
+	</select>
+	<update id="updateTaNoSeeOwnActive" parameterType="map">
+		update see_control set state=#{state} 
+		where user_id=#{user_id} and other_user_id=#{other_user_id} and type=#{type}
+	</update>
+	
 	
 	<select id="querySeeControlState" parameterType="map" 
 	resultType="com.liancheng.it.entity.user.SeeControl">
@@ -336,6 +348,10 @@
 	
 	<update id="modifyLifeSee" parameterType="map">
 		update user set life_see=#{life_see} where user_id=#{user_id}
+	</update>
+	
+	<update id="blockUser" parameterType="map">
+		update user set block_status=#{block_status} where user_id=#{user_id}
 	</update>
 	
  </mapper>

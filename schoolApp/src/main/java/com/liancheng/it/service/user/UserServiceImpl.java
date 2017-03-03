@@ -71,7 +71,6 @@ public class UserServiceImpl implements UserService {
 			resultJSON.put("status", false);
 			return resultJSON;
 		}else {//电话号码不为空的情况下
-			System.out.println("电话号码部位空="+phoneNum);
 			int reqParamLen = phoneNum.length();
 			if(reqParamLen==11){//如果有11位通过电话号码查询
 				hasuser = userDao.findByPhoneNum(phoneNum);
@@ -81,7 +80,11 @@ public class UserServiceImpl implements UserService {
 				hasuser = userDao.findBySchoolId(hasuser);
 			}
 			try {
-				if(hasuser!=null && UUIDUtil.md5(password).equals(hasuser.getPassword())){//登录条件判断
+				if(hasuser!=null && hasuser.getBlock_status()==1){
+					resultJSON.put("status", false);
+					resultJSON.put("msg", "您已被禁用");
+					return resultJSON;
+				}else if(hasuser!=null && UUIDUtil.md5(password).equals(hasuser.getPassword()) && hasuser.getBlock_status()==0){//登录条件判断
 					
 					//生成短信的token
 					Map<String , Object> payload=new HashMap<String, Object>();
@@ -105,12 +108,14 @@ public class UserServiceImpl implements UserService {
 				}else{
 					resultJSON.put("status", false);
 					resultJSON.put("msg", "用户名或密码不对");
+					return resultJSON;
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				resultJSON.put("status", false);
+				resultJSON.put("msg", "登录失败");
+				return resultJSON;
 			}
-			return resultJSON;//返回json字符串
-		}		
+		}
 	}
 	
 	
@@ -868,7 +873,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public JSONObject userReport(int pageSize, int pageNumber, String searchText, String verifyState, 
-			String school, String gender, String profession, String startDate, String endDate, 
+			String blockState, String school, String gender, String profession, String startDate, String endDate, 
 			String sortName, String sortOrder, String schoolID, String hostPath01, String hostPath02){
 		JSONObject resultJSON = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -885,6 +890,11 @@ public class UserServiceImpl implements UserService {
 			params.put("verifyState", verifyState);
 		}else {
 			params.put("verifyState", 2);
+		}
+		if("1".equals(blockState) || "0".equals(blockState)){
+			params.put("blockState", blockState);
+		}else {
+			params.put("blockState", 2);
 		}
 		params.put("school", school);
 		params.put("gender", gender);
@@ -1138,24 +1148,45 @@ public class UserServiceImpl implements UserService {
 		params.put("other_user_id", other_user_id);
 		params.put("type", type);
 		params.put("state", state);
-		params.put("see_creatime", new Timestamp(System.currentTimeMillis()));
+		SeeControl seeControl = userDao.queryTaNoSeeOwnActive(params);
+		System.out.println(seeControl);
 		if("1".equals(type) && state==0){
-			userDao.saveTaNoSeeOwnActive(params);
+			if(seeControl != null){
+				userDao.updateTaNoSeeOwnActive(params);
+			}else {
+				params.put("see_creatime", new Timestamp(System.currentTimeMillis()));
+				userDao.saveTaNoSeeOwnActive(params);
+			}
 			resultJSON.put("status", true);
 			resultJSON.put("msg", "让TA看我的动态");
 			return resultJSON;
 		}else if ("1".equals(type) && state==1) {
-			userDao.saveTaNoSeeOwnActive(params);
+			if(seeControl != null){
+				userDao.updateTaNoSeeOwnActive(params);
+			}else {
+				params.put("see_creatime", new Timestamp(System.currentTimeMillis()));
+				userDao.saveTaNoSeeOwnActive(params);
+			}
 			resultJSON.put("status", true);
 			resultJSON.put("msg", "不让TA看我的动态");
 			return resultJSON;
 		}else if ("2".equals(type) && state==0) {
-			userDao.saveTaNoSeeOwnActive(params);
+			if(seeControl != null){
+				userDao.updateTaNoSeeOwnActive(params);
+			}else {
+				params.put("see_creatime", new Timestamp(System.currentTimeMillis()));
+				userDao.saveTaNoSeeOwnActive(params);
+			}
 			resultJSON.put("status", true);
 			resultJSON.put("msg", "不看TA的动态");
 			return resultJSON;
 		}else if ("2".equals(type) && state==1) {
-			userDao.saveTaNoSeeOwnActive(params);
+			if(seeControl != null){
+				userDao.updateTaNoSeeOwnActive(params);
+			}else {
+				params.put("see_creatime", new Timestamp(System.currentTimeMillis()));
+				userDao.saveTaNoSeeOwnActive(params);
+			}
 			resultJSON.put("status", true);
 			resultJSON.put("msg", "看TA的动态");
 			return resultJSON;
@@ -1181,6 +1212,37 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	public JSONObject blockUser(String user_id, int lock){
+		JSONObject resultJSON = new JSONObject();
+		Map<String, Object> params = new HashMap<String, Object>();
+		try {
+			if(IMManager.blockIMUser(user_id, lock)){
+				if(lock==1){
+					params.put("user_id", user_id);
+					params.put("block_status", lock);
+					userDao.blockUser(params);
+					resultJSON.put("status", true);
+					resultJSON.put("msg", "禁用用户成功");
+					return resultJSON;
+				}else {
+					params.put("user_id", user_id);
+					params.put("block_status", lock);
+					userDao.blockUser(params);
+					resultJSON.put("status", true);
+					resultJSON.put("msg", "解禁用户成功");
+					return resultJSON;
+				}
+			}else {
+				resultJSON.put("status", false);
+				resultJSON.put("msg", "禁用/解禁用户失败");
+				return resultJSON;
+			}
+		} catch (Exception e) {
+			resultJSON.put("status", false);
+			resultJSON.put("msg", "禁用/解禁用户失败");
+			return resultJSON;
+		}
+	}
 	
 	
 }

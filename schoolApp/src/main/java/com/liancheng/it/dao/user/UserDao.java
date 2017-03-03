@@ -55,6 +55,11 @@ public interface UserDao {
 	public void modifyLifeSee(Map<String, Object> params);
 	
 	public void saveTaNoSeeOwnActive(Map<String, Object> params);//保存不让他看我动态的关系
+	public SeeControl queryTaNoSeeOwnActive(Map<String, Object> params);//查询不让他看我动态的关系
+	public void updateTaNoSeeOwnActive(Map<String, Object> params);//更新不让他看我动态的关系
+	
 	public List<SeeControl> querySeeControlState(Map<String, Object> params);
+	public void blockUser(Map<String, Object> params);//禁用/解禁用户
+	
 	
 }

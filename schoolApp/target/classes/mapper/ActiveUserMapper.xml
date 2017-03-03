@@ -7,10 +7,10 @@
  	<insert id="addActive" parameterType="com.liancheng.it.entity.active.Active" 
  	keyProperty="active_user_id">
 	 	insert into active
-	 	(user_id,type_a,type_b,saysay,title,
+	 	(user_id,type_a,type_b,saysay,title,position,
 	 	active_pic,docum,docum_size,doc_down_count,active_creatime) 
 	 	values
-	 	(#{user_id},#{type_a},#{type_b},#{saysay},#{title},
+	 	(#{user_id},#{type_a},#{type_b},#{saysay},#{title},#{position},
 	 	#{active_pic},#{docum},#{docum_size},#{doc_down_count},#{active_creatime})
  	</insert>
  	
@@ -46,22 +46,29 @@
  	 <select id="queryClassActive" parameterType="java.util.Map" 
  	 resultType="com.liancheng.it.entity.active.ClassActive">
  	 	select * from class_active 
- 	 	where type_a=#{type_a} and user_id not in 
- 	 	(
- 	 		select * from 
- 	 			(select other_user_id from see_control where other_user_id=#{user_id} and type='1' and state=1) A 
- 	 		UNION
- 	 			(select other_user_id from see_control where user_id=#{user_id} and type='2' and state=1)
- 	 	)
+ 	 	<where>
+ 	 		user_id not in 
+ 	 		(
+	 	 		select * from 
+	 	 			(select other_user_id from see_control where other_user_id=#{user_id} and type='1' and state=1) A 
+	 	 		UNION
+	 	 			(select other_user_id from see_control where user_id=#{user_id} and type='2' and state=1)
+ 	 		)
+ 	 		<if test="type_a != null and type_a != ''">and type_a=#{type_a}</if>
+ 	 		<if test="type_b != null and type_b != ''">and type_b=#{type_b}</if>
+ 	 	</where>
  	 	limit #{start},#{end}
  	 </select>
  	 
  	 <select id="queryFriendsActvie" parameterType="java.util.Map" 
  	 resultType="com.liancheng.it.entity.active.CycFriendsActvie">
  	 	select * from cycle_friends_active 
- 	 	where user_id in (select f_user_id from friends where user_id=#{user_id}) and user_id not in 
+ 	 	where user_id in (select f_user_id from friends where user_id=#{user_id} or f_user_id=#{user_id}) and user_id not in 
  	 	(
- 	 		select other_user_id from see_control where user_id=#{user_id} and type='2' and state=1
+ 	 		select * from 
+ 	 		(select user_id from see_control where other_user_id=#{user_id} and type='1' and state=1) A 
+ 	 		UNION 
+ 	 		(select other_user_id from see_control where user_id=#{user_id} and type='2' and state=1)
  	 	)
  	 	limit #{start},#{end}
  	 </select>
@@ -96,13 +103,13 @@
  	 	<where>
  	 		state='0' 
  	 		<if test="searchText != null and searchText != ''">
- 				and CONCAT_WS(active_user_id,type_a,type_b,saysay,title) like #{searchText}
+ 				and CONCAT_WS(active_user_id,type_a,type_b,saysay,title,position) like #{searchText}
  			</if>
  			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
 				and active_creatime BETWEEN #{startDate} AND #{endDate}
 			</if>
 			<if test="sortName != null and sortName == 'active_user_id'">ORDER BY active_user_id ${sortOrder}</if>
-			<if test="sortName != null and sortName == 'c_time'">ORDER BY active_creatime ${sortOrder}</if>
+			<if test="sortName != null and sortName == 'active_creatime'">ORDER BY active_creatime ${sortOrder}</if>
  	 	</where>
  	 	limit #{start},#{end}
  	 </select>
@@ -141,10 +148,10 @@
  			<if test="searchText != null and searchText != ''">
  				and CONCAT_WS(act_verify_id,class_active,stu_verify,certi_verify) like #{searchText}
  			</if>
- 			<if test="sortName != null and sortName == 'act_creatime'">ORDER BY act_creatime ${sortOrder}</if>
- 			<if test="sortName != null and sortName == 'act_verify_id'">ORDER BY act_verify_id ${sortOrder}</if>
  		</where>
  		group by class_active,two_class 
+		<if test="sortName != null and sortName == 'act_creatime'">ORDER BY act_creatime ${sortOrder}</if>
+		<if test="sortName != null and sortName == 'act_verify_id'">ORDER BY act_verify_id ${sortOrder}</if>
  		limit #{start},#{end}
  	</select>
  	<select id="allActiveVerifies" resultType="com.liancheng.it.entity.active.ActiveVerify">
@@ -160,8 +167,9 @@
  			<if test="searchText != null and searchText != ''">
  				and CONCAT_WS(act_verify_id,class_active,stu_verify,certi_verify) like #{searchText}
  			</if>
- 			<if test="sortName != null and sortName == 'act_creatime'">ORDER BY act_creatime ${sortOrder}</if>
  		</where>
+ 		<if test="sortName != null and sortName == 'act_creatime'">ORDER BY act_creatime ${sortOrder}</if>
+		<if test="sortName != null and sortName == 'act_verify_id'">ORDER BY act_verify_id ${sortOrder}</if>
  	</select>
  	
  	<update id="modifyStuVerify" parameterType="java.util.Map">
@@ -316,7 +324,7 @@
 				and active_creatime BETWEEN #{startDate} AND #{endDate}
 			</if>
  		</where>
- 		GROUP BY type_a 
+ 		GROUP BY type_a,type_b 
  		limit #{start},#{end}
  	</select>
  	
@@ -348,5 +356,63 @@
  		set theme_pic=#{theme_pic},act_lastmodifytime=#{act_lastmodifytime} 
  		where class_active=#{class_active}
  	</update>
+ 	
+ 	<select id="queryOneThemeHaveTwoClass" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.active.ActiveVerify">
+ 		select * from active_verify 
+ 		where class_active=#{class_active}
+ 	</select>
+ 	
+ 	<select id="themeCateg" resultType="com.liancheng.it.entity.active.ActiveVerify">
+ 		select * from active_verify group by class_active
+ 	</select>
+ 	
+ 	<select id="twoCateg" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.active.ActiveVerify">
+ 		select * from active_verify where class_active=#{themeCateg} 
+ 		group by two_class
+ 	</select>
+ 	
+ 	<select id="detailActiveRepoet" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.active.Active">
+ 		select 
+ 			A.active_user_id,A.user_id,U.user_nickname,U.phoneNum,A.type_a,A.type_b,A.saysay,
+ 			A.title,A.position,A.active_pic,A.docum,A.state,A.see,A.active_creatime 
+ 		from active A inner join user U on A.user_id=U.user_id 
+ 	 	<where>
+ 	 		<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(A.active_user_id,A.type_a,A.type_b,A.saysay,A.position,A.title,U.user_nickname,U.phoneNum) like #{searchText}
+ 			</if>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and A.active_creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="themeClass != null and themeClass != ''">and A.type_a=#{themeClass}</if>
+			<if test="twoClass != null and twoClass != ''">and A.type_b=#{twoClass}</if>
+			<if test="state != null and state != ''">and A.state=#{state}</if>
+ 	 	</where>
+		<if test="sortName != null and sortName == 'active_user_id'">ORDER BY A.active_user_id ${sortOrder}</if>
+		<if test="sortName != null and sortName == 'active_creatime'">ORDER BY A.active_creatime ${sortOrder}</if>
+ 	 	limit #{start},#{end}
+ 	</select>
+ 	
+ 	<select id="totalDetailActiveRepoet" parameterType="map" 
+ 	resultType="int">
+ 		select 
+ 			count(0) 
+ 		from active A inner join user U on A.user_id=U.user_id 
+ 	 	<where>
+ 	 		<if test="searchText != null and searchText != ''">
+ 				and CONCAT_WS(A.active_user_id,A.type_a,A.type_b,A.saysay,A.position,A.title,U.user_nickname,U.phoneNum) like #{searchText}
+ 			</if>
+ 			<if test="(startDate != null and startDate != '') and (endDate != null and endDate != '')">
+				and A.active_creatime BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="themeClass != null and themeClass != ''">and A.type_a=#{themeClass}</if>
+			<if test="twoClass != null and twoClass != ''">and A.type_b=#{twoClass}</if>
+			<if test="state != null and state != ''">and A.state=#{state}</if>
+ 	 	</where>
+		<if test="sortName != null and sortName == 'active_user_id'">ORDER BY A.active_user_id ${sortOrder}</if>
+		<if test="sortName != null and sortName == 'active_creatime'">ORDER BY A.active_creatime ${sortOrder}</if>
+ 	</select>
  	
  </mapper>

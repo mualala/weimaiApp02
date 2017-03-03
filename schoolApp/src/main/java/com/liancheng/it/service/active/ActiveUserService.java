@@ -13,11 +13,12 @@ public interface ActiveUserService {
 	
 	public JSONObject addActive(MultipartFile[] pics, MultipartFile[] docum, 
 			String user_id, String type_a, String type_b, String saysay, String title, 
-			String localBasePath);//用户添加动态
+			String position, String localBasePath);//用户添加动态
 	public JSONObject showOwnActive(String user_id,String v_user_id, int pageSize, 
 			int pageNumber, String hostPath01, String hostPath02);//查看个人动态
-	public JSONObject showClassActive(String user_id, String type_a, int pageSize, int pageNumber, 
-			String hostPath01, String hostPath02,String com_user_id);//首页大类的动态展示
+	public JSONObject showClassActive(String user_id, String type_a, String type_b, 
+			int pageSize, int pageNumber, 
+			String hostPath01, String hostPath02);//首页大类的动态展示
 	public JSONObject showFriendsActvie(String user_id, int pageSize, int pageNumber, 
 			String hostPath01, String hostPath02);//展示朋友圈动态
 	
@@ -49,5 +50,12 @@ public interface ActiveUserService {
 	public JSONObject attachActiveTwoCateg(MultipartFile twoPic, String themeCateg, String twoCateg, String localBasePath);//后台添加动态的二级分类
 	public JSONObject activeCategReport(int pageSize, int pageNumber, 
 			String startDate, String endDate);//动态分类数量的报表
+	public JSONObject oneThemeTwoClass(String class_active);
+	public JSONObject themeCateg();
+	public JSONObject twoCategSelect(String themeCateg);
+	public JSONObject detailActiveRepoet(String searchText, String startDate, String endDate, 
+			String themeClass, String twoClass, String state, String sortName, String sortOrder, int pageSize, 
+			int pageNumber, String hostPath02);
+	
 	
 }

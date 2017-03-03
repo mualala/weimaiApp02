@@ -32,8 +32,8 @@ public class FriendsServiceImpl implements FriendsService {
 	
 	public JSONObject reqAddFriends(String user_id, String f_user_id, String msg, String type){
 		JSONObject jsonObject = new JSONObject();
-		User user = new User();
-		if(user.getAdd_switch()==0){//1 直接加好友
+		User user = userDao.findById(user_id);
+		if(user.getAdd_switch()==0 && (!"3".equals(type) && !"4".equals(type))){//1 直接加好友
 			try {
 				if(IMManager.addFriends(user_id, f_user_id, msg, "1")){
 					Friends friends01 = new Friends();
@@ -55,15 +55,15 @@ public class FriendsServiceImpl implements FriendsService {
 					return jsonObject;
 				}else {
 					jsonObject.put("status", false);
-					jsonObject.put("msg", "请求加好友失败");
+					jsonObject.put("msg", "添加加好友失败");
 					return jsonObject;
 				}
 			} catch (Exception e) {
 				jsonObject.put("status", false);
-				jsonObject.put("msg", "请求加好友失败");
+				jsonObject.put("msg", "添加加好友失败");
 				return jsonObject;
 			}
-		}else if(user.getAdd_switch()==1) {//2 请求加好友
+		}else if(user.getAdd_switch()==1 && (!"3".equals(type) && !"4".equals(type))) {//2 请求加好友
 			try {
 				if(IMManager.addFriends(user_id, f_user_id, msg, "2")){
 					jsonObject.put("status", true);
@@ -97,16 +97,16 @@ public class FriendsServiceImpl implements FriendsService {
 					friendsDao.addFriend(friends02);
 					
 					jsonObject.put("status", true);
-					jsonObject.put("msg", "添加好友成功");
+					jsonObject.put("msg", "成为好友");
 					return jsonObject;
 				}else {
 					jsonObject.put("status", false);
-					jsonObject.put("msg", "请求加好友失败");
+					jsonObject.put("msg", "确认失败");
 					return jsonObject;
 				}
 			} catch (Exception e) {
 				jsonObject.put("status", false);
-				jsonObject.put("msg", "请求加好友失败");
+				jsonObject.put("msg", "确认失败");
 				return jsonObject;
 			}
 		}else {//不同意成为好友,type=4

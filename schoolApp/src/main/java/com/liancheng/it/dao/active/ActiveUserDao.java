@@ -75,4 +75,9 @@ public interface ActiveUserDao {
 	public CycFriendsActvie queryCurrFriendProfile(String user_id);//查询最近有动态的朋友(只要最近的一个朋友)
 	public int queryByThemeName(String class_active);//根据主题类型的名称查询是否有主题类别
 	public void updateThemeCateg(Map<String, Object> params);
+	public List<ActiveVerify> queryOneThemeHaveTwoClass(String class_active);
+	public List<ActiveVerify> themeCateg();
+	public List<ActiveVerify> twoCateg(String themeCateg);
+	public List<Active> detailActiveRepoet(Map<String, Object> params);
+	public int totalDetailActiveRepoet(Map<String, Object> params);
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.coobird.thumbnailator.Thumbnails;
 import net.minidev.json.JSONObject;
 
 import org.aspectj.lang.annotation.Aspect;
@@ -56,7 +57,7 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 	
 	public JSONObject addActive(MultipartFile[] pics, MultipartFile[] docum, 
 			String user_id, String type_a, String type_b, String saysay, String title, 
-			String localBasePath) {
+			String position, String localBasePath) {
 		JSONObject jsonObject = new JSONObject();
 		//判断后台对发动态是否开启了个人信息验证
 		System.out.println("type_a="+type_a);
@@ -78,11 +79,15 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 						System.out.println("发说说图片的名称="+picName+suffix);
 						picName02 = picName02+picName+suffix+",";
 						try {
-							System.out.println("发动态图片保存的本地路径="+localBasePath+picName+suffix);
-							//保存图片到本地目录
-							pics[i].transferTo(new File(localBasePath+picName+suffix));
-						} catch (Exception e) {
-							System.out.println("保存发表的动态图片失败！！");
+							//压缩图片
+							Thumbnails.of(pics[i].getInputStream()).scale(1f).outputQuality(0.25f).toFile(localBasePath+picName+suffix);
+						} catch (Exception e1) {
+							try {
+								//保存图片到本地目录
+								pics[i].transferTo(new File(localBasePath+picName+suffix));
+							} catch (Exception e2) {
+								System.out.println("保存发表的动态图片失败!");
+							}
 						}
 					}
 				}
@@ -116,6 +121,7 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 			active.setType_b(type_b);
 			active.setSaysay(saysay);
 			active.setTitle(title);
+			active.setPosition(position);
 			active.setActive_pic(picName02);
 			active.setDocum(documName02);
 			active.setDocum_size(documSize02);
@@ -173,14 +179,17 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 						if(!pics[i].isEmpty()){//只要上传图片不为空
 							picName = picName+"-"+i;
 							String suffix = pics[i].getOriginalFilename().substring(pics[i].getOriginalFilename().lastIndexOf("."));//获取文件的后缀名
-							System.out.println("发说说图片的名称="+picName+suffix);
 							picName02 = picName02+picName+suffix+",";
 							try {
-								System.out.println("发动态图片保存的本地路径="+localBasePath+picName+suffix);
-								//保存图片到本地目录
-								pics[i].transferTo(new File(localBasePath+picName+suffix));
-							} catch (Exception e) {
-								System.out.println("保存发表的动态图片失败！！");
+								//压缩图片
+								Thumbnails.of(pics[i].getInputStream()).scale(1f).outputQuality(0.25f).toFile(localBasePath+picName+suffix);
+							} catch (Exception e1) {
+								try {
+									//保存图片到本地目录
+									pics[i].transferTo(new File(localBasePath+picName+suffix));
+								} catch (Exception e2) {
+									System.out.println("保存发表的动态图片失败!");
+								}
 							}
 						}
 					}
@@ -213,6 +222,7 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 				active.setType_b(type_b);
 				active.setSaysay(saysay);
 				active.setTitle(title);
+				active.setPosition(position);
 				active.setActive_pic(picName02);
 				active.setDocum(documName02);
 				active.setDocum_size(documSize02);
@@ -222,14 +232,11 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 				activeUserDao.addActive(active);
 				jsonObject.put("msg", "发动态成功");
 				jsonObject.put("status", true);
-				System.out.println(active);
-				System.out.println(jsonObject);
 				return jsonObject;
 			}
 		}
 		jsonObject.put("status", true);
 		jsonObject.put("code", 5);
-		System.out.println("jsonObject="+jsonObject);
 		return jsonObject;
 	}
 	
@@ -495,8 +502,9 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 	}
 	
 	//主题大类动态的展示
-	public JSONObject showClassActive(String user_id, String type_a, int pageSize, int pageNumber, 
-			String hostPath01, String hostPath02, String com_user_id){
+	public JSONObject showClassActive(String user_id, String type_a, String type_b, 
+			int pageSize, int pageNumber, 
+			String hostPath01, String hostPath02){
 		System.out.println("进了主题大类动态的展示的service层！！！");
 		JSONObject jsonObject = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -504,9 +512,10 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 		int start = (pageNumber-1)*pageSize;
 		int end = pageSize;
 		params.put("type_a", type_a);
+		params.put("type_b", type_b);
 		params.put("start", start);
 		params.put("end", end);
-		
+		params.put("user_id", user_id);
 		ArrayList<ClassActive> classActives = 
 				(ArrayList<ClassActive>) activeUserDao.queryClassActive(params);
 		for(int i=0;i<classActives.size();i++){
@@ -539,7 +548,7 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 			//判断用户对某个说说是够已经点赞
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("active_user_id", classActives.get(i).getActive_user_id());
-			param.put("com_user_id", com_user_id);
+			param.put("com_user_id", user_id);
 			if(commontDao.queryIsLaud(param) == null){
 				classActives.get(i).setIsLaud(0);
 			}else {
@@ -554,10 +563,14 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 					commontDao.totalLaud(classActives.get(i).getActive_user_id()));
 			//添加用户头像
 			String profile = userDao.queryUserProfile(classActives.get(i).getUser_id());
-			if(profile==null){
+			if(classActives.get(i).getProfile()==null || "匿名#".equals(classActives.get(i).getType_a())){
 				classActives.get(i).setProfile(hostPath01+"avatar_def.png");
 			}else {
 				classActives.get(i).setProfile(hostPath01+profile);
+			}
+			//设置发动态用户昵称
+			if("匿名#".equals(classActives.get(i).getType_a())){
+				classActives.get(i).setUser_nickname("匿名");
 			}
 			//添加用户说说的评论数量
 			classActives.get(i).setTotalCommont(
@@ -570,7 +583,17 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 		jsonObject.put("msg", "首页大类的动态展示成功！");
 		jsonObject.put("status", true);
 		jsonObject.put("data", classActives);
-		System.out.println(classActives.toString());
+		List<ActiveVerify> twoClasses = activeUserDao.queryOneThemeHaveTwoClass(type_a);
+		List<String> twoClasseStr = new ArrayList<String>();
+		twoClasseStr.add("全部");
+		if(twoClasses.size()>0){
+			for(ActiveVerify av:twoClasses){
+				if(av.getTwo_class() != null){
+					twoClasseStr.add(av.getTwo_class());
+				}
+			}
+		}
+		jsonObject.put("twoClass", twoClasseStr);
 		return jsonObject;
 	}
 	
@@ -847,8 +870,6 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 				List<String> aa = new ArrayList<String>();
 				if(picsName.length>0){//只要用户有图片
 					for(String pic:picsName){
-						System.out.println("某次的图片数量"+(picsName.length-1));
-						System.out.println("picname="+pic);
 						aa.add(resultPicName+hostPath02+pic);
 					}
 				}
@@ -1106,7 +1127,6 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 					params.put("two_class", twoCateg);
 					params.put("two_pic", picName+suffix);
 					params.put("act_creatime", new Timestamp(System.currentTimeMillis()));
-					System.out.println(params);
 					activeUserDao.saveTwoCateg(params);
 					jsonObject.put("status", true);
 					jsonObject.put("msg", "添加二级分类成功");
@@ -1118,6 +1138,15 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 					return jsonObject;
 				}
 			}
+		}else {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("class_active", themeCateg);
+			params.put("two_class", twoCateg);
+			params.put("act_creatime", new Timestamp(System.currentTimeMillis()));
+			activeUserDao.saveTwoCateg(params);
+			jsonObject.put("status", true);
+			jsonObject.put("msg", "添加二级分类成功");
+			return jsonObject;
 		}
 		return jsonObject;
 	}
@@ -1139,6 +1168,117 @@ public class ActiveUserServiceImpl implements ActiveUserService {
 		acts.add(acr);
 		jsonObject.put("rows", acts);
 		jsonObject.put("total", activeUserDao.totalActiveCategReport(params));
+		return jsonObject;
+	}
+	
+	public JSONObject oneThemeTwoClass(String class_active){
+		JSONObject jsonObject = new JSONObject();
+		List<ActiveVerify> activeVerifies = activeUserDao.queryOneThemeHaveTwoClass(class_active);
+		List<String> twoClasses = new ArrayList<String>();
+		twoClasses.add("选择分类");
+		if(activeVerifies.size()>0){
+			for(ActiveVerify av:activeVerifies){
+				if(av.getTwo_class() != null){
+					twoClasses.add(av.getTwo_class());
+				}
+			}
+		}
+		jsonObject.put("status", true);
+		jsonObject.put("data", twoClasses);
+		return jsonObject;
+	}
+	
+	public JSONObject themeCateg(){
+		JSONObject jsonObject = new JSONObject();
+		List<ActiveVerify> activeVerifies = activeUserDao.themeCateg();
+		List<String> themeCateg = new ArrayList<String>();
+		if(activeVerifies.size()>0){
+			for(ActiveVerify av:activeVerifies){
+				themeCateg.add(av.getClass_active());
+			}
+		}
+		jsonObject.put("data", themeCateg);
+		return jsonObject;
+	}
+	
+	public JSONObject twoCategSelect(String themeCateg){
+		JSONObject jsonObject = new JSONObject();
+		List<ActiveVerify> activeVerifies = activeUserDao.twoCateg(themeCateg);
+		List<String> twoCateg = new ArrayList<String>();
+		if(activeVerifies.size()>0){
+			for(ActiveVerify av:activeVerifies){
+				if(av.getTwo_class() != null){
+					twoCateg.add(av.getTwo_class());
+				}
+			}
+		}
+		jsonObject.put("data", twoCateg);
+		return jsonObject;
+	}
+	
+	public JSONObject detailActiveRepoet(String searchText, String startDate, String endDate, 
+			String themeClass, String twoClass, String state, String sortName, String sortOrder, 
+			int pageSize, int pageNumber, String hostPath02){
+		JSONObject jsonObject = new JSONObject();
+		int start = (pageNumber-1)*pageSize;
+		int end = pageSize;
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("start", start);
+		params.put("end", end);
+		params.put("sortName", sortName);
+		params.put("sortOrder", sortOrder);
+		System.out.println("searchText="+searchText);
+		if (searchText != null && !"".equals(searchText)) {
+			params.put("searchText", "%"+searchText+"%");
+		}else {
+			params.put("searchText", searchText);
+		}
+		if("--请选择--".equals(themeClass)){
+			params.put("themeClass", "");
+		}else {
+			params.put("themeClass", themeClass);
+		}
+		if("无".equals(twoClass)){
+			params.put("twoClass", "");
+		}else {
+			params.put("twoClass", twoClass);
+		}
+		if("--请选择--".equals(state)){
+			params.put("state", "");
+		}else {
+			params.put("state", state);
+		}
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
+		System.out.println(params);
+		List<Active> actives = activeUserDao.detailActiveRepoet(params);
+		for(Active act:actives){
+			String pics = act.getActive_pic();
+			String resultPicName = "";//url地址的图片
+			List<String> aa = new ArrayList<String>();
+			if(pics != null && !"".equals(pics)){//只要用户有图片
+				String[] picsName = pics.split(",");
+				for(String pic:picsName){
+					aa.add(resultPicName+hostPath02+pic);
+				}
+			}
+			
+			String docums = act.getDocum();
+			String resultDocum = "";//url资源文件
+			List<String> bb = new ArrayList<String>();
+			if(docums != null && !"".equals(docums)){//只要有资源文件
+				String[] documsName = docums.split(",");
+				for(String docum:documsName){
+					bb.add(resultDocum+hostPath02+docum);
+				}
+			}
+			//添加图片
+			act.setPics(aa);
+			//添加资源文件
+			act.setDocums(bb);
+		}
+		jsonObject.put("rows", actives);
+		jsonObject.put("total", activeUserDao.totalDetailActiveRepoet(params));
 		return jsonObject;
 	}
 	

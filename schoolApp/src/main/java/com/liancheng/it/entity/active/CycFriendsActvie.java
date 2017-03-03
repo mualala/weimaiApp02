@@ -19,6 +19,7 @@ public class CycFriendsActvie implements Serializable {
 	private String type_a;
 	private String type_b;
 	private String saysay;
+	private String position;
 	private String active_pic;
 	private String docum;
 	private String state;
@@ -127,6 +128,18 @@ public class CycFriendsActvie implements Serializable {
 	 */
 	public void setSaysay(String saysay) {
 		this.saysay = saysay;
+	}
+	/**
+	 * @return the position
+	 */
+	public String getPosition() {
+		return position;
+	}
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	/**
 	 * @return the active_pic
@@ -281,12 +294,12 @@ public class CycFriendsActvie implements Serializable {
 				+ ", user_id=" + user_id + ", user_nickname=" + user_nickname
 				+ ", profile=" + profile + ", level=" + level + ", type_a="
 				+ type_a + ", type_b=" + type_b + ", saysay=" + saysay
-				+ ", active_pic=" + active_pic + ", docum=" + docum
-				+ ", state=" + state + ", fans_see_state=" + fans_see_state
-				+ ", see=" + see + ", active_creatime=" + active_creatime
-				+ ", pics=" + pics + ", docums=" + docums + ", totalCommont="
-				+ totalCommont + ", totalLaud=" + totalLaud + ", isLaud="
-				+ isLaud + ", isVerify=" + isVerify + "]";
+				+ ", position=" + position + ", active_pic=" + active_pic
+				+ ", docum=" + docum + ", state=" + state + ", fans_see_state="
+				+ fans_see_state + ", see=" + see + ", active_creatime="
+				+ active_creatime + ", pics=" + pics + ", docums=" + docums
+				+ ", totalCommont=" + totalCommont + ", totalLaud=" + totalLaud
+				+ ", isLaud=" + isLaud + ", isVerify=" + isVerify + "]";
 	}
 	
 }

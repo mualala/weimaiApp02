@@ -1,6 +1,6 @@
 ﻿
 var user = {
-		/*配置动态审核报表*/
+		/*配置用户报表*/
 		initUserReport: function(){
 		    $("#userReportTable").bootstrapTable("destroy");//先销毁表格
 		    
@@ -16,7 +16,7 @@ var user = {
 		        pagination: true,//启动分页
 		        pageSize: 10,//每页显示的记录数
 		        pageNumber: 1,//当前第几页
-		        pageList: [10,20,30,50,100,500,1000],//记录数可选列表
+		        pageList: [10,20,30,50,100,500,1000,5000,10000],//记录数可选列表
 		        search: true,//是否启用查询,是客户端client才有效
 		        searchOnEnterKey: true,//按回车触发搜索方法，否则自动触发搜索方法
 		        showColumns: true,//显示下拉框勾选要显示的列
@@ -26,16 +26,24 @@ var user = {
 		        silent: true,//刷新事件必须设置
 		        strictSearch: true,//全匹配搜索，否则为模糊搜索
 		        showToggle: true,//显示 切换试图（table/card）按钮
-		        //toolbar: '#userTool', 
+		        toolbar: '#userBlockTool', 
+		        singleSelect: true,//禁止多选
 		        sidePagination: "server",//服务器端请求
 		        
 		        columns: [{
+		            field: 'state',
+		            checkbox: true,
+		            width: 30
+		        },{
 		            field: 'schoolId',
 		            title: '校园号',
 		            sortable: true
 		        },{
 		            field: 'user_nickname',
 		            title: '昵称'
+		        },{
+		            field: 'block_status',
+		            title: '封禁状态'
 		        },{
 		            field: 'phoneNum',
 		            title: '手机号',
@@ -141,6 +149,7 @@ var user = {
 		                    pageSize: params.pageSize,
 		                    searchText: $(".search").children('input').val(),
 		                    verifyState: $("#verifyState option:selected").val(),
+		                    blockState: $("#blockState option:selected").val(),
 		                    school: $("#schoolName").val(),
 		                    gender: $("#gender option:selected").val(),
 		                    profession: $("#profession").val(),
@@ -166,7 +175,7 @@ var user = {
 		    });
 		},
 		
-		/*配置动态审核报表*/
+		/*配置用户审核报表*/
 		initUserVertifyTable: function initUserVertifyTable(){
 		    $("#userVertify").bootstrapTable("destroy");//先销毁表格
 		    
@@ -337,6 +346,33 @@ var user = {
 						);
 		        }
 		    });
+		},
+		
+		/*禁用/解禁用户方法  1禁用 0解禁*/
+		unOrblockUser: function(_lock){
+			var rows = $("#userReportTable").bootstrapTable('getAllSelections');
+			var info = {
+					user_id: rows[0].user_id,
+					lock: _lock
+			};
+			$.ajax({
+				url:"admin/unOrblockUser.do",
+				type:"post",
+				data:info,
+				dataType:"",
+				success:function(data){
+					layer.msg(data.msg+'\r\n', {icon: 1});
+				},
+				error:function(){
+					layer.alert(
+							'禁用用户失败,请联系系统管理员\r\n',
+							{
+								title: '提示框',
+								icon:0
+					 		}
+						);
+				}
+			});
 		},
 		
 		/*移除条件*/

@@ -43,14 +43,10 @@ public class UserController {
 	public JSONObject doLogin(@RequestParam("phoneNum") String phoneNum, 
 			@RequestParam("password") String password, 
 			HttpServletRequest request){
-//		String phoneNum = request.getParameter("phoneNum");
-//		String password = request.getParameter("password");
-//		String token =request.getParameter("schoolId");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
-		JSONObject result = new JSONObject();
-		result = userService.checkLogin(phoneNum, password, request, hostPath01);//调用service方法实现业务逻辑
+		JSONObject result = userService.checkLogin(phoneNum, password, request, hostPath01);
 		return result;
 	}
 	
@@ -116,13 +112,12 @@ public class UserController {
 		String picName = String.valueOf(System.currentTimeMillis());//设置图片唯一的名称
 		String suffix = pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));//获取文件的后缀名
 		
-		System.out.println("本地保存的路径="+localBasePath + picName + suffix);
 		userService.saveProfile(pic, user_id, localBasePath + picName + suffix,picName,localBasePath,suffix);
 		
 		JSONObject resultJSON = new JSONObject();
+		resultJSON.put("status", true);
 		resultJSON.put("msg", "头像上传成功!");
 		resultJSON.put("data", basePath+picName+suffix);
-		System.out.println("上传头像返回的数据："+resultJSON.toJSONString());
 		return resultJSON;
 	}
 	
@@ -327,30 +322,32 @@ public class UserController {
 //			jsonObject.put("length01=", prop.getProperty("university").length());
 //			jsonObject.put("length02=", StringUtil02.compress(prop.getProperty("university")).length());
 			jsonObject.put("msg", "学校数据读取成功");
+			return jsonObject;
 		} catch (Exception e) {
 			System.out.println("学校数据读取失败");
 			jsonObject.put("status", false);
 			jsonObject.put("msg", "学校数据读取失败");
 			return jsonObject;
 		}
-		return jsonObject;
-		/*
-		net.sf.json.JSONObject j = new net.sf.json.JSONObject();
+	}
+	
+	@RequestMapping("/cityJSON.do")
+	@ResponseBody
+	public JSONObject cityJSON(){
+		JSONObject jsonObject = new JSONObject();
 		Properties prop = new Properties();
-		InputStream in= this.getClass().getClassLoader().getResourceAsStream("/json/json.properties");
 		try {
+			InputStreamReader in= new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("/json/json.properties"),"UTF-8");
 			prop.load(in);
+			jsonObject.put("data", prop.getProperty("city"));
+			jsonObject.put("msg", "城市数据读取成功");
+			jsonObject.put("status", true);
+			return jsonObject;
 		} catch (Exception e) {
-			System.out.println("学校的api数据读取失败");
-			j.accumulate("status", false);
-			j.accumulate("msg", "学校的api数据读取失败");
-			return j;
+			jsonObject.put("msg", "城市数据读取失败");
+			jsonObject.put("status", false);
+			return jsonObject;
 		}
-		j.accumulate("data", prop.getProperty("university"));
-		j.accumulate("status", true);
-		j.accumulate("msg", "学校的api数据读取成功");
-		return j;*/
-		
 	}
 	
 	/**
@@ -471,7 +468,7 @@ public class UserController {
 	 */
 	@RequestMapping("/lifeSeeControl.do")
 	@ResponseBody
-	public JSONObject lifeSeeControl(@RequestParam("user_ui") String user_id, 
+	public JSONObject lifeSeeControl(@RequestParam("user_id") String user_id, 
 			@RequestParam("switchVal") int switchVal){
 		JSONObject jsonObject = userService.lifeSeeControl(user_id, switchVal);
 		return jsonObject;

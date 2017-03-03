@@ -1,0 +1,33 @@
+1、添加/修改数据库配置文件
+[client]
+default-character-set=utf8mb4
+[mysql]
+default-character-set=utf8mb4
+[mysqld]
+character-set-server=utf8mb4
+event_scheduler=ON
+
+2、修改表和字段编码为utf8mb4
+alter table active convert to character set utf8mb4 collate utf8mb4_unicode_ci;
+alter table active change saysay saysay varchar(1000) character set utf8mb4 collate utf8mb4_unicode_ci;
+
+3、修改mybatis的数据库连接属性
+?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE
+
+
+
+mysql查看编码
+show VARIABLES like '%char%';
+编码需如下：
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8mb4                    |
+| character_set_connection | utf8mb4                    |
+| character_set_database   | utf8mb4                    |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8mb4                    |
+| character_set_server     | utf8mb4                    |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+

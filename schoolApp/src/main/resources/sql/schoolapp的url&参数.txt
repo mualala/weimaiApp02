@@ -1,0 +1,424 @@
+﻿
+banner图展示的请求（app首页）
+http://192.168.0.32:8080/schoolApp/active/showAppMain.do
+获取顿巴数同心圆内容的请求
+http://192.168.0.32:8080/schoolApp/admin/dunbaVal.do
+
+banner图展示的请求参数（app首页）：
+	登录用户的云信id：user_id
+
+碰碰直接子评论的点赞
+http://192.168.0.32:8080/schoolApp/pengpeng/childAnsLaud.do
+碰碰功能
+碰碰首页数据的请求
+http://192.168.0.32:8080/schoolApp/pengpeng/defMain.do
+碰碰的问题列表的请求
+http://192.168.0.32:8080/schoolApp/pengpeng/questionList.do
+碰碰首页的请求
+http://192.168.0.32:8080/schoolApp/pengpeng/defMain.do
+添加直接子评论的请求--1
+http://192.168.0.32:8080/schoolApp/pengpeng/addAnswer.do
+某登录用户对问题回答后的展示列表的请求
+http://192.168.0.32:8080/schoolApp/pengpeng/showCurrUserAnswer.do
+碰碰展示仅双方可见的评论列表的请求
+http://192.168.0.32:8080/schoolApp/pengpeng/showOnlyChildAnswer.do
+碰碰增加回答的浏览量的请求
+http://192.168.0.32:8080/schoolApp/pengpeng/addSee.do
+碰碰添加问题的评论的评论的请求---2
+http://192.168.0.32:8080/schoolApp/pengpeng/addChildAnswer.do
+碰碰再次在列表中在添加评论---3
+http://192.168.0.32:8080/schoolApp/pengpeng/addTwoChildAnswer.do
+
+碰碰直接子评论的点赞的请求参数
+	登录用户的云信id：user_id
+	子评论的id：ans_id
+碰碰再次在列表中在添加评论的请求参数：---3
+	评论人的云信id：user_id
+	父评论的用户id：other_user_id
+	---2   2级评论的id：ans_id
+	评论的内容：content
+碰碰添加问题的评论的评论的请求参数：---2
+	登录用户的云信id：user_id
+	父评论的云信id：other_user_id
+	直接回答的id：ans_id
+	评论的评论的内容：content
+碰碰增加回答的浏览量的请求参数：
+	碰碰回答的id：ans_id
+碰碰展示仅双方可见的评论列表的请求参数：
+	问题的id：ques_id
+	登录用户的云信id：own_user_id
+	回答用户的云信id：other_user_id
+	匿名还是实名：name_type
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+某登录用户对问题回答后的展示列表的请求参数：
+	问题的id：ques_id
+	登录用户的云信id：user_id
+	实名还是匿名：name_type
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+碰碰首页数据的请求参数：
+	云信id：user_id
+	问题的id（只要不是从问题列表加载过来，该参数默认是0；否则传真是的问题id号）：ques_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+	实名还是匿名(默认是空字符串)：name_type
+	性别(默认是空字符串)：gender
+碰碰的问题列表的请求参数：
+	登录用户的云信：user_id
+	实名还是匿名：name_type
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+碰碰首页的请求参数：（点碰碰进来设置为ques_id=0，其他时候ques_id正常获取）
+	登录用户的云信id：user_id
+	问题的id：ques_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+添加直接子评论的请求参数：---1
+	云信id：user_id
+	问题的id：ques_id
+	评论的内容：content
+	实名还是匿名：name_type
+
+
+
+
+
+
+展示动态的详情
+http://192.168.0.32:8080/schoolApp/commont/detailActive.do
+添加评论的评论（子评论）
+http://192.168.0.32:8080/schoolApp/commont/addcToc.do
+点赞的用户列表
+http://192.168.0.32:8080/schoolApp/commont/laudList.do
+用户发评论
+http://192.168.0.32:8080/schoolApp/commont/addCommont.do
+用户点赞
+http://192.168.0.32:8080/schoolApp/commont/addLaud.do
+移除点赞
+http://192.168.0.32:8080/schoolApp/commont/cancelLaud.do
+
+
+展示动态的详情的请求参数：
+	登录用户的云信id：user_id
+	发动态的云信id：com_user_id
+	动态的的id（是数字那种id，没英文）：active_user_id
+添加评论的评论（子评论）的请求参数：
+	子评论用户的云信id：child_user_id
+	评论的id：com_id
+	子评论的内容：child_content
+	上级父评论的云信id：parent_user_id
+用户发评论的请求参数：
+	评论用户的uuid：com_user_id
+	动态数据的用户的uuid：user_id
+	动态的的id（是数字那种id，没英文）：active_user_id
+	评论的内容：content
+用户点赞的请求参数：
+	评论用户的uuid：com_user_id
+	动态的的id（是数字那种id，没英文）：active_user_id
+点赞的用户列表的请求参数：
+	动态的的id（是数字那种id，没英文）：active_user_id
+移除点赞的请求参数：
+	移除点赞用户的uuid：com_user_id
+	动态的的id（是数字那种id，没英文）：active_user_id
+
+请求加好友
+http://192.168.0.32:8080/schoolApp/friends/reqAddFriends.do
+删除好友的请求
+http://192.168.0.32:8080/schoolApp/friends/deleteFriend.do
+用户取消fans的请求
+http://192.168.0.32:8080/schoolApp/friends/cancelFans.do
+用户的朋友列表请求
+http://192.168.0.32:8080/schoolApp/friends/showFriendList.do
+某用户的fans用户列表
+http://192.168.0.32:8080/schoolApp/friends/fans.do
+某用户的关注用户列表
+http://192.168.0.32:8080/schoolApp/friends/attentionUsers.do
+用户取消关注的请求
+http://192.168.0.32:8080/schoolApp/friends/cancelAttention.do
+用户添加关注用户的请求
+http://192.168.0.32:8080/schoolApp/friends/addAttention.do
+-- 展示朋友的朋友的列表---合并到首页banner展示
+-- http://192.168.0.32:8080/schoolApp/friends/fTof.do
+
+请求加好友的请求参数：
+	登录用户的云信id：user_id
+	好友的云信id：f_user_id
+	加好友的消息：msg
+	类型（3=确认成为好友 4=不同意加好友）：type
+删除好友的请求参数：
+	登录用户的云信id：user_id
+	好友的云信id：f_user_id
+用户取消fans的请求参数：
+	登录用户的云信id：user_id
+	fans的云信id：f_user_id
+用户的朋友列表请求参数：
+	登录用户的云信id：user_id
+某用户的fans用户列表的请求参数：
+	云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+某用户的关注用户列表的请求参数：
+	云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+用户取消关注的请求参数：
+	主动关注的云信id：user_id
+	被关注的云信id：f_user_id
+用户添加关注用户的请求参数：
+	主动关注的云信id：user_id
+	被关注的云信id：f_user_id
+-- 展示朋友的朋友的列表的请求参数：
+	云信id：user_id
+
+
+
+某分类下的二级分类
+http://192.168.0.32:8080/schoolApp/active/oneThemeTwoClass.do
+用户删除某条收藏请求
+http://192.168.0.32:8080/schoolApp/active/deleteFavor.do
+用户的动态收藏列表请求
+http://192.168.0.32:8080/schoolApp/active/showFavoritesList.do
+用户收藏动态的请求
+http://192.168.0.32:8080/schoolApp/active/addFavorites.do
+动态关键词热搜排行
+http://192.168.0.32:8080/schoolApp/active/hotActiveKey.do
+删除动态
+http://192.168.0.32:8080/schoolApp/active/deleteOneActive.do
+用户的资源文件下载请求
+http://192.168.0.32:8080/schoolApp/active/文件的名字和扩展名/download
+动态的全文检索请求
+http://192.168.0.32:8080/schoolApp/active/fullText.do
+点击追加说说查看的数量的请求
+http://192.168.0.32:8080/schoolApp/active/seeAction.do
+首页的大类进入后动态展示
+http://192.168.0.32:8080/schoolApp/active/classActive.do
+朋友圈动态展示
+http://192.168.0.32:8080/schoolApp/active/friendsActive.do
+个人动态展示
+http://192.168.0.32:8080/schoolApp/active/showOwnActive.do
+用户发表动态
+http://192.168.0.32:8080/schoolApp/active/addActive.do
+
+某分类下的二级分类请求参数：
+	主题大类：type_a
+用户删除某条收藏请求参数：
+	收藏的id：favor_id
+用户的动态收藏列表请求参数：
+	登录用户的云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+用户收藏动态的请求参数：
+	动态的id：active_user_id
+	登录用户的云信id：user_id
+删除动态的请求参数：
+	动态的id：active_user_id
+	登录用户的云信id：user_id
+用户的资源文件下载请求参数：
+	动态的id：active_user_id
+动态的全文检索的请求参数：
+	检索文字的参数：text
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+点击追加说说查看的数量的请求的参数：
+	动态的的id（是数字那种id，没英文）：active_user_id
+首页的大类进入后动态展示的请求参数：
+	登录用户的云信id：user_id
+	大类(如校园生活，秀一秀，毕业结伴等)：type_a
+	二级分类：type_b
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+	点赞用户云信id：com_user_id
+朋友圈动态展示的请求参数：
+	云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+个人动态展示的请求参数：
+	云信id：user_id
+	被访问的云信id：v_user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+用户发表动态前的验证请求参数：
+	云信id：user_id
+	分类类型a：type_a  (即首页动态大类，校园生活、工作生活、秀一秀等)
+用户发表动态请求参数：
+	云信id：user_id
+	分类类型a：type_a  (即首页动态大类，校园生活、工作生活、秀一秀等)
+	分类类型b：type_b
+	说说的内容：saysay
+	图片参数：active_pic
+	资源文件的参数：docum
+	标题：title
+	位置：position
+用户信息查看请求参数
+	手机号：phoneNum
+
+
+生活圈动态粉丝可见否
+http://192.168.0.32:8080/schoolApp/user/lifeSeeControl.do
+控制 --不让TA看我的动态-- 和 --不看TA的动态的开关--
+http://192.168.0.32:8080/schoolApp/user/taNoSeeOwnActive.do
+加我好友是否需要验证
+http://192.168.0.32:8080/schoolApp/user/addFriendIsVerify.do
+拉黑用户
+http://192.168.0.32:8080/schoolApp/user/specialRelation.do
+控制是否可发消息
+http://192.168.0.32:8080/schoolApp/user/controlSendMsg.do
+动态可见不可见的开关
+http://192.168.0.32:8080/schoolApp/user/seeSwitch.do
+重置密码
+http://192.168.0.32:8080/schoolApp/user/rePassword.do
+用户身份验证状态
+http://192.168.0.32:8080/schoolApp/user/checkUserVerify.do
+用户个人信息展示的请求
+http://192.168.0.32:8080/schoolApp/user/showUserInfo.do
+登录请求
+http://192.168.0.32:8080/schoolApp/user/login.do
+验证码请求
+http://192.168.0.32:8080/schoolApp/user/checkPhoneNum.do
+注册请求
+http://192.168.0.32:8080/schoolApp/user/regist.do
+用户上传头像
+http://192.168.0.32:8080/schoolApp/user/profile.do
+用户编辑更新
+http://192.168.0.32:8080/schoolApp/user/edit.do
+用户技能更新
+http://192.168.0.32:8080/schoolApp/user/editSkill.do
+用户信息查看
+http://192.168.0.32:8080/schoolApp/user/info.do
+用户上传验证信息请求
+http://192.168.0.32:8080/schoolApp/user/verify.do
+人海的随机用户
+http://192.168.0.32:8080/schoolApp/user/peoples.do
+人海和脉脉圈的用户的筛选
+http://192.168.0.32:8080/schoolApp/user/filterPeoples.do
+人海的朋友搜索
+http://192.168.0.32:8080/schoolApp/user/peoplesSearch.do
+脉脉圈的分类用户请求
+http://192.168.0.32:8080/schoolApp/user/maimaiCateg.do
+脉脉圈的朋友搜索的请求参数
+http://192.168.0.32:8080/schoolApp/user/maimaiSearch.do
+访客的用户列表请求
+http://192.168.0.32:8080/schoolApp/user/showVisitorList.do
+学校api数据接口请求
+http://192.168.0.32:8080/schoolApp/user/schoolAPI.do
+城市json数据接口
+http://192.168.0.32:8080/schoolApp/user/cityJSON.do
+
+生活圈动态粉丝可见否
+	登录用户的云信id：user_id
+	开关值（0：关闭 1：开启）：switchVal
+控制 --不让TA看我的动态-- 和 --不看TA的动态的开关--
+	登录用户的云信id：user_id
+	被控制人的云信id：other_user_id
+	类型（1=不让TA看我的动态 2不看TA的动态）：type
+	开关值（0：关闭 1：开启）：switchVal
+加我好友是否需要验证的请求参数
+	登录用户的云信id：user_id
+	开关值：switchVal
+拉黑用户的请求参数：
+	登录用户的云信id：user_id
+	被拉黑人的云信id：other_user_id
+	拉黑状态：（0：关闭拉黑 1：开启黑名单）：value
+控制是否可发消息的请求参数：
+	登录用户的云信id：user_id
+	控制是否可发消息(0：关闭 1：开启)：send_msg
+动态可见不可见的开关的请求参数：
+	登录用户的云信id：user_id
+	别人的云信id：f_user_id
+验证码请求参数：
+	验证码的类型（注册时类型是int，值是1）：codeType
+	请求的手机号码：phoneNum
+重置密码的请求参数：
+	电话号码：phoneNum
+	验证码：code
+	重置的密码：password
+用户身份验证状态：
+	用户的云信id：user_id
+学校api数据接口请求参数：
+	无
+访客的用户列表请求参数：
+	登录用户的云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+用户个人信息展示的请求参数：
+	登录用户的云信id：user_id
+脉脉圈的朋友搜索的请求参数：
+	搜索的参数：param
+人海的朋友搜索的请求参数：
+	搜索的参数：param
+脉脉圈的分类用户请求的参数：
+	云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+	分类类型(只传 同大学、老乡、同高 中这三个值)：type
+人海和脉脉圈的用户的筛选的参数：
+	云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+	性别：gender
+	年级：grade
+	查询的初始年龄：age01
+	查询的结束年龄：age02
+	专业：major
+	分类类型(如果是人海，传""空字符串；如果是脉脉圈，只传 同大学、老乡、同高 中这三个值)：type
+人海的随机用户请求参数：
+	云信id：user_id
+	每页显示的记录数：pageSize
+	第几页：pageNumber
+用户上传验证信息请求的参数：
+	云信id：user_id
+	是学生证验证还是毕业证验证：type，值为stu(学生证)或certi(毕业证)
+	图片参数：verify
+用户技能更新请求参数
+	云信id：user_id
+	技能参数：skills
+用户编辑更新请求参数：
+	云信id：user_id
+	姓名：username
+	性别：gender
+	出生日期：birthday
+	星座：star
+	情感状态：e_state
+	年级：grade
+	行业：profession
+	专业：major
+	学校：school
+	高中：highschool
+	省：province
+	市：city
+	县：county
+	家乡：home
+	个人签名：lable
+	技能标签：skill
+用户上传头像的请求参数：
+	图片的参数：profile
+	云信id：user_id
+用户注册的请求参数：
+	手机号：phoneNum
+	验证码：code
+	密码：password
+	姓名：username
+
+
+
+
+
+
+
+
+
+
+action：朋友圈动态的点赞、评论、、
+active：朋友圈动态
+admin：管理员表
+all_life：banner下面的8个相同结构的东西
+checkcode：验证码临时表
+friends：好友关系表
+groups：群组表关系表
+messages：发送消息的表
+user：用户表
+userskill：用户技能表
+
+云信账号:695931535@qq.com
+密码:e13212ss

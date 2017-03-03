@@ -3,6 +3,7 @@
  * 	.verify
  * 	.theme categore
  * 	.active report
+ *  .detail active
  */
 var active = {
 		themeToLocal: new Array(),//将主题大类的分类保存到本地,用于二级分类的下拉选择
@@ -79,7 +80,11 @@ var active = {
 			            width: 80
 			        },{
 			            field: 'type_a',
-			            title: '首页大类',
+			            title: '主题大类',
+			            width: 80
+			        },{
+			            field: 'type_b',
+			            title: '二级分类',
 			            width: 80
 			        },{
 			            field: 'title',
@@ -88,6 +93,10 @@ var active = {
 			        },{
 			            field: 'saysay',
 			            title: '说说的内容',
+			            width: 100
+			        },{
+			            field: 'position',
+			            title: '位置',
 			            width: 100
 			        },{
 			            field: 'pics',
@@ -153,8 +162,8 @@ var active = {
 			            return param;
 			        },
 			        onLoadSuccess: function(data){//加载成功时执行
-			        	//隐藏列uuid
 			        	$("#activeTable").bootstrapTable("hideColumn","user_id");
+			        	$("#activeTable").bootstrapTable("hideColumn","docums");
 			        },
 			        onLoadError: function(){//加载失败时执行
 			        	layer.msg('加载数据失败,请联系系统管理员'+'\r\n', {icon: 1});
@@ -337,7 +346,8 @@ var active = {
 			            field: 'two_class',
 			            title: '二级分类',
 			            width: 140
-			        },{
+			        }/*
+			        ,{
 			            field: 'two_pic',
 			            title: '二级分类UI',
 			            formatter: function(value,row,index){
@@ -350,7 +360,8 @@ var active = {
 			            	return resultPics;
 			            },
 			            width: 80
-			        },{
+			        }*/
+			        ,{
 			            field: 'stu_verify',
 			            title: '学生证验证权限(编辑)',
 			            editable: {
@@ -457,7 +468,6 @@ var active = {
 						var id = rows[i].act_verify_id;
 						ids = ids+id+",";
 					}
-					console.log(ids);
 					$.ajax({
 						url:"admin/batchDelThemeCateg.do",
 						type:"post",
@@ -580,7 +590,9 @@ var active = {
 									icon:0
 						 		}
 							);
-					}else if (twoPicVal==null || twoPicVal==undefined) {
+					}
+					/*
+					else if (twoPicVal==null || twoPicVal==undefined) {
 						layer.alert(
 								'请添加二级分类UI图标\r\n',
 								{
@@ -588,7 +600,8 @@ var active = {
 									icon:0
 						 		}
 							);
-					}else {
+					}*/
+					else {
 						var formData = new FormData();
 						formData.append("themeCategVal",themeCategVal);
 						formData.append("twoCategVal",twoCategVal);
@@ -601,10 +614,12 @@ var active = {
 		            		contentType: false,
 		            		success:function(data){
 		            			layer.msg(data.msg+'\r\n', {icon: 0});
+		            			/*
 		            			//清空上传图片中的值
 	            				var twoPic = $('#twoPic');
 	            				twoPic.after(twoPic.clone().val(''));
 	            				twoPic.remove();
+	            				*/
 	            				//清空控件中的值
 	            				$("#twoCateg").val('');
 		            		},
@@ -639,7 +654,7 @@ var active = {
 			        pagination: true,//启动分页
 			        pageSize: 10,//每页显示的记录数
 			        pageNumber: 1,//当前第几页
-			        pageList: [10,20,30,50,100,500],//记录数可选列表
+			        pageList: [10,20,30,50,100,500,1000,5000,10000],//记录数可选列表
 			        //search: true,//是否启用查询,是客户端client才有效
 			        searchOnEnterKey: true,//按回车触发搜索方法，否则自动触发搜索方法
 			        showColumns: true,//显示下拉框勾选要显示的列
@@ -687,6 +702,192 @@ var active = {
 			        }
 			    });
 			}
+		},
+		
+		detailActiveReport: {
+			
+			loadThemeCateg: function(){
+				$.ajax({
+					url: 'admin/categSelect.do',
+					data: '',
+					type: 'post',
+					success: function(data){
+						var themeCategs = data.data;
+						$("#themeClass").empty();
+						$("#themeClass").append("<option>--请选择--</option>");
+						if(themeCategs.length>0){
+							for (var i = 0; i < data.data.length; i++) {
+								$("#themeClass").append("<option>" + themeCategs[i] + "</option>");
+							}
+						}else {
+							$("#themeClass").empty();
+							$("#themeClass").append("<option>无</option>");
+						}
+					},
+					error:function(){
+						layer.msg('加载数据失败,请联系系统管理员'+'\r\n', {icon: 1});
+					}
+				});
+			},
+			
+			loadTwoCateg: function(){
+				//获取二级分类
+				$.ajax({
+					url: 'admin/twoCategSelect.do',
+					data: {themeCateg: $("#themeClass option:selected").val()},
+					type: 'post',
+					success: function(data){
+						var twoCategs = data.data;
+						$("#twoClass").empty();
+						if(twoCategs.length>0){
+							for (var i = 0; i < data.data.length; i++) {
+								$("#twoClass").append("<option>" + twoCategs[i] + "</option>");
+							}
+						}else {
+							$("#twoClass").empty();
+							$("#twoClass").append("<option>无</option>");
+						}
+					},
+					error:function(){
+						layer.msg('加载数据失败,请联系系统管理员'+'\r\n', {icon: 1});
+					}
+				});
+			}
+			
+		},
+		
+		initDetailActiveReport: function(){
+			$("#activeDetailTable").bootstrapTable("destroy");//先销毁表格
+		    //初始化表格，动态从服务器加载数据
+		    $("#activeDetailTable").bootstrapTable({
+		        method: "post",
+		        url: 'admin/detailActiveRepoet.do',
+		        height: "350",
+		        striped: false,//不显示斑马线
+		        clickToSelect: true,//点击行即可选中单选/复选框
+		        dataType: "json",
+		        contentType: "application/x-www-form-urlencoded",
+		        pagination: true,//启动分页
+		        pageSize: 10,//每页显示的记录数
+		        pageNumber: 1,//当前第几页
+		        pageList: [10,20,30,50,100,500,1000],//记录数可选列表
+		        search: true,//是否启用查询,是客户端client才有效
+		        searchOnEnterKey: true,//按回车触发搜索方法，否则自动触发搜索方法
+		        showColumns: true,//显示下拉框勾选要显示的列
+		        showExport: true,//是否显示导出
+		        exportDataType: "basic",
+		        showRefresh: true,//显示刷新按钮
+		        silent: true,//刷新事件必须设置
+		        strictSearch: true,//全匹配搜索，否则为模糊搜索
+		        showToggle: true,//显示 切换试图（table/card）按钮
+		        //singleSelect:true,
+		        toolbar: '#activeVerifyTool', 
+		        sidePagination: "server",//服务器端请求
+		        
+		        columns: [{
+		            field: 'active_user_id',
+		            title: 'ID',
+		            sortable: true,
+		            width: 50
+		        },{
+		            field: 'user_nickname',
+		            title: '昵称',
+		            width: 80
+		        },{
+		            field: 'phoneNum',
+		            title: '电话',
+		            width: 80
+		        },{
+		            field: 'user_id',
+		            title: 'uuid',
+		            width: 80
+		        },{
+		            field: 'type_a',
+		            title: '主题大类',
+		            width: 80
+		        },{
+		            field: 'type_b',
+		            title: '二级分类',
+		            width: 80
+		        },{
+		            field: 'title',
+		            title: '标题',
+		            width: 80
+		        },{
+		            field: 'saysay',
+		            title: '说说的内容',
+		            width: 100
+		        },{
+		            field: 'position',
+		            title: '位置',
+		            width: 100
+		        },{
+		            field: 'pics',
+		            title: '图片',
+		            width: 150,
+		            formatter: function(value,row,index){
+		            	var resultPics = "";
+		            	if(value.length>0){
+		            		for(var i=0;i<value.length;i++){
+		            			resultPics += '<img  src="'+value[i]+'" class="img-rounded" onclick="javascript:window.open(this.src);"></img>';
+		            		}
+		            	}
+		            	return resultPics;
+		            }
+		        },{
+		        	field: 'docums',
+		        	title: '资源文件',
+		        	width: '200',
+		        	formatter: function(value,row,index){
+		        		var resultDocum = "";
+		        		if(value.length>0){
+		        			for(var i=0;i<value.length;i++){
+		        				var start = value[i].lastIndexOf("/")+1;
+		        				var end = value[i].length;
+		    					resultDocum = resultDocum+'<a href="'+value[i]+'">'+value[i].replace("__","").substring(start,end)+'</a><br/>';
+		        			}
+		        		}
+		        		return resultDocum;
+		        	}
+		        },{
+		            field: 'active_creatime',
+		            title: '创建时间',
+		            formatter: function(value,row,index){
+		            	return active.formatDate(value);
+		            },
+		            sortable: true,
+		            width: 120
+		        }],
+		        
+		        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder  
+		        //设置为limit可以获取limit, offset, search, sort, order  
+		        queryParamsType: "undefined", 
+		        
+		        queryParams: function queryParams(params){
+		            //请求的分页参数
+		            var param = {
+		                    pageNumber: params.pageNumber,
+		                    pageSize: params.pageSize,
+		                    searchText: $(".search").children('input').val(),
+		                    startDate: $("#startDate").val(),
+		                    endDate: $("#endDate").val(),
+		                    sortName: params.sortName,
+		                    sortOrder: params.sortOrder,
+		                    themeClass: $("#themeClass option:selected").val(),
+		                    twoClass: $("#twoClass option:selected").val(),
+		                    state: $("#state option:selected").val()
+		                    
+		            };
+		            return param;
+		        },
+		        onLoadSuccess: function(data){//加载成功时执行
+		        	$("#activeDetailTable").bootstrapTable("hideColumn","user_id");
+		        	$("#activeDetailTable").bootstrapTable("hideColumn","docums");
+		        },
+		        onLoadError: function(){//加载失败时执行
+		        	layer.msg('加载数据失败,请联系系统管理员'+'\r\n', {icon: 1});
+		        }
+		    });
 		}
 		
 }

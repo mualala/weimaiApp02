@@ -120,8 +120,9 @@ public class PPServiceImpl implements PPService {
 		List<AnswerUsers> answerUsers = pengPengDao.queryAnswers(params);
 		if(answerUsers!=null || answerUsers.size()>0){
 			for(AnswerUsers ans:answerUsers){
-				if(ans.getProfile()==null){
+				if("匿名".equals(name_type)){
 					ans.setProfile(hostPath+"avatar_def.png");
+					ans.setUser_nickname("匿名");
 				}else {
 					ans.setProfile(hostPath+ans.getProfile());
 				}
@@ -215,10 +216,14 @@ public class PPServiceImpl implements PPService {
 		
 		List<ChildAnswer> childAns = new ArrayList<ChildAnswer>();
 		if(ownAnswer != null){//添加评论的评论
-			if(ownAnswer.getProfile()==null){
+			if("匿名".equals(name_type)){
 				ownAnswer.setProfile(hostPath01+"avatar_def.png");
 			}else {
-				ownAnswer.setProfile(hostPath01+ownAnswer.getProfile());
+				if(ownAnswer.getProfile()==null){
+					ownAnswer.setProfile(hostPath01+"avatar_def.png");
+				}else {
+					ownAnswer.setProfile(hostPath01+ownAnswer.getProfile());
+				}
 			}
 			Map<String, Object> params02 = new HashMap<String, Object>();
 			int start = (pageNumber-1)*pageSize;

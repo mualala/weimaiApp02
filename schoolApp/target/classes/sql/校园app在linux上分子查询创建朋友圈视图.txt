@@ -1,0 +1,7 @@
+﻿
+-- 分子视图创建朋友圈视图
+CREATE view user_info as select DISTINCT U.user_id,F.fans_see_state,U.level from user U INNER JOIN friends F ON U.user_id=F.user_id
+
+CREATE view clause_2 as select A.active_user_id,A.user_id,W.level,A.type_a,A.type_b,A.saysay,A.position,A.active_pic,A.docum,A.state,W.fans_see_state,A.see,A.active_creatime from active A INNER JOIN user_info W ON A.user_id=W.user_id
+
+CREATE view cycle_friends_active as select M.active_user_id,M.user_id,N.user_nickname,N.profile,M.level,M.type_a,M.type_b,M.saysay,M.position,M.active_pic,M.docum,M.state,M.fans_see_state,M.see,M.active_creatime from clause_2 M INNER JOIN user N ON M.user_id=N.user_id where ((M.state = '1') and (M.fans_see_state = '1')) order by M.active_creatime desc

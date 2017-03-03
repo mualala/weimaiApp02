@@ -85,7 +85,6 @@ public class PengPengController {
 	@ResponseBody
 	public JSONObject childAnsLaud(@RequestParam("user_id") String user_id, 
 			@RequestParam("ans_id") int ans_id){
-		System.out.println("进了碰碰直接子评论的点赞。。。");
 		JSONObject jsonObject = pPService.addChildAnsLaud(user_id, ans_id);
 		return jsonObject;
 	}

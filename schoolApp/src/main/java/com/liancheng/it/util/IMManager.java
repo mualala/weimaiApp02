@@ -63,6 +63,49 @@ public class IMManager {
 	}
 	
 	/**
+	 * 禁用/解禁用户
+	 * @param user_id
+	 * @param lock 开关 1禁用 0解禁
+	 * @return
+	 */
+	public static boolean blockIMUser(String user_id, int lock) throws Exception{
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		String url = "";
+		if(lock==1){
+			url = "https://api.netease.im/nimserver/user/block.action";
+		}else {
+			url = "https://api.netease.im/nimserver/user/unblock.action";
+		}
+		HttpPost httpPost = new HttpPost(url);
+		
+		String checkSum = CheckSumBuilder.getCheckSum(appSecret, nonce, curTime);
+		
+		//设置请求的header
+		httpPost.addHeader("AppKey",appKey);//开发者平台分配的appkey
+		httpPost.addHeader("Nonce", nonce);//随机数(最大长度128个字符)
+		httpPost.addHeader("CurTime", curTime);//当前UTC时间戳,从1970年1月1日0点0 分0 秒开始到现在的秒数(String)
+		httpPost.addHeader("CheckSum",checkSum);
+		httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		//设置请求的参数
+		List<NameValuePair> vpns = new ArrayList<NameValuePair>();
+		vpns.add(new BasicNameValuePair("accid", user_id));
+		httpPost.setEntity(new UrlEncodedFormEntity(vpns, "utf-8"));
+		
+		//执行请求
+		HttpResponse response = httpClient.execute(httpPost);
+		String imResult = EntityUtils.toString(response.getEntity(),"utf-8");
+		JSONObject jsonObject = new JSONObject(imResult);
+		String state = jsonObject.get("code").toString();
+		if("200".equals(state)){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	
+	/**
 	 * 好友关系
 	 * @param user_id
 	 * @param f_user_id
@@ -228,9 +271,8 @@ public class IMManager {
 		
 //		System.out.println(getIMUserId("10000bba","sh"));
 		
-//		System.out.println(delFriends("181d4d3239e449b2938821243327048c", "6340428319bc4b0db3446725634f369b"));
+		System.out.println(delFriends("f5db8cbe5d644b4aa72ae4cefbb29e18", "e7d2a1f9ca4041a8917648b5eec3c408"));
 //		System.out.println(setSpecialRelation("181d4d3239e449b2938821243327048c", "6340428319bc4b0db3446725634f369b", "1"));
-		
 	}
 	
 }

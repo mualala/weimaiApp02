@@ -19,6 +19,7 @@ public class ClassActive implements Serializable {
 	private String type_b;
 	private String saysay;
 	private String title;
+	private String position;
 	private String active_pic;
 	private String docum;
 	private String docum_size;
@@ -132,6 +133,18 @@ public class ClassActive implements Serializable {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	/**
+	 * @return the position
+	 */
+	public String getPosition() {
+		return position;
+	}
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	/**
 	 * @return the active_pic
@@ -333,15 +346,15 @@ public class ClassActive implements Serializable {
 		return "ClassActive [active_user_id=" + active_user_id + ", user_id="
 				+ user_id + ", level=" + level + ", user_nickname="
 				+ user_nickname + ", type_a=" + type_a + ", type_b=" + type_b
-				+ ", saysay=" + saysay + ", title=" + title + ", active_pic="
-				+ active_pic + ", docum=" + docum + ", docum_size="
-				+ docum_size + ", state=" + state + ", see=" + see
-				+ ", doc_down_count=" + doc_down_count + ", active_creatime="
-				+ active_creatime + ", pics=" + pics + ", docums=" + docums
-				+ ", totalCommont=" + totalCommont + ", profile=" + profile
-				+ ", totalLaud=" + totalLaud + ", isLaud=" + isLaud
-				+ ", isVerify=" + isVerify + ", isFavor=" + isFavor
-				+ ", favor_id=" + favor_id + "]";
+				+ ", saysay=" + saysay + ", title=" + title + ", position="
+				+ position + ", active_pic=" + active_pic + ", docum=" + docum
+				+ ", docum_size=" + docum_size + ", state=" + state + ", see="
+				+ see + ", doc_down_count=" + doc_down_count
+				+ ", active_creatime=" + active_creatime + ", pics=" + pics
+				+ ", docums=" + docums + ", totalCommont=" + totalCommont
+				+ ", profile=" + profile + ", totalLaud=" + totalLaud
+				+ ", isLaud=" + isLaud + ", isVerify=" + isVerify
+				+ ", isFavor=" + isFavor + ", favor_id=" + favor_id + "]";
 	}
 	
 }

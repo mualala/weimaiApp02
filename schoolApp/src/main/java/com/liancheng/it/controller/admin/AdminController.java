@@ -339,6 +339,7 @@ public class AdminController {
 			@RequestParam("pageNumber") int pageNumber, 
 			@RequestParam(value="searchText",required=false) String searchText, 
 			@RequestParam(value="verifyState",required=false) String verifyState, 
+			@RequestParam(value="blockState",required=false) String blockState, 
 			@RequestParam(value="school",required=false) String school, 
 			@RequestParam(value="gender",required=false) String gender, 
 			@RequestParam(value="profession",required=false) String profession, 
@@ -353,8 +354,8 @@ public class AdminController {
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
 		String hostPath02 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_verify/";
-		System.out.println(gender);
-		JSONObject jsonObject = userService.userReport(pageSize, pageNumber, searchText, verifyState, school, gender, profession, startDate, endDate, sortName, sortOrder, schoolID, hostPath01, hostPath02);
+		JSONObject jsonObject = userService.userReport(pageSize, pageNumber, searchText, verifyState, 
+				blockState, school, gender, profession, startDate, endDate, sortName, sortOrder, schoolID, hostPath01, hostPath02);
 		return jsonObject;
 	}
 	
@@ -580,7 +581,7 @@ public class AdminController {
 	 */
 	@RequestMapping("/attachActiveTwoCateg.do")
 	@ResponseBody
-	public JSONObject attachActiveTwoCateg(@RequestParam("twoPicVal") MultipartFile twoPic, 
+	public JSONObject attachActiveTwoCateg(@RequestParam(value="twoPicVal",required=false) MultipartFile twoPic, 
 			HttpServletRequest request){
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		String themeCateg = multipartRequest.getParameter("themeCategVal");
@@ -601,6 +602,54 @@ public class AdminController {
 			@RequestParam("startDate") String startDate, 
 			@RequestParam("endDate") String endDate){
 		JSONObject jsonObject = activeUserService.activeCategReport(pageSize, pageNumber, startDate, endDate);
+		return jsonObject;
+	}
+	
+	/**
+	 * 禁用用户
+	 * @param schoolIds
+	 * @return
+	 */
+	@RequestMapping("/unOrblockUser.do")
+	@ResponseBody
+	public JSONObject unOrblockUser(@RequestParam("user_id") String user_id, 
+			@RequestParam("lock") int lock){
+		JSONObject jsonObject = userService.blockUser(user_id, lock);
+		return jsonObject;
+	}
+	
+	@RequestMapping("/categSelect.do")
+	@ResponseBody
+	public JSONObject themeCateg(){
+		JSONObject jsonObject = activeUserService.themeCateg();
+		return jsonObject;
+	}
+	
+	@RequestMapping("/twoCategSelect.do")
+	@ResponseBody
+	public JSONObject twoCategSelect(@RequestParam("themeCateg") String themeCateg){
+		JSONObject jsonObject = activeUserService.twoCategSelect(themeCateg);
+		return jsonObject;
+	}
+	
+	@RequestMapping("/detailActiveRepoet.do")
+	@ResponseBody
+	public JSONObject detailActiveRepoet(@RequestParam("searchText") String searchText, 
+			@RequestParam(value="startDate",required=false) String startDate, 
+			@RequestParam(value="endDate",required=false) String endDate, 
+			@RequestParam(value="themeClass",required=false) String themeClass, 
+			@RequestParam(value="twoClass",required=false) String twoClass, 
+			@RequestParam(value="state",required=false) String state, 
+			@RequestParam(value="sortName",required=false) String sortName, 
+			@RequestParam(value="sortOrder",required=false) String sortOrder, 
+			@RequestParam(value="pageSize",required=false) int pageSize, 
+			@RequestParam(value="pageNumber",required=false) int pageNumber, 
+			HttpServletRequest request){
+		//项目环境下的图片路径
+		String path = request.getContextPath();
+		String hostPath02 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_active/";
+		JSONObject jsonObject = activeUserService.detailActiveRepoet(searchText, startDate, endDate, 
+				themeClass, twoClass, state, sortName, sortOrder, pageSize, pageNumber, hostPath02);
 		return jsonObject;
 	}
 	

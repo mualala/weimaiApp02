@@ -37,7 +37,6 @@ public class TestTxManager extends TestBase {
 		try {
 			user.setPassword(UUIDUtil.md5("123456"));
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		user.setPhoneNum("18782951708");

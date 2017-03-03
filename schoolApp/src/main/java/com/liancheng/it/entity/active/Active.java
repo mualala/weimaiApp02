@@ -19,6 +19,7 @@ public class Active implements Serializable{
 	private String type_b;//用于扩展分类
 	private String saysay;//发表的说说
 	private String title;//标题
+	private String position;//位置
 	private String active_pic;//说说发表的图片
 	private String docum;//上传的资源文件
 	private String docum_size;//docum_size
@@ -33,13 +34,13 @@ public class Active implements Serializable{
 	private int totalCommont;//某条说说的评论数量总计
 	private String prifile;//用户的头像
 	private int totalLaud;//某条说说的点赞数量
+	private String phoneNum;
 	private String user_nickname;//用户的昵称
 	private int level;
 	private String c_time;//用于后台报表
 	private int isLaud;//用户对某条说说是否点赞
 	private int isVerify;//某用户是否通过了验证;0=不是认证用户；1是认证用户
 	private int favor_id;//收藏夹的id
-	
 	
 	/**
 	 * @return the active_user_id
@@ -112,6 +113,18 @@ public class Active implements Serializable{
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	/**
+	 * @return the position
+	 */
+	public String getPosition() {
+		return position;
+	}
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	/**
 	 * @return the active_pic
@@ -270,6 +283,18 @@ public class Active implements Serializable{
 		this.totalLaud = totalLaud;
 	}
 	/**
+	 * @return the phoneNum
+	 */
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+	/**
+	 * @param phoneNum the phoneNum to set
+	 */
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+	/**
 	 * @return the user_nickname
 	 */
 	public String getUser_nickname() {
@@ -348,16 +373,17 @@ public class Active implements Serializable{
 	public String toString() {
 		return "Active [active_user_id=" + active_user_id + ", user_id="
 				+ user_id + ", type_a=" + type_a + ", type_b=" + type_b
-				+ ", saysay=" + saysay + ", title=" + title + ", active_pic="
-				+ active_pic + ", docum=" + docum + ", docum_size="
-				+ docum_size + ", state=" + state + ", see=" + see
-				+ ", doc_down_count=" + doc_down_count + ", f_see_state="
+				+ ", saysay=" + saysay + ", title=" + title + ", position="
+				+ position + ", active_pic=" + active_pic + ", docum=" + docum
+				+ ", docum_size=" + docum_size + ", state=" + state + ", see="
+				+ see + ", doc_down_count=" + doc_down_count + ", f_see_state="
 				+ f_see_state + ", active_creatime=" + active_creatime
 				+ ", pics=" + pics + ", docums=" + docums + ", totalCommont="
 				+ totalCommont + ", prifile=" + prifile + ", totalLaud="
-				+ totalLaud + ", user_nickname=" + user_nickname + ", level="
-				+ level + ", c_time=" + c_time + ", isLaud=" + isLaud
-				+ ", isVerify=" + isVerify + ", favor_id=" + favor_id + "]";
+				+ totalLaud + ", phoneNum=" + phoneNum + ", user_nickname="
+				+ user_nickname + ", level=" + level + ", c_time=" + c_time
+				+ ", isLaud=" + isLaud + ", isVerify=" + isVerify
+				+ ", favor_id=" + favor_id + "]";
 	}
 	
 }

@@ -43,6 +43,7 @@ public class User implements Serializable {
 	private int life_see;//生活圈动态粉丝可见
 	private int add_switch;//加好友是否需要验证
 	private int send_msg;//是否可以发消息
+	private int block_status;//是否封禁用户的状态 0没封禁 1 封禁了
 	private String token;//接入云信所需的token
 	private Timestamp creatime;//注册时间
 	private Timestamp lastmodifytime;//最后一次更新时间
@@ -407,6 +408,18 @@ public class User implements Serializable {
 		this.send_msg = send_msg;
 	}
 	/**
+	 * @return the block_status
+	 */
+	public int getBlock_status() {
+		return block_status;
+	}
+	/**
+	 * @param block_status the block_status to set
+	 */
+	public void setBlock_status(int block_status) {
+		this.block_status = block_status;
+	}
+	/**
 	 * @return the token
 	 */
 	public String getToken() {
@@ -568,13 +581,13 @@ public class User implements Serializable {
 				+ ", major=" + major + ", school=" + school + ", highschool="
 				+ highschool + ", lable=" + lable + ", skill=" + skill
 				+ ", life_see=" + life_see + ", add_switch=" + add_switch
-				+ ", send_msg=" + send_msg + ", token=" + token + ", creatime="
-				+ creatime + ", lastmodifytime=" + lastmodifytime + ", skills="
-				+ skills + ", actives=" + actives + ", reportCreaTime="
-				+ reportCreaTime + ", reportLastTime=" + reportLastTime
-				+ ", pics=" + pics + ", oneActCount=" + oneActCount
-				+ ", visit=" + visit + ", fans=" + fans + ", home=" + home
-				+ "]";
+				+ ", send_msg=" + send_msg + ", block_status=" + block_status
+				+ ", token=" + token + ", creatime=" + creatime
+				+ ", lastmodifytime=" + lastmodifytime + ", skills=" + skills
+				+ ", actives=" + actives + ", reportCreaTime=" + reportCreaTime
+				+ ", reportLastTime=" + reportLastTime + ", pics=" + pics
+				+ ", oneActCount=" + oneActCount + ", visit=" + visit
+				+ ", fans=" + fans + ", home=" + home + "]";
 	}
 	
 }
