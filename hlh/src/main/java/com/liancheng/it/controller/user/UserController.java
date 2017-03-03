@@ -1,39 +1,31 @@
 package com.liancheng.it.controller.user;
 
-
-import java.io.InputStream;
-import java.util.Properties;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import net.minidev.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.liancheng.it.service.user.UserService;
 
-import net.minidev.json.JSONObject;
-/**
- * ÊµÏÖµÇÂ¼£¬Á¬½ÓÊı¾İ¿âÑéÖ¤ÕÊºÅÃÜÂë
- *
- */
-
-@Controller//½«controller×¢Èë
+@Controller
 @RequestMapping("/user")
 public class UserController {
-	
 	@Resource
 	private UserService userService;
 	
-
 	/**
-	 * ×¢²á
+	 * æ³¨å†Œ
+	 * @param phoneNum
+	 * @param verifyCode
+	 * @param nickname
+	 * @param password
+	 * @return
 	 */
 	@RequestMapping(value="/regist.do",produces="application/json;charset=UTF-8")
 	@ResponseBody
@@ -46,33 +38,106 @@ public class UserController {
 	}
 	
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
+	 * @param phoneNum
+	 * @param password
+	 * @return
 	 */
 	@RequestMapping("/login.do")
 	@ResponseBody
 	public JSONObject login(@RequestParam("loginUser") String phoneNum, 
 			@RequestParam("loginPassword") String password){
-		JSONObject jsonObject = new JSONObject();
-		if(userService.checkLoginUser(phoneNum, password)){
-			jsonObject.put("status", true);
-			jsonObject.put("url", "index.html");
-			jsonObject.put("msg", "µÇÂ¼³É¹¦");
-			return jsonObject;
-		}else {
-			jsonObject.put("status", false);
-			jsonObject.put("msg", "ÕËºÅ»òÃÜÂë´íÎó");
-			return jsonObject;
-		}
+		JSONObject jsonObject = userService.checkLoginUser(phoneNum, password);
+		return jsonObject;
 	}
 	
 	/**
-	 * ·¢ËÍÑéÖ¤Âë
+	 * å‘é€éªŒè¯ç 
+	 * @param phoneNum
+	 * @return
 	 */
 	@RequestMapping("/sendCode.do")
 	@ResponseBody
 	public JSONObject sendCode(@RequestParam("phoneNum") String phoneNum){
-		System.out.println("½øÁË·¢ËÍÑéÖ¤Âë¡£¡£¡£");
 		JSONObject jsonObject = userService.createCode(phoneNum);
 		return jsonObject;
 	}
+	
+	/**
+	 * æ›´æ–°ç”¨æˆ·ä¿¡æ¯
+	 */
+	@RequestMapping(value="/updateUser.do",method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject updateUser(@RequestParam("token") String user_id, 
+			@RequestParam(value="phoneNum",required=false) String phoneNum, 
+			@RequestParam(value="password",required=false) String password, 
+			@RequestParam(value="nickname",required=false) String nickname, 
+			@RequestParam(value="age",required=false) String age, 
+			@RequestParam(value="gender",required=false) String gender, 
+			@RequestParam(value="mobile",required=false) String mobile, 
+			@RequestParam(value="homeland",required=false) String homeland, 
+			@RequestParam(value="job",required=false) String job, 
+			@RequestParam(value="label",required=false) String label){
+		JSONObject jsonObject = userService.updateUser(user_id, phoneNum, password, nickname,
+				age, gender, mobile, homeland, job, label);
+		return jsonObject;
+	}
+	
+	/**
+	 * å±•ç¤ºç”¨æˆ·ä¸ªäººä¿¡æ¯
+	 * @param user_id
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/showUserInfo.do")
+	@ResponseBody
+	public JSONObject showUserInfo(@RequestParam("token") String user_id, 
+			HttpServletRequest req){
+		//é¡¹ç›®ç¯å¢ƒä¸‹çš„å›¾ç‰‡è·¯å¾„
+		String path = req.getContextPath();
+		String hostPath01 = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+path+"/images/local_user_profile/";
+		JSONObject jsonObject = userService.showUserInfo(user_id, hostPath01);
+		return jsonObject;
+	}
+	
+	/**
+	 * æ·»åŠ æ”¶è´§åœ°å€
+	 * @param user_id
+	 * @param name
+	 * @param phone
+	 * @param area
+	 * @param address
+	 * @return
+	 */
+	@RequestMapping("/attachShoppingAddress.do")
+	@ResponseBody
+	public JSONObject attachShoppingAddress(@RequestParam("token") String user_id, 
+			@RequestParam("name") String name, 
+			@RequestParam("phone") String phone, 
+			@RequestParam("area") String area, 
+			@RequestParam("address") String address){
+		JSONObject jsonObject = userService.attachShoppingAddress(user_id, name, phone, area, address);
+		return jsonObject;
+	}
+	
+	/**
+	 * å±•ç¤ºæ”¶è´§åœ°å€çš„åˆ†é¡µæ•°æ®
+	 * @param user_id
+	 * @param pageSize
+	 * @param pageNumber
+	 * @return
+	 */
+	@RequestMapping("/showAddrPagination.do")
+	@ResponseBody
+	public JSONObject showAddrPagination(@RequestParam("token") String user_id, 
+			@RequestParam("pageSize") int pageSize, 
+			@RequestParam("pageNumber") int pageNumber){
+		JSONObject jsonObject = userService.showAddrPagination(user_id, pageSize, pageNumber);
+		return jsonObject;
+	}
+	
+	
+	
+	
+	
 }

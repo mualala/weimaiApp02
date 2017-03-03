@@ -1,14 +1,26 @@
-package com.liancheng.it.dao.user;
+ï»¿package com.liancheng.it.dao.user;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Select;
+
+import com.liancheng.it.entity.user.ShoppingAddress;
 import com.liancheng.it.entity.user.User;
 
 public interface UserDao {
 	
-	public User queryUserById(String user_id);
-	public void saveUser(User user);//±£´æ×¢²áµÄÓÃ»§
-	public User queryUserByPhone(String phoneNum);//¸ù¾İemail»òphoneNum
+	User queryUserById(String user_id);
+	User queryUserByPhone(String phoneNum);//æ ¹æ®emailæˆ–phoneNum
+	void saveUser(User user);//ä¿å­˜æ³¨å†Œçš„ç”¨æˆ·
+	int updateUser(Map<String, Object> params);//ä¿®æ”¹ç”¨æˆ·
+	int saveShoppingAddress(Map<String, Object> params);
+	
+	@Select("select * from shopping_address where user_id=#{user_id} limit #{start},#{end}")
+	List<ShoppingAddress> queryPaginAddr(Map<String, Object> params);
+	@Select("select count(0) from shopping_address where user_id=#{user_id}")
+	int totalPaginAddr(String user_id);
+	
 	
 	
 }

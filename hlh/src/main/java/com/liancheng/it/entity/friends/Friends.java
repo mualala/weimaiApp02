@@ -1,22 +1,22 @@
-package com.liancheng.it.entity.friends;
+ï»¿package com.liancheng.it.entity.friends;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * ÅóÓÑºÍ·ÛË¿µÄÊµÌåÀà
+ * æœ‹å‹å’Œç²‰ä¸çš„å®ä½“ç±»
  * @author Administrator
  */
 public class Friends implements Serializable {
 	
 	private static final long serialVersionUID = -1774392339456776942L;
 	
-	private String user_id;//¢Ù·¢Æğ¼ÓºÃÓÑµÄuuid ¢ÚÖ÷¶¯Ìí¼Ó¹Ø×¢µÄuuid
-	private String f_user_id;//¢ÙºÃÓÑµÄuuid ¢Ú±»¹Ø×¢µÄÓÃ»§
-	private String f_see_state;//ÅóÓÑÊÇ·ñ¿É²é¿´¶¯Ì¬£¬0=²»ÄÜ¿´¶¯Ì¬£¬1=ÄÜ¿´¶¯Ì¬
-	private String fans_see_state;//fansÊÇ·ñ¿É²é¿´¶¯Ì¬£¬0=²»ÄÜ¿´¶¯Ì¬£¬1=ÄÜ¿´¶¯Ì¬
-	private String type;//0=ÅóÓÑ£»1=¹Ø×¢
-	private Timestamp f_creatime;//Ìí¼ÓÅóÓÑµÄÊ±¼ä
+	private String user_id;//â‘ å‘èµ·åŠ å¥½å‹çš„uuid â‘¡ä¸»åŠ¨æ·»åŠ å…³æ³¨çš„uuid
+	private String f_user_id;//â‘ å¥½å‹çš„uuid â‘¡è¢«å…³æ³¨çš„ç”¨æˆ·
+	private String f_see_state;//æœ‹å‹æ˜¯å¦å¯æŸ¥çœ‹åŠ¨æ€ï¼Œ0=ä¸èƒ½çœ‹åŠ¨æ€ï¼Œ1=èƒ½çœ‹åŠ¨æ€
+	private String fans_see_state;//fansæ˜¯å¦å¯æŸ¥çœ‹åŠ¨æ€ï¼Œ0=ä¸èƒ½çœ‹åŠ¨æ€ï¼Œ1=èƒ½çœ‹åŠ¨æ€
+	private String type;//0=æœ‹å‹ï¼›1=å…³æ³¨
+	private Timestamp f_creatime;//æ·»åŠ æœ‹å‹çš„æ—¶é—´
 	
 	private String profile;
 	private String user_nickname;

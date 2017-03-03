@@ -9,7 +9,7 @@ function back(){
 
 function return_prepage()
 {
-    if(window.document.referrer==""||window.document.referrer==window.location.href)
+    if(window.document.referrer=="" || window.document.referrer==window.location.href)
     {
         window.location.href="{dede:type}[field:typelink /]{/dede:type}";
     }else

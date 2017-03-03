@@ -1,9 +1,10 @@
-package com.liancheng.it.service.user;
+ï»¿package com.liancheng.it.service.user;
 
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -20,158 +21,250 @@ import com.liancheng.it.dao.user.CheckCodeDao;
 import com.liancheng.it.dao.user.UserDao;
 import com.liancheng.it.entity.friends.Friends;
 import com.liancheng.it.entity.user.Coder;
+import com.liancheng.it.entity.user.ShoppingAddress;
 import com.liancheng.it.entity.user.User;
+import com.liancheng.it.util.DateUtil;
 import com.liancheng.it.util.HttpSenderUtil;
 import com.liancheng.it.util.Jwt;
 import com.liancheng.it.util.RegistCheckCode;
 import com.liancheng.it.util.UUIDUtil;
 /**
- * ÓÃ»§µÇÂ¼ÒµÎñ
+ * ç”¨æˆ·ç™»å½•ä¸šåŠ¡
  */
 
-@Service("userService")//É¨Ãèservice
+@Service("userService")//æ‰«æservice
 @Aspect
 @Transactional
 public class UserServiceImpl implements UserService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	@Resource(name="userDao")//×¢ÈëuserDao
+	@Resource(name="userDao")//æ³¨å…¥userDao
 	private UserDao userDao;
-	@Resource(name="checkCodeDao")//×¢ÈëcheckCodeDao
+	@Resource(name="checkCodeDao")//æ³¨å…¥checkCodeDao
 	private CheckCodeDao checkCodeDao;
 
 	/**
-	 * ×¢²áÒµÎñ
+	 * æ³¨å†Œä¸šåŠ¡
 	 */
 	public JSONObject addUser(String phoneNum,String password,String code,String nickname){
 		JSONObject resultJSON=new JSONObject();
 		User user = new User();
 		Coder checkCode = new Coder();
 		
-		if(password==null || "".equals(password)){//ÃÜÂëÈç¹ûÎª¿Õ
-			resultJSON.put("msg", "ÃÜÂëÎª¿Õ,ÇëÊäÈëÃÜÂë!");
+		if(password==null || "".equals(password)){//å¯†ç å¦‚æœä¸ºç©º
+			resultJSON.put("msg", "å¯†ç ä¸ºç©º,è¯·è¾“å…¥å¯†ç !");
 			return resultJSON;
 		}
-		if(code==null || "".equals(code)){//Èç¹ûÑéÖ¤ÂëÎª¿Õ
-			resultJSON.put("msg", "ÑéÖ¤ÂëÎª¿Õ,ÇëÊäÈëÑéÖ¤Âë!");
+		if(code==null || "".equals(code)){//å¦‚æœéªŒè¯ç ä¸ºç©º
+			resultJSON.put("msg", "éªŒè¯ç ä¸ºç©º,è¯·è¾“å…¥éªŒè¯ç !");
 			return resultJSON;
 		}else {
-			checkCode = checkCodeDao.findCheckCodeByPhoneNum(phoneNum);//¸ù¾İÑéÖ¤Âë»ñÈ¡ÓÃ»§ÑéÖ¤ĞÅÏ¢
+			checkCode = checkCodeDao.findCheckCodeByPhoneNum(phoneNum);//æ ¹æ®éªŒè¯ç è·å–ç”¨æˆ·éªŒè¯ä¿¡æ¯
 			
-			System.out.println("²éÑ¯ÓÃ»§µÄÑéÖ¤ÂëĞÅÏ¢coder£º"+checkCode+"\nÇëÇóµÄµç»°="+phoneNum+
-					"\nÇëÇóµÄÑéÖ¤Âë="+code);
-			if(checkCode==null){//Èç¹ûÃ»ÓĞ»ñÈ¡ÑéÖ¤Âë
+			System.out.println("æŸ¥è¯¢ç”¨æˆ·çš„éªŒè¯ç ä¿¡æ¯coderï¼š"+checkCode+"\nè¯·æ±‚çš„ç”µè¯="+phoneNum+
+					"\nè¯·æ±‚çš„éªŒè¯ç ="+code);
+			if(checkCode==null){//å¦‚æœæ²¡æœ‰è·å–éªŒè¯ç 
 				resultJSON.put("status", false);
-				resultJSON.put("msg", "¸ÃºÅÂëÎ´»ñÈ¡ÑéÖ¤Âë");
+				resultJSON.put("msg", "è¯¥å·ç æœªè·å–éªŒè¯ç ");
 				return resultJSON;
-			}else if(code.equals(checkCode.getCode()) && phoneNum.equals(checkCode.getId())) {//ÑéÖ¤ÂëºÍµç»°ºÅÂëÕıÈ·µÄÇé¿öÏÂ
+			}else if(code.equals(checkCode.getCode()) && phoneNum.equals(checkCode.getId())) {//éªŒè¯ç å’Œç”µè¯å·ç æ­£ç¡®çš„æƒ…å†µä¸‹
 				
-				System.out.println("½øÁË¡£¡£¡£");
+				System.out.println("è¿›äº†ã€‚ã€‚ã€‚");
 				
 				long currentime = System.currentTimeMillis();
 				long creatime = checkCode.getCreatime().getTime();
 				
-				if(currentime<creatime+1*60*1000){//ÅĞ¶ÏÑéÖ¤ÂëÊÇ·ñ¹ıÆÚ£¬5·ÖÖÓÎª¹ıÆÚÊ±¼ä
+				if(currentime<creatime+1*60*1000){//åˆ¤æ–­éªŒè¯ç æ˜¯å¦è¿‡æœŸï¼Œ5åˆ†é’Ÿä¸ºè¿‡æœŸæ—¶é—´
 					try {
-						user.setUser_id(UUIDUtil.creatId());//¿ÉÒÔÏÈÉú³Éuuid
+						user.setUser_id(UUIDUtil.creatId());//å¯ä»¥å…ˆç”Ÿæˆuuid
 						user.setPhoneNum(phoneNum);
-						user.setNickname(nickname);//¿ÉÒÔÏÈÉèÖÃÓÃ»§Ãû
-						user.setPhoneNum(phoneNum);//Ìí¼ÓÓÃ»§µç»°ºÅÂë
+						user.setNickname(nickname);//å¯ä»¥å…ˆè®¾ç½®ç”¨æˆ·å
+						user.setPhoneNum(phoneNum);//æ·»åŠ ç”¨æˆ·ç”µè¯å·ç 
 						user.setCreatime(new Timestamp(System.currentTimeMillis()));
-						user.setPassword(UUIDUtil.md5(password));//ÉèÖÃÃÜÂë 
+						user.setPassword(UUIDUtil.md5(password));//è®¾ç½®å¯†ç  
 						
-						userDao.saveUser(user);//±£´æ×¢²áÓÃ»§
-						checkCodeDao.deleteCoderByPhoneNum(phoneNum);//×¢²á³É¹¦¾ÍÉ¾³ıÑéÖ¤Âë
+						userDao.saveUser(user);//ä¿å­˜æ³¨å†Œç”¨æˆ·
+						checkCodeDao.deleteCoderByPhoneNum(phoneNum);//æ³¨å†ŒæˆåŠŸå°±åˆ é™¤éªŒè¯ç 
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					System.out.println("×¢²áÓÃ»§µÄĞÅÏ¢£º"+user);
+					System.out.println("æ³¨å†Œç”¨æˆ·çš„ä¿¡æ¯ï¼š"+user);
 					
 					Date date = new Date();
 					Map<String , Object> payload=new HashMap<String, Object>();
-					payload.put("uid", phoneNum);//ÓÃ»§ID
-					payload.put("iat", date.getTime());//Éú³ÉÊ±¼ä
-					payload.put("ext",date.getTime()+1000*60*60);//¹ıÆÚÊ±¼ä1Ğ¡Ê±
+					payload.put("uid", phoneNum);//ç”¨æˆ·ID
+					payload.put("iat", date.getTime());//ç”Ÿæˆæ—¶é—´
+					payload.put("ext",date.getTime()+1000*60*60);//è¿‡æœŸæ—¶é—´1å°æ—¶
 //					String token=Jwt.createToken(payload);
 					
 					resultJSON.put("status", true);
-					resultJSON.put("msg", "×¢²á³É¹¦");
+					resultJSON.put("msg", "æ³¨å†ŒæˆåŠŸ");
 					return resultJSON;
-				}else {//ÑéÖ¤Âë¹ıÆÚ
-					checkCodeDao.deleteCoderByPhoneNum(phoneNum);//ÑéÖ¤Âë¹ıÆÚ¾ÍÉ¾³ı¸ÃÌõÑéÖ¤Âë¼ÇÂ¼
+				}else {//éªŒè¯ç è¿‡æœŸ
+					checkCodeDao.deleteCoderByPhoneNum(phoneNum);//éªŒè¯ç è¿‡æœŸå°±åˆ é™¤è¯¥æ¡éªŒè¯ç è®°å½•
 					resultJSON.put("status", false);
-					resultJSON.put("msg", "ÑéÖ¤ÂëÊ§Ğ§£¬ÇëÖØĞÂ»ñÈ¡ÑéÖ¤Âë");
+					resultJSON.put("msg", "éªŒè¯ç å¤±æ•ˆï¼Œè¯·é‡æ–°è·å–éªŒè¯ç ");
 				}
 			}else {
-				resultJSON.put("msg", "×¢²áÊ§°Ü");
+				resultJSON.put("msg", "æ³¨å†Œå¤±è´¥");
 				return resultJSON;
 			}
 		}
 		return resultJSON;
 	}
 	
-	public boolean checkLoginUser(String phoneNum, String password){
+	public JSONObject checkLoginUser(String phoneNum, String password){
+		JSONObject jsonObject = new JSONObject();
 		User user = userDao.queryUserByPhone(phoneNum);
 		try {
 			if(user!=null && (UUIDUtil.md5(password)).equals(user.getPassword())){
-				logger.info("ÓÃ»§¿ÉÒÔµÇÂ¼");
-				return true;
+				logger.info("ç”¨æˆ·å¯ä»¥ç™»å½•");
+				jsonObject.put("status", true);
+				jsonObject.put("token", user.getUser_id());
+				jsonObject.put("url", "index.html");
+				jsonObject.put("msg", "ç™»å½•æˆåŠŸ");
+				return jsonObject;
+			}else {
+				jsonObject.put("status", false);
+				jsonObject.put("msg", "è´¦å·æˆ–å¯†ç é”™è¯¯");
+				return jsonObject;
 			}
 		} catch (Exception e) {
-			logger.info("µÇÂ¼Ê±md5¼ÓÃÜÊ§°Ü");
+			logger.info("ç™»å½•æ—¶md5åŠ å¯†å¤±è´¥");
 		}
-		return false;
+		return jsonObject;
 	}
 	
 	/**
-	 * Éú³ÉÑéÖ¤Âë²¢·¢ËÍÑéÖ¤ÂëÒµÎñ
+	 * ç”ŸæˆéªŒè¯ç å¹¶å‘é€éªŒè¯ç ä¸šåŠ¡
 	 */
 	public JSONObject createCode(String phoneNum){
 		JSONObject resultJSON=new JSONObject();
 		Coder coder =  new Coder();
 		Coder checkCode = checkCodeDao.findCheckCodeByPhoneNum(phoneNum);
-		if(userDao.queryUserByPhone(phoneNum)!=null){//ÊÖ»úºÅÂëÒÑ¾­×¢²á
+		if(userDao.queryUserByPhone(phoneNum)!=null){//æ‰‹æœºå·ç å·²ç»æ³¨å†Œ
 			resultJSON.put("status", false);
-			resultJSON.put("msg", "¸ÃÊÖ»úºÅÂëÒÑ×¢²á");
+			resultJSON.put("msg", "è¯¥æ‰‹æœºå·ç å·²æ³¨å†Œ");
 			return resultJSON;
-		}else {//ÊÖ»úºÅÂëÃ»×¢²á¹ı
-			if(checkCode != null){//ÅĞ¶Ï¸ÃÊÖ»úÊÇ·ñ»ñÈ¡¹ıÑéÖ¤Âë
+		}else {//æ‰‹æœºå·ç æ²¡æ³¨å†Œè¿‡
+			if(checkCode != null){//åˆ¤æ–­è¯¥æ‰‹æœºæ˜¯å¦è·å–è¿‡éªŒè¯ç 
 //				Date date=new Date();
 				long currentime = System.currentTimeMillis();
 				long creatime = checkCodeDao.findCheckCodeByPhoneNum(phoneNum).getCreatime().getTime();
 				
-				if(currentime<creatime+1*60*1000){//ÅĞ¶ÏÑéÖ¤ÂëÊÇ·ñ¹ıÆÚ£¬1·ÖÖÓÄÚ²»ÄÜÔÙ»ñÈ¡ÑéÖ¤Âë
+				if(currentime<creatime+1*60*1000){//åˆ¤æ–­éªŒè¯ç æ˜¯å¦è¿‡æœŸï¼Œ1åˆ†é’Ÿå†…ä¸èƒ½å†è·å–éªŒè¯ç 
 					resultJSON.put("status", false);
-					resultJSON.put("msg", "ÇëÓÚ1·ÖÖÓºó»ñÈ¡");
-					System.out.println("»ñÈ¡ÁËÑéÖ¤Âë£¬1min²»ÄÜ»ñÈ¡");
+					resultJSON.put("msg", "è¯·äº1åˆ†é’Ÿåè·å–");
+					System.out.println("è·å–äº†éªŒè¯ç ï¼Œ1minä¸èƒ½è·å–");
 					return resultJSON;
 				}else{
-					checkCodeDao.deleteCoderByPhoneNum(phoneNum);//5·ÖÖÓºóÉ¾³ı¸ÃÑéÖ¤Âë
+					checkCodeDao.deleteCoderByPhoneNum(phoneNum);//5åˆ†é’Ÿååˆ é™¤è¯¥éªŒè¯ç 
 				}
 			}
 			String code = RegistCheckCode.getCheckCode();
-			String codemsg = "ÄúºÃ£¡ÄúµÄÑéÖ¤ÂëÎª£º"+code+"ÓĞĞ§Ê±¼ä1·ÖÖÓ£¬Çë¼°Ê±Íê³É×¢²á£¡";
+			String codemsg = "æ‚¨å¥½ï¼æ‚¨çš„éªŒè¯ç ä¸ºï¼š"+code+"æœ‰æ•ˆæ—¶é—´1åˆ†é’Ÿï¼Œè¯·åŠæ—¶å®Œæˆæ³¨å†Œï¼";
 			
 			coder.setCode(code);
 			coder.setCreatime(new Timestamp(System.currentTimeMillis()));
 			coder.setId(phoneNum);
-			checkCodeDao.saveCoder(coder);//±£´æÒ»´ÎÑéÖ¤Âë
-			System.out.println("±£´æÁËÑéÖ¤Âë£º"+ coder.toString());
+			checkCodeDao.saveCoder(coder);//ä¿å­˜ä¸€æ¬¡éªŒè¯ç 
+			System.out.println("ä¿å­˜äº†éªŒè¯ç ï¼š"+ coder.toString());
 			try {
 				HttpSenderUtil.batchSend("http://sapi.253.com/msg/HttpBatchSendSM",
 						"qishidianzi", "Qsdz757980", phoneNum, codemsg, true, null);
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("¸øÊÖ»úºÅ"+phoneNum+"·¢ËÍÑéÖ¤ÂëÊ§°Ü");
+				System.out.println("ç»™æ‰‹æœºå·"+phoneNum+"å‘é€éªŒè¯ç å¤±è´¥");
 			}
 			resultJSON.put("status", true);
-			resultJSON.put("msg", "»ñÈ¡ÑéÖ¤Âë³É¹¦");
+			resultJSON.put("msg", "è·å–éªŒè¯ç æˆåŠŸ");
 			resultJSON.put("data", code);
-			System.out.println("ÑéÖ¤Âë·µ»ØµÄjson£º"+resultJSON.toJSONString());
+			System.out.println("éªŒè¯ç è¿”å›çš„jsonï¼š"+resultJSON.toJSONString());
 			return resultJSON;
 		}
 		
 	}
+
+	public JSONObject updateUser(String user_id,String phoneNum,String password,String nickname,
+			String age,String gender,String mobile,String homeland,String job,String label) {
+		JSONObject resultJSON = new JSONObject();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("user_id", user_id);
+		params.put("phoneNum", phoneNum);
+		params.put("password", password);
+		params.put("nickname", nickname);
+		params.put("age", age);
+		params.put("gendar", gender);
+		params.put("mobile", mobile);
+		params.put("homeland", homeland);
+		params.put("job", job);
+		params.put("label", label);
+		params.put("lastmodifytime", new Timestamp(System.currentTimeMillis()));
+		System.out.println(params);
+		logger.info(params.toString());
+		int rows = userDao.updateUser(params);
+		if(rows == 1){
+			resultJSON.put("status", true);
+			resultJSON.put("msg", "ä¿®æ”¹ä¸ªäººä¿¡æ¯æˆåŠŸ");
+			return resultJSON;
+		}else{
+			resultJSON.put("status", false);
+			resultJSON.put("msg", "ä¿®æ”¹ä¸ªäººä¿¡æ¯å¤±è´¥");
+			return resultJSON;
+		}
+	}
+	
+	public JSONObject showUserInfo(String user_id, String hostPath01){
+		JSONObject resultJSON = new JSONObject();
+		User user = userDao.queryUserById(user_id);
+		if(user != null){
+			if(user.getProfile() != null){
+				user.setProfile(hostPath01+user.getProfile());
+			}
+			resultJSON.put("status", true);
+			resultJSON.put("data", user);
+		}else {
+			resultJSON.put("status", false);
+		}
+		return resultJSON;
+	}
+	
+	public JSONObject attachShoppingAddress(String user_id, String name, String phone, 
+			String area, String address){
+		JSONObject resultJSON = new JSONObject();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("user_id", user_id);
+		params.put("name", name);
+		params.put("phone", phone);
+		params.put("area", area);
+		params.put("address", address);
+		params.put("addr_creatime", new Timestamp(System.currentTimeMillis()));
+		int insertCount = userDao.saveShoppingAddress(params);
+		if(insertCount==1){
+			resultJSON.put("status", true);
+			resultJSON.put("msg", "æ·»åŠ æ”¶è´§åœ°å€æˆåŠŸ");
+		}else {
+			resultJSON.put("status", false);
+			resultJSON.put("msg", "æ·»åŠ æ”¶è´§åœ°å€å¤±è´¥");
+		}
+		return resultJSON;
+	}
+	
+	public JSONObject showAddrPagination(String user_id, int pageSize, int pageNumber){
+		JSONObject resultJSON = new JSONObject();
+		Map<String, Object> params = new HashMap<String, Object>();
+		int start = (pageNumber-1)*pageSize;
+		int end = pageSize;
+		params.put("start", start);
+		params.put("end", end);
+		params.put("user_id", user_id);
+		List<ShoppingAddress> addrs = userDao.queryPaginAddr(params);
+		resultJSON.put("rows", addrs);
+		resultJSON.put("total", userDao.totalPaginAddr(user_id));
+		return resultJSON;
+	}
+	
+	
 	
 	
 }

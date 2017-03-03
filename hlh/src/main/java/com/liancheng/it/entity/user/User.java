@@ -1,7 +1,7 @@
-package com.liancheng.it.entity.user;
+ï»¿package com.liancheng.it.entity.user;
 
 /**
- * ÓÃ»§±í
+ * ç”¨æˆ·è¡¨
  */
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -13,13 +13,21 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = -2184344802610554732L;
 	
-	private String user_id;//ÓÃ»§µÄuuid
-	private String phoneNum;//email»òphoneNum
-	private String nickname;//ÓÃ»§êÇ³Æ
-	private String password;//ÃÜÂë
-
-	private Timestamp creatime;//×¢²áÊ±¼ä
-	private Timestamp lastmodifytime;//×îºóÒ»´Î¸üĞÂÊ±¼ä
+	private String user_id;//ç”¨æˆ·çš„uuid
+	private String phoneNum;//æ³¨å†Œemailæˆ–phoneNum
+	private String nickname;//ç”¨æˆ·æ˜µç§°
+	private String password;//å¯†ç 
+	private String profile;//å¤´åƒ
+	private int level;//ç­‰çº§
+	private int age;//å¹´é¾„
+	private String gender;//æ€§åˆ«
+	private String mobile;//æ‰‹æœºå·ç 
+	private String homeland;//å®¶ä¹¡
+	private String job;//èŒä¸š
+	private String label;//ä¸ªäººç®€ä»‹
+	private Timestamp creatime;//æ³¨å†Œæ—¶é—´
+	private Timestamp lastmodifytime;//æœ€åä¸€æ¬¡æ›´æ–°æ—¶é—´
+	
 	/**
 	 * @return the user_id
 	 */
@@ -69,6 +77,102 @@ public class User implements Serializable {
 		this.password = password;
 	}
 	/**
+	 * @return the profile
+	 */
+	public String getProfile() {
+		return profile;
+	}
+	/**
+	 * @param profile the profile to set
+	 */
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	/**
+	 * @return the level
+	 */
+	public int getLevel() {
+		return level;
+	}
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	/**
+	 * @return the age
+	 */
+	public int getAge() {
+		return age;
+	}
+	/**
+	 * @param age the age to set
+	 */
+	public void setAge(int age) {
+		this.age = age;
+	}
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+		return gender;
+	}
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	/**
+	 * @return the mobile
+	 */
+	public String getMobile() {
+		return mobile;
+	}
+	/**
+	 * @param mobile the mobile to set
+	 */
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	/**
+	 * @return the homeland
+	 */
+	public String getHomeland() {
+		return homeland;
+	}
+	/**
+	 * @param homeland the homeland to set
+	 */
+	public void setHomeland(String homeland) {
+		this.homeland = homeland;
+	}
+	/**
+	 * @return the job
+	 */
+	public String getJob() {
+		return job;
+	}
+	/**
+	 * @param job the job to set
+	 */
+	public void setJob(String job) {
+		this.job = job;
+	}
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	/**
 	 * @return the creatime
 	 */
 	public Timestamp getCreatime() {
@@ -99,6 +203,9 @@ public class User implements Serializable {
 	public String toString() {
 		return "User [user_id=" + user_id + ", phoneNum=" + phoneNum
 				+ ", nickname=" + nickname + ", password=" + password
+				+ ", profile=" + profile + ", level=" + level + ", age=" + age
+				+ ", gender=" + gender + ", mobile=" + mobile + ", homeland="
+				+ homeland + ", job=" + job + ", label=" + label
 				+ ", creatime=" + creatime + ", lastmodifytime="
 				+ lastmodifytime + "]";
 	}

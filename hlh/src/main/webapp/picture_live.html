@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图文直播</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/store.css">
+    <link rel="stylesheet" href="css/l_luntan.css">
+    <style>
+        .bottom-right>span {
+            color: #D8D8D8;
+            font-size: 1rem;
+            margin-left: 3px;
+        }
+        .time{
+            font-size: 14px;
+        }
+        .btn-primary {
+            padding: 2px 3px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        div{
+            font-family: "黑体";
+        }
+        .swiper-container {
+	        width: 100%;
+	        height: 500px;
+    	}
+    </style>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+<div class="wrap" style="min-height: 100%">
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon  mui-pull-left" onClick="back()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+        <h1 class="mui-title">图文直播</h1>
+        
+        <div class="mui-action-back mui-icon  mui-pull-right" style="width: 25%;">
+                  <a onclick="luntan.fatie.TWJump()" style="display: inline-block"><img src="img/list-bbs-Create-a-post.png" alt="" style="height: 17px;float: left;"></a>
+                  <a href="lutan_search.html" style="display: inline-block"><img src="img/list-bbs--search.png" alt="" style="height: 17px;float:right;"></a>
+         </div>
+    </header>
+    <div class="wrap1 picture" style="margin-top: 65px">
+		<div class="container">
+			<div class="swiper-container" id="tw_swiper-container">
+				<div class="swiper-wrapper" id="tw_swiper-wrapper">
+					<div class="swiper-slide"></div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!--底部导航-->
+    <nav class="mui-bar mui-bar-tab"style="z-index: 99999;">
+        <a class="mui-tab-item mui-active" href="index.html">
+            <span class="mui-icon"><img src="img/home-page-square1.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">广场</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/home-page-Like-the-icon.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">喜欢</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/home-page-In-switching.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">地区切换</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon"><img src="img/home-page-A-neighbor.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">邻居</span>
+        </a>
+        <a class="mui-tab-item" href="">
+            <span class="mui-icon "><img src="img/p.png" alt="" style="width:25px;height:25px;"></span>
+            <span class="mui-tab-label">我</span>
+        </a>
+    </nav>
+</div>
+<script src="js/jquery-3.0.0.min.js"></script>
+<script src="js/back.js"></script>
+<script src="js/swiper-3.4.0.min.js"></script>
+<script type="text/javascript" src="myjs/util.js"></script>
+<script type="text/javascript" src="myjs/luntan.js"></script>
+
+<script type="text/javascript">
+	//图文直播滑动分页
+	tw_swiper = new Swiper('#tw_swiper-container',{
+		direction: 'vertical',
+		observer: true,//开启观察者功能
+		onInit: function(swiper){
+			luntan.paginationTie.reqPaginationData(4, swiper.activeIndex+1, 2);
+			luntan.paginationTie.showPaginationData(2);
+		},
+		onSlideChangeEnd: function(swiper) {
+			luntan.paginationTie.reqPaginationData(4, swiper.activeIndex+1, 2);
+			luntan.paginationTie.showPaginationData(2);
+			$($("#tw_swiper-wrapper").children()[swiper.activeIndex-1]).empty();
+			$($("#tw_swiper-wrapper").children()[swiper.activeIndex+1]).empty();
+		}
+	});
+</script>
+</body>
+</html>

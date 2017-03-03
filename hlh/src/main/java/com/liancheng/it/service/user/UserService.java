@@ -1,16 +1,20 @@
-package com.liancheng.it.service.user;
-
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.multipart.MultipartFile;
+ï»¿package com.liancheng.it.service.user;
 
 import net.minidev.json.JSONObject;
 
 public interface UserService {
 	
-	public JSONObject addUser(String phoneNum,String password,String code,String nickname);//×¢²á
-	public boolean checkLoginUser(String phoneNum, String password);//¼ì²éÓÃ»§µÇÂ¼
-	public JSONObject createCode(String phoneNum);//Éú³ÉÑéÖ¤Âë
+	public JSONObject addUser(String phoneNum,String password,String code,String nickname);//æ³¨å†Œ
+	public JSONObject checkLoginUser(String phoneNum, String password);//æ£€æŸ¥ç”¨æˆ·ç™»å½•
+	public JSONObject createCode(String phoneNum);//ç”ŸæˆéªŒè¯ç 
+	public JSONObject updateUser(String user_id,String phoneNum,String password,String nickname,
+			String age,String gender,String mobile,String homeland,String job,String label);
+	public JSONObject showUserInfo(String user_id, String hostPath01);
+	public JSONObject attachShoppingAddress(String user_id, String name, String phone, 
+			String area, String address);
+	public JSONObject showAddrPagination(String user_id, int pageSize, int pageNumber);
+	
+	
+	
 	
 }

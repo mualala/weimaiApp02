@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <style>
+           .color{
+               color: #C7C7C7;
+               font-size: 12px;
+           }
+        .font{
+            font-size: 12px;
+             color: #D1D1D1;
+        }
+           .W20{
+            width:15%;
+            font-size: 14px;
+           height: 40px;
+           line-height: 40px;
+
+        }
+        .form-control{
+            float: left;
+            border: 0 !important;
+            outline: 0!important;
+            width: 80% !important;
+            box-shadow:none!important;
+        }
+        .border{
+            border: 1px solid #F7F7F7;
+        }
+           input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+               line-height: 21px;
+               width: 100%;
+               height: 40px;
+               margin-bottom: 0px;
+               padding: 10px 15px;
+               -webkit-user-select: text;
+               border: 1px solid rgba(0,0,0,.2);
+               border-radius: 3px;
+               outline: 0;
+               background-color: #fff;
+               -webkit-appearance: none;
+           }
+           .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+               font-family: Muiicons;
+               font-size: 20px;
+               font-weight: 400;
+               line-height: 1;
+               text-decoration: none;
+               color: #aaa;
+               border-radius: 0;
+               background: 0 0;
+               -webkit-font-smoothing: antialiased;
+           }
+        .mui-radio{
+            float: left;
+            width: 40%;
+            display: inline;
+            height: 40px;
+            font-size: 14px;
+        }
+           .mui-input-row {
+                clear: none;
+
+               overflow: hidden;
+           }
+        label{
+            font-family: "黑体";
+        }
+    </style>
+</head>
+<body style="font-size: 75px;padding-bottom: 40px;background: #ffffff">
+      <div class="wrap" style="height: 100%;overflow-x: hidden">
+          <header class="mui-bar mui-bar-nav">
+              <a class="mui-action-back mui-icon  mui-pull-left" onClick="javascript:return_prepage()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <h1 class="mui-title">新建收货地址</h1>
+              <!--<a class="mui-action-back mui-icon  mui-pull-right" style=" font-size: 16px!important; color: #7A7A7A!important;margin-top: 5px; ">取消</a>-->
+          </header>
+           <div class="row" style="margin-top: 50px;">
+               <form action="d">
+               <div class="container border" style="border-top: 0">
+                   <div class="col-xs-12">
+                       <span class="left W20">收货人</span>
+                       <input id="name" type="text" class="form-control"placeholder="收货人姓名">
+                   </div>
+               </div>
+               <div class="container border" style="border-top: none">
+                   <div class="col-xs-12">
+                       <span class="left W20">电话</span>
+                       <input id="phone" type="text" class="form-control"placeholder="收货人电话号码">
+                   </div>
+               </div>
+
+               <div class="container border" style="border-top: none">
+                   <div class="col-xs-12">
+                       <span class="left W20">地区</span>
+                       <input id="area" type="text" class="form-control"placeholder="收货地区">
+                   </div>
+               </div>
+
+
+               <div class="container border" style="border-top: none">
+                   <div class="col-xs-12">
+                       <span class="left W20">地址</span>
+                       <textarea name="" id="address" class="form-control"placeholder="收货地址"></textarea>
+                   </div>
+               </div>
+               <div class="container" style="margin-top: 50px;">
+                   <div class="col-xs-12" style="text-align: center">
+                       <a onclick="user.shoppingAddress.submitShoppingAddress();" class="btn btn-primary" style="width: 100%">提交</a>
+                   </div>
+
+               </div>
+               </form>
+           </div>
+      </div>
+	<script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/back.js"></script>
+    <script src="myjs/util.js"></script>
+    <script src="myjs/user.js"></script>
+    <script type="text/javascript">
+    	
+    </script>
+</body>
+</html>

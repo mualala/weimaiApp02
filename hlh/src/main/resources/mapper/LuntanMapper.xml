@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+  <mapper namespace="com.liancheng.it.dao.luntan.LuntanDao">
+ 	
+ 	<insert id="saveCommont"  parameterType="com.liancheng.it.entity.luntan.Luntan" keyProperty="lt_id">
+ 		insert into luntan
+ 		<trim prefix="set" suffixOverrides=",">
+ 			<if test="type != null and type != ''">type=#{type},</if>
+ 			<if test="user_id != null and user_id != ''">user_id=#{user_id},</if>
+ 			<if test="area != null and area != ''">area=#{area},</if>
+ 			<if test="lt_type != null and lt_type != ''">lt_type=#{lt_type},</if>
+ 			<if test="lt_content != null and lt_content != ''">lt_content=#{lt_content},</if>
+ 			<if test="pic != null and pic != ''">pic=#{pic},</if>
+ 			<if test="lt_creatime != null and lt_creatime != ''">lt_creatime=#{lt_creatime}</if>
+ 		</trim>
+ 	</insert>
+ 	
+ 	<select id="queryPaginationLT" parameterType="map" 
+ 	resultType="com.liancheng.it.entity.luntan.Luntan">
+ 		select 
+			L.lt_id,U.nickname,U.profile,U.level,L.lt_content,L.pic,L.lt_creatime
+		from luntan L INNER JOIN user U ON L.user_id=U.user_id 
+		<where>
+			L.lt_type=#{lt_type} and L.area=#{area}
+			<if test="type != null and type != ''">and L.type=#{type}</if>
+		</where>
+		order by L.lt_creatime desc
+		limit #{start},#{end}
+ 	</select>
+ 	<select id="totalPaginationLT" parameterType="map" resultType="int">
+ 		select count(0)
+		from luntan L INNER JOIN user U ON L.user_id=U.user_id 
+		<where>
+			L.lt_type=#{lt_type} and L.area=#{area}
+			<if test="type != null and type != ''">and L.type=#{type}</if>
+		</where>
+ 	</select>
+ 	
+ 	<select id="queryLTById" parameterType="int" resultType="com.liancheng.it.entity.luntan.Luntan">
+ 		select 
+			L.lt_id,U.nickname,U.profile,U.level,L.lt_content,L.pic,L.lt_creatime
+		from luntan L INNER JOIN user U ON L.user_id=U.user_id 
+		where L.lt_id=#{lt_id}
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	<select id="findAllBypage" parameterType="map" resultType="com.liancheng.it.entity.luntan.Luntan">
+ 		select * from luntan 
+ 		where lt_status='0'
+ 		order by lt_creatime desc
+ 		limit #{page},#{pageSize}
+ 	</select>
+ 	
+ 	<select id="findAllById" parameterType="int" resultType="com.liancheng.it.entity.luntan.Luntan">
+ 		select * from luntan 
+ 		where lt_id=#{lt_id}
+ 	</select>
+ 	
+ 	<select id="findPictureBypage" parameterType="map" resultType="com.liancheng.it.entity.luntan.Luntan">
+ 		select * from luntan 
+ 		where lt_status='1'
+ 		order by lt_creatime desc
+ 		limit #{page},#{pageSize}
+ 	</select>
+ </mapper>

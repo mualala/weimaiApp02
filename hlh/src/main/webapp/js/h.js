@@ -3,8 +3,8 @@
  * Created by Administrator on 2016/11/10.
  */
 
-mui.init();
-(function($) {
+//mui.init();
+(function() {
     //$.swipeoutOpen(el,direction)//打开指定列的滑动菜单，el:指定列的dom对象，direction：取值left|right，指定打开的是左侧或右侧滑动菜单
     //$.swipeoutClose(el);//关闭指定列的滑动菜单，el:指定列的dom对象
     //				setTimeout(function() {

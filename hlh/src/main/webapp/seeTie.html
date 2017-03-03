@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="css/seeTie.css">
+    <link rel="stylesheet" href="css/fx.css">
+    <link rel="stylesheet" href="css/share.css">
+    <style>
+    .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+        margin: 0;
+        padding: 0px 9px !important;
+        vertical-align: top;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+        margin: 0;
+        padding: 11px 15px;
+        vertical-align: top;
+        border-right: none!important;
+        border-bottom: none!important;
+    }
+    
+    .mui-col-xs-3 {
+        width: 23% !important;
+    }
+    
+    .mui-grid-9>li {
+        background: #E4E4E4 !important;
+        margin: 1% !important;
+    }
+    
+    .mui-media-body {
+        margin-top: 0 !important;
+        font-size: 1rem !important;
+    }
+    
+    div {
+        font-size: 1.2rem;
+    }
+    
+    .col-xs-7,
+    .col-xs-3 {
+        color: #BEBEBE;
+    }
+    
+    .col-xs-7 {
+        padding-right: 0!important;
+    }
+    
+    .font {
+        font-size: 1.3rem;
+    }
+    
+    .radios {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .btn-warning {
+        padding: 2px 10px;
+    }
+    </style>
+</head>
+
+<body style="padding-bottom: 40px;background: #ffffff;font-size: 75px;overflow:Scroll;overflow-x:hidden">
+    <!--分享功能-->
+    <!--<div class="mark"></div>-->
+    <!--<div class="share-dialog">-->
+    <!--<div class="share-platform">-->
+    <!--<div class="bdsharebuttonbox">-->
+    <!--<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>-->
+    <!--<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>-->
+    <!--<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>-->
+    <!--<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="wrap" style="min-height: 100%">
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon  mui-pull-left" href="luntan.html"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+            <h1 class="mui-title">查看帖子</h1>
+            <a class="mui-action-back mui-icon  mui-pull-right"><img src="img/home-page-square.png" alt="" style="height: 17px;"></a>
+        </header>
+    </div>
+    <!--轮播-->
+    <script src="js/swiper-3.4.0.min.js"></script>
+	<script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/seeTie.js"></script>
+    <script src="js/back.js"></script>
+    <script src="js/ZeroClipboard.js"></script>
+    <script type="text/javascript" src="myjs/util.js"></script>
+	<script type="text/javascript" src="myjs/luntan.js"></script>
+    
+    <script type="text/javascript">
+	    var g_url = window.location.href;
+	    $('.share-copy-c input').val(g_url);
+	    var clip = new ZeroClipboard(document.getElementById("btnCopy"));
+    	luntan.seeTie.showTieDetail();
+    </script>
+    
+    <script language="javascript">
+	    var mySwiper = new Swiper('.swiper-container', {
+	        pagination: '.swiper-pagination',
+	        paginationElement: 'li',
+	        autoplay: 1000,
+	    })
+    </script>
+    <script>
+	    window._bd_share_config = {
+	        "common": {
+	            "bdSnsKey": {},
+	            "bdText": "分享到新浪微博",
+	            "bdMini": "1",
+	            "bdMiniList": ["bdxc", "tqf", "douban", "bdhome", "sqq", "thx", "ibaidu", "meilishuo", "mogujie", "diandian", "huaban", "duitang", "hx", "fx", "youdao", "sdo", "qingbiji", "people", "xinhua", "mail", "isohu", "yaolan", "wealink", "ty", "iguba", "fbook", "twi", "linkedin", "h163", "evernotecn", "copy", "print"],
+	            "bdPic": "",
+	            "bdStyle": "1",
+	            "bdSize": "32"
+	        },
+	        "share": {}
+	    };
+	    with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/my%20indent.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/personal.css">
+</head>
+<body style=";padding-bottom: 60px;background: #ffffff">
+      <div class="wrap" style="min-height: 100%">
+          <header class="mui-bar  mui-bar-transparent">
+              <a class="mui-action-back mui-icon  mui-pull-left" onclick="back()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <h1 class="mui-title">个人资料</h1>
+              <a class="mui-action-back mui-icon  mui-pull-right" href="p_center_bianji.html"><img src="img/list-p-center-The-editor.png" alt="" style="height: 17px;"></a>
+          </header>
+          <div class="p_info">
+              <img src="" alt="" style="width: 100%;height: 240px;">
+              <div class="container img_content"><img id="profile" src="" alt=""></div>
+              <div class="container second ">
+                  <div class="col-xs-12">
+                      <span class="name" id="nickname" style="color: #ffffff;"></span>
+                      <span id="gender" class="icon"></span>
+                      <a href="my_grades.html" class="btn btn-sm btn-warning" id="luntan_lv"></a>
+                  </div>
+              </div>
+              <div class="container third ">
+                  <div class="col-xs-6" style="padding-right: 0;border-right: 1px solid #ffffff"><a href="haoyou.html" style="display: inline-block"><span>好友</span><span id='f_count'>28</span></a></div>
+                  <div class="col-xs-6" style="padding-left: 0"><a href="my_point.html" style="display: inline-block"><span>积分</span><span id='jifen'></span></a></div>
+              </div>
+              <div class="container four1">
+                   <p id="label"></p>
+              </div>
+          </div>
+          <!--内容-->
+              <ul class="mui-table-view">
+                  <li class="mui-table-view-cell" >
+                      <a class="mui-navigate-right" href="my_shop.html"><span class="icon_img one"></span>&nbsp;&nbsp;我的店铺</a>
+                  </li>
+                  <li class="mui-table-view-cell">
+                      <a class="mui-navigate-right"><span class="icon_img two"></span>&nbsp;&nbsp;我的发帖</a>
+                  </li>
+                  <li class="mui-table-view-cell">
+                      <a class="mui-navigate-right"><span class="icon_img three"></span>&nbsp;&nbsp;收藏</a>
+                  </li>
+                  <li class="mui-table-view-cell">
+                      <a class="mui-navigate-right" href="my%20indent.html"><span class="icon_img four"></span>&nbsp;&nbsp;我的订单</a>
+                  </li>
+                  <li class="mui-table-view-cell">
+                      <a class="mui-navigate-right" href="guanli_adress.html"><span class="icon_img five"></span>&nbsp;&nbsp;地址</a>
+                  </li>
+                  <li class="mui-table-view-cell">
+                      <a class="mui-navigate-right"><span class="icon_img six"></span>&nbsp;&nbsp;分享应用</a>
+                  </li>
+                  <li class="mui-table-view-cell">
+                      <a class="mui-navigate-right" href="receive_indent.html"><span class="icon_img seven"></span>&nbsp;&nbsp;收到的订单</a>
+                  </li>
+                  <li class="mui-table-view-cell">
+                      <a class="mui-navigate-right" href="setting.html"><span class="icon_img eight"></span>&nbsp;&nbsp;设置</a>
+                  </li>
+              </ul>
+          <nav class="mui-bar mui-bar-tab"style="z-index: 99999;">
+              <a class="mui-tab-item mui-active" href="index.html">
+                  <span class="mui-icon"><img src="img/home-page-square1.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">广场</span>
+              </a>
+              <a class="mui-tab-item" href="like.html">
+                  <span class="mui-icon "><img src="img/home-page-Like-the-icon.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">喜欢</span>
+              </a>
+              <a class="mui-tab-item" href="">
+                  <span class="mui-icon "><img src="img/home-page-In-switching.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">地区切换</span>
+              </a>
+              <a class="mui-tab-item" href="lingju_tuijian_qun.html">
+                  <span class="mui-icon"><img src="img/home-page-A-neighbor.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">邻居</span>
+              </a>
+              <a class="mui-tab-item" href="">
+                  <span class="mui-icon "><img src="img/p.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">我</span>
+              </a>
+          </nav>
+      </div>
+      <!--轮播-->
+	<script src="js/jquery-3.0.0.min.js"></script>
+	<script src="js/back.js"></script>
+	<script src="js/swiper-3.4.0.min.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.indexedlist.js"></script>
+    <script src="myjs/util.js" type="text/javascript" ></script>
+    <script src="myjs/user.js" type="text/javascript" ></script>
+	<script type="text/javascript">
+		user.showUserInfo();
+	</script>
+</body>
+
+</html>

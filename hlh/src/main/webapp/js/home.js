@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/10/28.
  */
-$(function (){
+$(function () {
     $(window).scroll(function () {
          if($(window).scrollTop()>44){
              $(".mark2").css({
@@ -36,13 +36,7 @@ $(function () {
 $(function () {
     var clouse=$(".clouse");
     clouse.click(function(){
-    	$(".big_map").hide();
-        $(".big").show();
+    	$(".big").show();
+        $(".big_map").hide();
     });
 });
-//切换首页地址
-function replaceLocation(_this){
-	console.log(_this);
-	var location = $(_this).text();
-	$("#location").text(location);
-}

@@ -10,6 +10,11 @@
  		where user_id=#{user_id}
  	</select>
  	
+ 	<select id="queryUserByPhone" parameterType="string" 
+ 	resultType="com.liancheng.it.entity.user.User">
+ 		select * from user where phoneNum=#{phoneNum}
+ 	</select>
+ 	
  	<insert id="saveUser" parameterType="com.liancheng.it.entity.user.User">
  		insert into user 
  		<trim prefix="set" suffixOverrides=",">
@@ -21,9 +26,31 @@
  		</trim>
  	</insert>
  	
- 	<select id="queryUserByPhone" parameterType="string" 
- 	resultType="com.liancheng.it.entity.user.User">
- 		select * from user where phoneNum=#{phoneNum}
- 	</select>
+ 	<update id="updateUser" parameterType="map">
+ 		update user
+ 		<trim prefix="set" suffixOverrides=",">
+			<if test="phoneNum != null and phoneNum != ''">phoneNum=#{phoneNum},</if> 
+			<if test="nickname != null and nickname != ''">nickname=#{nickname},</if>
+			<if test="password != null and password != ''">password=#{password},</if>
+			<if test="age != null and age != ''">age=#{age},</if>
+			<if test="gender != null and gender != ''">gender=#{gender},</if>
+			<if test="mobile != null and mobile != ''">mobile=#{mobile},</if>
+			<if test="homeland != null and homeland != ''">homeland=#{homeland},</if>
+			<if test="job != null and job != ''">job=#{job},</if>
+			<if test="label != null and label != ''">label=#{label},</if>
+			<if test="lastmodifytime != null and lastmodifytime != ''">lastmodifytime=#{lastmodifytime},</if>
+ 		</trim>
+ 		where user_id=#{user_id}
+ 	</update>
+ 	
+ 	<insert id="saveShoppingAddress" parameterType="map" keyProperty="addr_id">
+ 		insert into shopping_address 
+ 		(user_id,name,phone,area,address,addr_creatime) 
+ 		values 
+ 		(#{user_id},#{name},#{phone},#{area},#{address},#{addr_creatime})
+ 	</insert>
+ 	
+ 	
+ 	
  	
  </mapper>

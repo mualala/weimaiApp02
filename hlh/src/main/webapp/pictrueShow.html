@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/pictrueShow.css">
+    <link rel="stylesheet" href="css/i.css">
+    <link rel="stylesheet" href="css/b.css">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script src="js/waterfall.js"></script>
+    <script src="js/swiper-3.4.0.min.js"></script>
+    <script src="js/jquery.masonry.min.js"></script>
+    <script src="js/back.js"></script>
+    <style>
+
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding:0px 9px !important;
+            vertical-align: top;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            margin: 0;
+            padding: 11px 15px;
+            vertical-align: top;
+             border-right: none!important;
+             border-bottom: none!important;
+        }
+        .mui-col-xs-3 {
+            width: 23% !important;
+        }
+        .mui-grid-9>li{
+            background:#E4E4E4 !important;
+            margin: 1% !important;
+
+        }
+        .mui-media-body{
+            margin-top: 0 !important;
+            font-size: 1rem !important;
+        }
+        .mui-tab-label{
+            height: 21px!important;
+            line-height: 21px;
+        }
+        .nice {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            background: black;
+            opacity: .3;
+            left: 0;
+            margin: 0!important;
+        }
+        .tittle {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            left: 0;
+            opacity: 1!important;
+            color: #ffffff!important;
+            z-index: 999;
+            margin: 0!important;
+        }
+        .mui-bar-tab .mui-tab-item .mui-icon {
+            top: 0;
+            width: 24px;
+            height: 24px;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+    </style>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+      <div class="wrap" style="min-height: 100%">
+          <header class="mui-bar mui-bar-nav">
+              <a class="mui-action-back mui-icon  mui-pull-left" onClick="back()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <h1 class="mui-title">图片展示</h1>
+
+              <a class="mui-action-back mui-icon  mui-pull-right" style="width: 25%;">
+
+                  <img src="img/list-bbs-Create-a-post.png" alt="" style="height: 17px;float:right;">
+              </a>
+          </header>
+          <!--列表-->
+          <div class="mui-content" style="background: #ffffff;">
+              <div class="mui-content">
+                  <ul class="mui-table-view mui-grid-view mui-grid-9" style="background: #ffffff !important;border-top: 0!important;">
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+                          <div class="mui-media-body">甜点饮品</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">快餐</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">超市</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">五金杂货</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">川菜</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">风味小吃</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">海鲜</div></a></li>
+                      <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="#">
+
+                          <div class="mui-media-body">更多>></div></a></li>
+
+                  </ul>
+              </div>
+          </div>
+          <!--瀑布流-->
+          <div id="container" class="container swiper-container">
+              <div id="main" class="swiper-wrapper">
+                  <ul class="content swiper-slide">
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-post-The-picture.png" alt="">
+                                  <p class="nice"></p>
+                                  <p class="tittle">风景</p>
+                              </a>
+
+
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#" class="pic_a">
+                                  <img src="img/list-Pictures-show1.png" alt="">
+                                  <p class="nice"></p>
+                                  <p class="tittle">风景</p>
+                              </a>
+
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-post-The-picture.png" alt="">
+                                  <p class="nice"></p>
+                                  <p class="tittle">风景</p>
+                              </a>
+
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-Pictures-show1.png" alt="">
+                              </a>
+                              <p class="nice"></p>
+                              <p class="tittle">风景</p>
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-post-The-picture.png" alt="">
+                              </a>
+                              <p class="nice"></p>
+                              <p class="tittle">风景</p>
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-Pictures-show1.png" alt="">
+                              </a>
+                              <p class="nice"></p>
+                              <p class="tittle">风景</p>
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-Pictures-show1.png" alt="">
+                              </a>
+                              <p class="nice"></p>
+                              <p class="tittle">风景</p>
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-Pictures-show1.png" alt="">
+                              </a>
+                              <p class="nice"></p>
+                              <p class="tittle">风景</p>
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-Pictures-show1.png" alt="">
+                              </a>
+                              <p class="nice"></p>
+                              <p class="tittle">风景</p>
+                          </div>
+                      </li>
+                      <li class="module post">
+                          <div class="pic">
+                              <a href="#">
+                                  <img src="img/list-post-The-picture.png" alt="">
+                              </a>
+                              <p class="nice"></p>
+                              <p class="tittle">风景</p>
+                          </div>
+                      </li>
+                  </ul>
+
+              </div>
+          </div>
+          <script>
+              $(document).ready(function(){
+                  var $container = $('.content');
+                  $container.imagesLoaded(function(){
+                      $container.masonry({
+                          itemSelector: '.post',
+                          columnWidth: 1
+                      });
+                  });
+              });
+//              var mySwiper = new Swiper('.nav-box',{
+//                  slidesPerView : 3.5,
+//                  spaceBetween : 10
+//              });
+          </script>
+
+          <!--底部导航-->
+          <nav class="mui-bar mui-bar-tab"style="z-index: 99999;">
+              <a class="mui-tab-item mui-active" href="">
+                  <span class="mui-icon"><img src="img/home-page-square1.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">广场</span>
+              </a>
+              <a class="mui-tab-item" href="">
+                  <span class="mui-icon "><img src="img/home-page-Like-the-icon.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">喜欢</span>
+              </a>
+              <a class="mui-tab-item" href="">
+                  <span class="mui-icon "><img src="img/home-page-In-switching.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">地区切换</span>
+              </a>
+              <a class="mui-tab-item" href="">
+                  <span class="mui-icon"><img src="img/home-page-A-neighbor.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">邻居</span>
+              </a>
+              <a class="mui-tab-item" href="">
+                  <span class="mui-icon "><img src="img/p.png" alt="" style="width:25px;height:25px;"></span>
+                  <span class="mui-tab-label">我</span>
+              </a>
+          </nav>
+      </div>
+      <!--轮播-->
+      <script src="js/swiper-3.4.0.min.js"></script>
+      <!--<script language="javascript">-->
+          <!--var mySwiper = new Swiper('.swiper-container',{-->
+              <!--pagination : '.swiper-pagination',-->
+              <!--paginationElement : 'li',-->
+              <!--autoplay : 1000,-->
+          <!--})-->
+      <!--</script>-->
+
+</body>
+</html>

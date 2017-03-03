@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/mui.min.css">
     <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
     <link rel="stylesheet" href="css/all.css">
     <link rel="stylesheet" href="css/index.css">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <script src="js/jquery-3.0.0.min.js"></script>
     <link href="css/mui.indexedlist.css" rel="stylesheet" />
     <style>
-        html,
-        body {
+        html,body {
             min-height: 100%;
 
         }
@@ -25,44 +23,26 @@
             -webkit-box-shadow: none;
             box-shadow: none;
         }
-
         .posCity2{
             float: left;
             font-size: 14px;
             color: #000000;
             margin-top: 10px;
-            display: inline-block
-
+            display: inline-block;
         }
         .pos_img>a>img{
             position: absolute;
             right: 15px;
             top: 0;
         }
-    </style>
-    <script>
-        $(function () {
-            var allmap=$("#allmap");
-            var pos_menue=$(".pos_menue");
-            pos_menue.click(function(){
-
-                allmap.show();
-            })
-        })
-
-    </script>
-
-    <style>
-
         .mui-search{
             position: relative;
         }
-          .search_icon{
-              position: absolute !important;
-              left:5px;
-              top: 12px;
-          }
-
+        .search_icon{
+            position: absolute !important;
+            left:5px;
+            top: 12px;
+        }
         .Width>img{
             height: 40px;
             line-height: 40px;
@@ -90,7 +70,6 @@
             padding-right: 22px;
             float: right;
         }
-
         div.mui-indexed-list{
             height: 500px;
         }
@@ -105,7 +84,6 @@
             font-size: 1rem;
             margin-left: 3px;
         }
-
     </style>
 
 </head>
@@ -114,7 +92,7 @@
      <div class="big_map" style="display: none;">
          <div class="map_div" >
              <header class="mui-bar mui-bar-nav">
-                     <a class="mui-icon mui-icon-closeempty  mui-pull-left clouse"></a>
+                     <a class="mui-icon mui-icon-closeempty mui-pull-left clouse"></a>
                      <h1 class="mui-title">内蒙古</h1>
              </header>
              <!--定位城市-->
@@ -122,8 +100,8 @@
                  <p>热门城市</p>
                  <div class="mui-content" style="margin:50px 0;">
                      <ul class="mui-table-view mui-grid-view mui-grid-9">
-                         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#" class="btn-default btn btn-sm" onclick="replaceLocation(this);">内蒙古通辽市</a></li>
-                         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#" class="btn-default btn btn-sm" onclick="replaceLocation(this);">霍林郭勒市</a></li>
+                         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#" class="btn-default btn btn-sm" onclick="index.replaceLocation(this);">内蒙古通辽市</a></li>
+                         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#" class="btn-default btn btn-sm" onclick="index.replaceLocation(this);">霍林郭勒市</a></li>
                      </ul>
                  </div>
              </div>
@@ -139,7 +117,7 @@
               <div class="mui-input-row mui-search " style="width: 67%;left:5px;float: left;">
                   <input type="search" class="mui-input-clear" placeholder="搜索帖子商铺">
               </div>
-              <a  class="mui-action-back  mui-pull-right" href="messageIfon.html"><img src="img/home-page-The-message.png" alt="" style="width: 24px;height: 24px;float: right;margin-top: 10px;"></a>
+              <a  class="mui-action-back  mui-pull-right" href="messageIfon.html"><img src="./img/home-page-The-message.png" alt="" style="width: 24px;height: 24px;float: right;margin-top: 10px;"></a>
           </header>
           <!--轮播-->
           <div class="swiper-container swiper-container-horizontal" id="swiper-container1" style="height:200px;width: 100%;">
@@ -156,7 +134,7 @@
            <!--九宫格列表-->
           <div class="mui-content">
               <ul class="mui-table-view mui-grid-view mui-grid-12" style="margin-top: 0">
-                  <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="html/luntan/luntan.html">
+                  <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="luntan.html">
                       <span class="mui-icon  Width"><img src="img/home-page-bbs.png" alt=""></span>
                       <div class="mui-media-body">论坛</div></a></li>
                   <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3"><a href="shangpu.html">
@@ -185,7 +163,7 @@
           </div>
            <!--third-->
 
-           <div class="row" style="padding: 20px 0;background: #ffffff">
+           <div class="row shenghuo" style="padding: 20px 0;background: #ffffff">
                  <div class="container">
                      <!--左边-->
                      <div class="container" style="padding: 0">
@@ -221,41 +199,41 @@
                </div>
            </div>
            <!--third第二行-->
-          <div class="row" style="padding: 20px 0;background: #ffffff">
-              <div class="container">
-                  <!--左边-->
-                  <div class="container" style="padding: 0">
-                      <div class="col-xs-8" style="padding-right: 0">
-                          <div class="">
-                              <a href="" class="btn-primary btn btn-sm">置顶</a>
-                              <a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="img/home-page-Head-portrait.png" alt="" class="radios"></a>
-                              <span style="font-size: 12px">我要笑都</span>
-                              <span class="btn btn-warning btn-sm">LV.5</span>
-                          </div>
-                          <a href="seeTie.html" style="display: inline-block">
-                              <div  class="LH">
-                                  <p>xxxxxxxxxxxxxx</p>
-                              </div>
-                              <div class="LH">
-                                  <p>xxxxxxxxxxxxxxxxx</p>
-                              </div>
-                          </a>
+<!--           <div class="row" style="padding: 20px 0;background: #ffffff"> -->
+<!--               <div class="container"> -->
+<!--                   左边 -->
+<!--                   <div class="container" style="padding: 0"> -->
+<!--                       <div class="col-xs-8" style="padding-right: 0"> -->
+<!--                           <div class=""> -->
+<!--                               <a href="" class="btn-primary btn btn-sm">置顶</a> -->
+<!--                               <a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="img/home-page-Head-portrait.png" alt="" class="radios"></a> -->
+<!--                               <span style="font-size: 12px">我要笑都</span> -->
+<!--                               <span class="btn btn-warning btn-sm">LV.5</span> -->
+<!--                           </div> -->
+<!--                           <a href="seeTie.html" style="display: inline-block"> -->
+<!--                               <div  class="LH"> -->
+<!--                                   <p>xxxxxxxxxxxxxx</p> -->
+<!--                               </div> -->
+<!--                               <div class="LH"> -->
+<!--                                   <p>xxxxxxxxxxxxxxxxx</p> -->
+<!--                               </div> -->
+<!--                           </a> -->
 
-                      </div>
-                      <div class="col-xs-4 pos_img" >
-                          <a href="seeTie.html" style="display: inline-block"><img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;"/></a>
-                          <p class="opacit"></p>
-                          <p class="num">还有四张</p>
-                      </div>
-                  </div>
-                  <div class="col-sm-12" style="overflow: hidden">
-                      <a href="lingju_luntan.html" class="btn btn-primary btn-sm" style="background: #ffffff;color: #00a0e9">邻里论坛</a>
-                      <span class="time">3小时前</span>
-                      <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span>19993</span></span>
+<!--                       </div> -->
+<!--                       <div class="col-xs-4 pos_img" > -->
+<!--                           <a href="seeTie.html" style="display: inline-block"><img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;"/></a> -->
+<!--                           <p class="opacit"></p> -->
+<!--                           <p class="num">还有四张</p> -->
+<!--                       </div> -->
+<!--                   </div> -->
+<!--                   <div class="col-sm-12" style="overflow: hidden"> -->
+<!--                       <a href="lingju_luntan.html" class="btn btn-primary btn-sm" style="background: #ffffff;color: #00a0e9">邻里论坛</a> -->
+<!--                       <span class="time">3小时前</span> -->
+<!--                       <span class="bottom-right" style="float: right"><img src="img/home-age-comments.png" alt="" style="width: 17px;height: 17px;"><span>19993</span></span> -->
 
-                  </div>
-              </div>
-          </div>
+<!--                   </div> -->
+<!--               </div> -->
+<!--           </div> -->
           <!--宝贝平绣-->
           <div class="row" style="padding: 20px 0;background: #ffffff;box-sizing: border-box;">
               <div class="container">
@@ -328,7 +306,7 @@
                       <div class="col-xs-4 pos_img" >
                           <a href="seeTie.html">
                               <img src="img/home-page-The-picture.png" style="width: 80px;height: 80px;"/>
-                          <p class="opacit"></p>
+                          <p class="op acit"></p>
                           <p class="num">还有四张</p>
                           </a>
                       </div>
@@ -372,25 +350,45 @@
 
           </a>
       </nav>
-
+      <script src="js/mui.min.js"></script>
+	  <script src="js/jquery-3.0.0.min.js"></script>
       <script src="js/swiper-3.4.0.min.js"></script>
       <script src="js/home.js"></script>
-      <script src="js/mui.min.js"></script>
-     <script src="js/mui.indexedlist.js"></script>
+      <script type="text/javascript" src="myjs/luntan.js"></script>
+      <script type="text/javascript" src="myjs/util.js"></script>
+      <script type="text/javascript" src="myjs/index.js"></script>
+      <script src="js/mui.indexedlist.js"></script>
       <!--轮播-->
-      <script language="javascript">
-          var mySwiper = new Swiper('.swiper-container',{
-              pagination : '.swiper-pagination',
-              paginationElement : 'li',
-              autoplay : 1000,
-          })
+      <script type="text/javascript">
+	      $(function (){
+	    	  var mySwiper = new Swiper('.swiper-container',{
+	              pagination : '.swiper-pagination',
+	              paginationElement : 'li',
+	              autoplay : 1000,
+	          });
+	    	  
+	    	  var allmap=$("#allmap");
+              var pos_menue=$(".pos_menue");
+              pos_menue.click(function(){
+                  allmap.show();
+              });
+              
+	          //加载选择的区域
+	          if(util.getSession("area")!=null || util.getSession("area")!=undefined){
+	        	  $("#location").text(util.getSession("area"));
+	          }
+	          
+	      })
+	      function replaceLocation(_this){
+	    	  console.log($(_this).text());
+	      }
+	      $(function(){
+	    	var formData = new FormData();
+			formData.append("pageNumber",1);
+			formData.append("pageSize",2);
+			luntan.loadTie(formData);
+			luntan.seeTie();
+	      })
       </script>
-     <script>
-
-         $(function () {
-             $(".one").html(localStorage.getItem("cc"));
-         })
-     </script>
-
 </body>
 </html>

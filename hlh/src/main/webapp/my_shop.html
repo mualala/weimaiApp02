@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>我的店铺</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/store.css">
+    <script src="js/back.js"></script>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script>
+        //点击分享，弹出分享框
+        $(function(){
+            $(".up_shop").click(function(){
+                $(".share_wai").show();
+                return false;
+            })
+            $(".w_qixiao").click(function(){
+                $(".share_wai").hide();
+            })
+        })
+    </script>
+</head>
+<body style=";padding-bottom: 40px;background: #ffffff">
+<div class="wrap" style="min-height: 100%">
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon  mui-pull-left" href="personal_info.html"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+        <h1 class="mui-title">我的店铺</h1>
+    </header>
+    <div class="warning" style="margin-top: 44px">
+        营业时间<span class="w_money" style="color: #007aff">9:00-11：00</span>
+    </div>
+    <div class="warning" style="">
+        <a href="creatShop.html">
+            开店<img class="w_money" style="width: 12px" src="img/list-p-center-return.png">
+       </a>
+    </div>
+    <div class="warning up_shop" style="">
+        升级店铺<img class="w_money" style="width: 12px" src="img/list-p-center-return.png">
+    </div>
+    <div class="warning" style="">
+        <a href="upload_photos.html">
+            上传图片<img class="w_money" style="width: 12px" src="img/list-p-center-return.png">
+        </a>
+
+    </div>
+    <div class="warning" style="">
+        店铺图像<img class="w_money" style="width: 12px" src="img/list-p-center-return.png">
+    </div>
+    <!--弹出框-->
+    <div class="share_wai" style="display: none;">
+        <div class="share_another">
+        </div>
+        <div class="share_inner" style="top:30%;width: 80%;margin: 0 10%;border-radius: 15px;">
+            <div class="sha_ww" style="text-align: center">
+                升级店铺
+            </div>
+            <div class="sha_ww" style="border: 1px solid #eee;text-align: center;color: #ff0000">
+                你本次升级店铺需花费￥123
+            </div>
+            <ul class="share_choice">
+                <li class="w_qixiao">取消</li>
+                <li>确定</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
