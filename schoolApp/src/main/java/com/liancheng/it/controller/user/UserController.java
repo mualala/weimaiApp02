@@ -35,9 +35,6 @@ public class UserController {
 	@Resource
 	private UserService userService;
 	
-	/**
-	 * 登录
-	 */
 	@RequestMapping(value="/login.do",produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public JSONObject doLogin(@RequestParam("phoneNum") String phoneNum, 
@@ -50,15 +47,11 @@ public class UserController {
 		return result;
 	}
 	
-	/**
-	 * 验证码请求
-	 */
 	@RequestMapping(value="/checkPhoneNum.do",produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public JSONObject checkCode(@RequestParam("codeType") int codeType, 
 			@RequestParam("phoneNum") String phoneNum){
 		JSONObject result = new JSONObject();
-		System.out.println("请求的电话号码："+phoneNum);
 		if(phoneNum == null || "".equals(phoneNum)){
 			result.put("status", false);
 			result.put("msg", "手机号位空,请输入手机号码");
@@ -69,48 +62,28 @@ public class UserController {
 		}
 	}
 	
-	/**
-	 * 注册
-	 */
 	@RequestMapping(value="/regist.do",produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject regist(HttpServletRequest request){
-		String phoneNum = request.getParameter("phoneNum");
-		String code = request.getParameter("code");
-		String password = request.getParameter("password");
-		String username = request.getParameter("username");
-		
-		System.out.println("进入用户注册，phone："+phoneNum);
-		System.out.println("注册用户的密码：" + password);
-		System.out.println("请求的验证码：" + code);
+	public JSONObject regist(@RequestParam(value="phoneNum",required=false) String phoneNum, 
+			@RequestParam(value="code",required=false) String code, 
+			@RequestParam(value="password",required=false) String password, 
+			@RequestParam(value="username",required=false) String username){
 		JSONObject result = userService.addUser(phoneNum, password, code,username);
 		return result;
 	}
 	
-	/**
-	 * 上传用户头像
-	 */
 	@RequestMapping(value="/profile.do", method=RequestMethod.POST)
 	@ResponseBody
 	public JSONObject profile(@RequestParam("profile") MultipartFile pic, 
 			@RequestParam("user_id") String user_id, 
 			HttpServletRequest request, HttpServletResponse response){
-		
-		//将HttpServletRequest转换成MultipartHttpServletRequest
-		//(MultipartHttpServletRequest)request
-		
-		System.out.println("进了用户头像上传请求，用户id=" + user_id);
-		
-		//服务器上的地址，url
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
-		System.out.println("basePath="+basePath);
-		
 		//获取保存本地用户头像的路径
-		String localBasePath = request.getSession().getServletContext().getRealPath("/")+"images/local_user_profile/";//获取本地磁盘路径
+		String localBasePath = request.getSession().getServletContext().getRealPath("/")+"images/local_user_profile/";
 		
 		String picName = String.valueOf(System.currentTimeMillis());//设置图片唯一的名称
-		String suffix = pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));//获取文件的后缀名
+		String suffix = pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));
 		
 		userService.saveProfile(pic, user_id, localBasePath + picName + suffix,picName,localBasePath,suffix);
 		
@@ -121,28 +94,19 @@ public class UserController {
 		return resultJSON;
 	}
 	
-	/**
-	 * 用户个人信息展示
-	 */
 	@RequestMapping("/showUserInfo.do")
 	@ResponseBody
 	public JSONObject showUserInfo(@RequestParam("user_id") String user_id, 
 			@RequestParam("other_user_id") String other_user_id, 
 			HttpServletRequest request){
-		System.out.println("进了用户信息展示.....");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
 		String hostPath02 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_active/";
-		
 		JSONObject result = userService.userInfo(user_id, other_user_id, hostPath01, hostPath02);
 		return result;
 	}
 	
-	
-	/**
-	 * 更新用户基本信息
-	 */
 	@RequestMapping(value="/edit.do",method=RequestMethod.POST)
 	@ResponseBody
 	public JSONObject eidtUser(@RequestParam("user_id") String user_id, 
@@ -161,21 +125,14 @@ public class UserController {
 			@RequestParam(value="county",required=false) String county, 
 			@RequestParam(value="lable",required=false) String lable, 
 			@RequestParam(value="skill",required=false) String skill){
-		System.out.println("major="+major+",school="+school);
-		System.out.println("进了用户信息更新！");
 		JSONObject jsonObject = userService.editUser(user_id, username, gender, birthday, star, e_state, grade, 
 				profession, school, major, highschool, province, city, county, lable, skill);
-		System.out.println("major="+major+",school="+school);
 		return jsonObject;
 	}
 	
-	/**
-	 * 上传用户验证信息
-	 * @param type 验证信息的类型，学生证还是毕业证
-	 */
 	@RequestMapping(value="/verify.do")
 	@ResponseBody
-	public JSONObject uploadVerify(@RequestParam("verify") MultipartFile verify, 
+	public JSONObject uploadVerify(@RequestParam(value="verify",required=false) MultipartFile verify, 
 			HttpServletRequest request){
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
 		
@@ -187,9 +144,7 @@ public class UserController {
 		String picName = String.valueOf(System.currentTimeMillis());//设置图片唯一的名称
 		//获取文件的后缀名
 		String suffix = verify.getOriginalFilename().substring(verify.getOriginalFilename().lastIndexOf("."));
-		
 		JSONObject jsonObject = userService.userVerify(verify, type, user_id, localBasePath, picName, suffix);
-		
 		return jsonObject;
 	}
 	
@@ -210,11 +165,7 @@ public class UserController {
 		JSONObject jsonObject = userService.randPeoples(user_id, pageSize, pageNumber, hostPath01);
 		return jsonObject;
 	}
-	/**
-	 * 人海和脉脉圈用户的筛选请求
-	 * @param age01 查询的初始年龄
-	 * @param age02 查询的结束年龄
-	 */
+	
 	@RequestMapping(value="/filterPeoples.do")
 	@ResponseBody
 	public JSONObject filterPeoples(@RequestParam(value="user_id") String user_id, 
@@ -227,8 +178,6 @@ public class UserController {
 			@RequestParam(value="major",required=false) String major, 
 			@RequestParam(value="type",required=false) String type, 
 			HttpServletRequest request){
-		System.out.println("进了人海用户的筛选请求。。。");
-		System.out.println("user_id="+user_id+",pageNumber="+pageNumber+",pageSize="+pageSize+",gender="+gender+",grade="+grade+",age01="+age01+",age02="+age02+",major="+major+",type="+type);
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
@@ -237,14 +186,10 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 人海用户的搜索
-	 */
 	@RequestMapping("peoplesSearch.do")
 	@ResponseBody
 	public JSONObject peoplesSearch(@RequestParam("param") String param, 
 			HttpServletRequest request){
-		System.out.println("进了人海用户的搜索。。。");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
@@ -252,9 +197,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 脉脉圈的分类用户
-	 */
 	@RequestMapping("/maimaiCateg.do")
 	@ResponseBody
 	public JSONObject maimaiCateg(@RequestParam("user_id") String user_id, 
@@ -262,42 +204,30 @@ public class UserController {
 			@RequestParam("pageNumber") int pageNumber, 
 			@RequestParam("type") String type, 
 			HttpServletRequest request){
-		System.out.println("进了脉脉圈用户加载列表。。。");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
-		
 		JSONObject jsonObject = userService.maimaiCateg(user_id, pageSize, pageNumber, type, hostPath01);
 		return jsonObject;
 	}
 	
-	/**
-	 * 脉脉圈的用户搜索
-	 */
 	@RequestMapping("/maimaiSearch.do")
 	@ResponseBody
 	public JSONObject maimaiSearch(@RequestParam("param") String param, 
 			HttpServletRequest request){
-		System.out.println("进了脉脉圈的用户搜索。。。");
-		System.out.println("param="+param);
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
-		
 		JSONObject jsonObject = userService.maimaiSearch(param, hostPath01);
 		return jsonObject;
 	}
 	
-	/**
-	 * 访客的用户列表
-	 */
 	@RequestMapping("/showVisitorList.do")
 	@ResponseBody
 	public JSONObject showVisitorList(@RequestParam("user_id") String user_id, 
 			@RequestParam("pageSize") int pageSize, 
 			@RequestParam("pageNumber") int pageNumber, 
 			HttpServletRequest request){
-		System.out.println("访客的用户列表。。。");
 		//项目环境下的图片路径
 		String path = request.getContextPath();
 		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
@@ -306,7 +236,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 返回学校api数据的接口
+	 * 返回学校json数据的接口
 	 */
 	@RequestMapping(value="/schoolAPI.do",produces="application/json;charset=utf-8")
 	@ResponseBody
@@ -317,10 +247,7 @@ public class UserController {
 			InputStreamReader in= new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("/json/json.properties"),"UTF-8");
 			prop.load(in);
 			jsonObject.put("status", true);
-//			jsonObject.put("data", StringUtil02.compress("abcdefghijklmn"));
 			jsonObject.put("data", StringUtil02.compress(prop.getProperty("university")));
-//			jsonObject.put("length01=", prop.getProperty("university").length());
-//			jsonObject.put("length02=", StringUtil02.compress(prop.getProperty("university")).length());
 			jsonObject.put("msg", "学校数据读取成功");
 			return jsonObject;
 		} catch (Exception e) {
@@ -350,26 +277,18 @@ public class UserController {
 		}
 	}
 	
-	/**
-	 * 用户的认证状态
-	 */
 	@RequestMapping("/checkUserVerify.do")
 	@ResponseBody
 	public JSONObject checkUserVerify(@RequestParam("user_id") String user_id){
-		System.out.println("进了用户的认证状态");
 		JSONObject jsonObject = userService.checkUserVrify(user_id);
 		return jsonObject;
 	}
 	
-	/**
-	 * 重置密码
-	 */
 	@RequestMapping("/rePassword.do")
 	@ResponseBody
 	public JSONObject rePassword(@RequestParam("phoneNum") String phoneNum, 
 			@RequestParam("code") String code, 
 			@RequestParam("password") String password){
-		System.out.println("进了重置密码");
 		JSONObject jsonObject = userService.editPassword(phoneNum, code, password);
 		return jsonObject;
 	}
@@ -385,11 +304,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 控制是否可以发消息
-	 * @param send_msg 开关：0关闭 1开启
-	 * @return
-	 */
 	@RequestMapping("/controlSendMsg.do")
 	@ResponseBody
 	public JSONObject controlSendMsg(@RequestParam("user_id") String user_id, 
@@ -428,12 +342,6 @@ public class UserController {
 		}
 	}
 	
-	/**
-	 * 加好友时是否需要验证的开关
-	 * @param user_id
-	 * @param other_user_id
-	 * @return
-	 */
 	@RequestMapping("/addFriendIsVerify.do")
 	@ResponseBody
 	public JSONObject addFriendIsVerify(@RequestParam("user_id") String user_id, 
@@ -442,14 +350,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 控制 --不让TA看我的动态-- 和 --不看TA的动态的开关--
-	 * @param user_id
-	 * @param other_user_id
-	 * @param type
-	 * @param state
-	 * @return
-	 */
 	@RequestMapping("/taNoSeeOwnActive.do")
 	@ResponseBody
 	public JSONObject taNoSeeOwnActive(@RequestParam("user_id") String user_id, 

@@ -3,12 +3,6 @@
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
  
  <mapper namespace="com.liancheng.it.dao.user.UserDao">
- 
- 	<select id="findByPhoneNum" parameterType="string" 
- 	resultType="com.liancheng.it.entity.user.User">
- 		select * from user
- 		where phoneNum=#{phoneNum} 
- 	</select>
  	
  	<select id="findByUserId" parameterType="string" 
  	resultType="com.liancheng.it.entity.user.User">
@@ -55,13 +49,6 @@
 		</trim>
  		where user_id=#{user_id}
  	</update>
-	
-	<!-- #{}相当于jdbc中的preparedstatment,${}是取值也即ognl
-		这里取map中的值,所以要用${}来去集合中的值
-	<update id="editSkills" parameterType="java.util.Map">
-		
-	</update>
-	 -->
 	
  	
  	<delete id="deleteById" parameterType="string" >

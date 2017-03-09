@@ -21,9 +21,6 @@ public class FriendsController {
 	@Resource
 	private FriendsService friendsService;
 	
-	/**
-	 * 请求加好友
-	 */
 	@RequestMapping("/reqAddFriends.do")
 	@ResponseBody
 	public JSONObject reqAddFriends(@RequestParam("user_id") String user_id, 
@@ -34,24 +31,6 @@ public class FriendsController {
 		return jsonObject;
 	}
 	
-//	/**
-//	 * 展示朋友的朋友
-//	 */
-//	@RequestMapping(value="/fTof.do")
-//	@ResponseBody
-//	public JSONObject showfTof(@RequestParam("user_id") String user_id, 
-//			HttpServletRequest request){
-//		System.out.println("进了展示朋友的朋友的请求。。");
-//		//项目环境下的图片路径
-//		String path = request.getContextPath();
-//		String hostPath01 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/images/local_user_profile/";
-//		JSONObject jsonObject = friendsService.showfTof(user_id, hostPath01);
-//		return jsonObject;
-//	}
-	
-	/**
-	 * 用户添加关注用户
-	 */
 	@RequestMapping("/addAttention.do")
 	@ResponseBody
 	public JSONObject addAttention(@RequestParam("user_id") String user_id, 
@@ -60,9 +39,6 @@ public class FriendsController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 用户取消关注
-	 */
 	@RequestMapping("/cancelAttention.do")
 	@ResponseBody
 	public JSONObject cancelAttention(@RequestParam("user_id") String user_id, 
@@ -71,9 +47,6 @@ public class FriendsController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 用户的关注用户列表
-	 */
 	@RequestMapping("/attentionUsers.do")
 	@ResponseBody
 	public JSONObject attentionUsers(@RequestParam("user_id") String user_id, 
@@ -87,9 +60,6 @@ public class FriendsController {
 		return jsonObject;
 	}
 	
-	/**
-	 * fans的用户列表
-	 */
 	@RequestMapping("/fans.do")
 	@ResponseBody
 	public JSONObject fans(@RequestParam("user_id") String user_id, 
@@ -103,9 +73,6 @@ public class FriendsController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 用户的朋友列表
-	 */
 	@RequestMapping("/showFriendList.do")
 	@ResponseBody
 	public JSONObject showFriendList(@RequestParam("user_id") String user_id, 
@@ -117,9 +84,6 @@ public class FriendsController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 取消用户的fans用户
-	 */
 	@RequestMapping("/cancelFans.do")
 	@ResponseBody
 	public JSONObject cancelFans(@RequestParam("user_id") String user_id, 
@@ -128,12 +92,6 @@ public class FriendsController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 删除朋友
-	 * @param user_id 登录用户的id
-	 * @param f_user_id 要删除朋友的id
-	 * @return
-	 */
 	@RequestMapping("/deleteFriend.do")
 	@ResponseBody
 	public JSONObject deleteFriend(@RequestParam("user_id") String user_id, 

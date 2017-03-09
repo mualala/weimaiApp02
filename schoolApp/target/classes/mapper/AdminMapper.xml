@@ -4,30 +4,15 @@
  
  <mapper namespace="com.liancheng.it.dao.admin.AdminDao">
  
- 	<!-- 查询admin账户 -->
- 	<select id="checkAdmin" parameterType="string" 
- 	resultType="com.liancheng.it.entity.admin.Admin">
- 		select * from admin where admin_name=#{adminame}
- 	</select>
- 	
  	<select id="queryBannerPics" 
  	resultType="com.liancheng.it.entity.admin.BannerPicReport">
  		select * from banner_pic
- 	</select>
- 	
- 	<select id="TotalBannersCount" resultType="int">
- 		select count(*) from banner_pic
  	</select>
  	
  	<select id="updateBanner" parameterType="map">
  		update banner_pic set 
  		ban_pic=#{ban_pic},ban_url=#{ban_url},ban_lastmodify_time=#{ban_lastmodify_time}
  		where ban_id=#{ban_id}
- 	</select>
- 	
- 	<select id="queryBannerById" parameterType="int" 
- 	resultType="com.liancheng.it.entity.admin.BannerPicReport">
- 		select * from banner_pic where ban_id=#{ban_id}
  	</select>
  	
  	<update id="deleteBannerPicById" parameterType="map">
@@ -41,10 +26,6 @@
  		content=#{content},last_modify_time=#{last_modify_time}
  		where id=1
  	</update>
- 	<select id="queryDunbar" resultType="com.liancheng.it.entity.admin.DunbarCircle">
- 		select * from dunbar_circle 
- 		where id=1
- 	</select>
  	
  	<update id="modifyAdminUser" parameterType="map">
  		update admin 
@@ -61,10 +42,6 @@
  		values 
  		(#{admin_id},#{login_ip},#{browser_info},#{login_time})
  	</insert>
- 	
- 	<select id="countAdminLog" resultType="int">
- 		select count(*) from admin_login_info
- 	</select>
  	
  	<select id="adminLogRepot" parameterType="map" 
  	resultType="com.liancheng.it.entity.admin.AdminLoginInfo">
@@ -103,10 +80,6 @@
  		</foreach>
  	</delete>
  	
- 	<select id="queryMaxBannerId" resultType="int">
- 		select MAX(ban_id) from banner_pic
- 	</select>
- 	
  	<update id="updateBannerPic" parameterType="map">
  		update banner_pic set 
  		ban_pic=#{ban_pic},title=#{title},ban_url=#{ban_url},ban_lastmodify_time=#{ban_lastmodify_time}
@@ -119,10 +92,5 @@
  		values 
  		(#{ban_id},#{title},#{ban_pic},#{ban_url},#{ban_creatime})
  	</insert>
- 	
- 	<select id="queryByAdminName" parameterType="string" 
- 	resultType="com.liancheng.it.entity.admin.Admin">
- 		select * from admin where admin_name=#{adminName}
- 	</select>
  	
  </mapper>

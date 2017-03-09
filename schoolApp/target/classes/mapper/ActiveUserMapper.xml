@@ -14,11 +14,6 @@
 	 	#{active_pic},#{docum},#{docum_size},#{doc_down_count},#{active_creatime})
  	</insert>
  	
- 	<select id="queryActiveCounts" parameterType="string" 
- 	resultType="java.lang.Integer">
- 		select count(*) from active where user_id=#{user_id}
- 	</select>
- 	
  	<select id="queryOwnActive" parameterType="java.util.Map" 
  	resultType="com.liancheng.it.entity.active.Active">
  		select * from active 
@@ -73,23 +68,12 @@
  	 	limit #{start},#{end}
  	 </select>
  	 
- 	 
- 	 <select id="queryActiveSee" parameterType="int" 
- 	 resultType="com.liancheng.it.entity.active.Active">
- 	 	select see from active where active_user_id=#{active_user_id}
- 	 </select>
  	 <update id="updateSee" parameterType="com.liancheng.it.entity.active.Active">
  	 	update active set 
  	 	see=#{see} 
  	 	where active_user_id=#{active_user_id}
  	 </update>
  	 
- 	 <select id="queryActiveId" parameterType="int" 
- 	 resultType="com.liancheng.it.entity.active.ClassActive">
- 	 	select * from class_active where active_user_id=#{active_user_id}
- 	 </select>
- 	 
-
  	 <resultMap type="com.liancheng.it.entity.active.Active" id="aa">
  	 	<id column="active_user_id" property="active_user_id"/>
  	 	<result column="type_a" property="type_a" />
@@ -130,11 +114,6 @@
  	 	</where>
  	 </select>
  	 
- 	 <update id="oneActiveVerify" parameterType="int">
- 	 	update active set 
- 	 	state='1' 
- 	 	where active_user_id=#{active_user_id}
- 	 </update>
  	 <update id="oneActiveNoVerify" parameterType="int">
  	 	update active set 
  	 	state='2' 
