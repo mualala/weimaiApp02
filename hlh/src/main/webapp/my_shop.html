@@ -7,20 +7,6 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/mui.min.css">
     <link rel="stylesheet" href="css/store.css">
-    <script src="js/back.js"></script>
-    <script src="js/jquery-1.8.0.min.js"></script>
-    <script>
-        //点击分享，弹出分享框
-        $(function(){
-            $(".up_shop").click(function(){
-                $(".share_wai").show();
-                return false;
-            })
-            $(".w_qixiao").click(function(){
-                $(".share_wai").hide();
-            })
-        })
-    </script>
 </head>
 <body style=";padding-bottom: 40px;background: #ffffff">
 <div class="wrap" style="min-height: 100%">
@@ -33,8 +19,8 @@
         营业时间<span class="w_money" style="color: #007aff">9:00-11：00</span>
     </div>
     <div class="warning" style="">
-        <a href="creatShop.html">
-            开店<img class="w_money" style="width: 12px" src="img/list-p-center-return.png">
+        <a href="javascript:void(0);" onclick="openShop_jump();">开店
+        	<img class="w_money" style="width: 12px" src="img/list-p-center-return.png">
        </a>
     </div>
     <div class="warning up_shop" style="">
@@ -67,5 +53,30 @@
         </div>
     </div>
 </div>
+	<script src="js/back.js"></script>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script src="myjs/util.js"></script>
+    <script>
+        //点击分享，弹出分享框
+        $(function(){
+            $(".up_shop").click(function(){
+                $(".share_wai").show();
+                return false;
+            })
+            $(".w_qixiao").click(function(){
+                $(".share_wai").hide();
+            })
+        })
+        //开店需登录
+        function openShop_jump(){
+        	if(util.getSession('token')){
+        		location.href = 'creatShop.html';
+        	}else{
+        		alert('请先登录,才能创建店铺');
+        		location.href = 'login.html';
+        	}
+        }
+    </script>
+
 </body>
 </html>

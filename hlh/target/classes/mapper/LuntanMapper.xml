@@ -20,7 +20,7 @@
  	<select id="queryPaginationLT" parameterType="map" 
  	resultType="com.liancheng.it.entity.luntan.Luntan">
  		select 
-			L.lt_id,U.nickname,U.profile,U.level,L.lt_content,L.pic,L.lt_creatime
+			L.lt_id,L.user_id,U.nickname,U.profile,U.level,L.lt_content,L.pic,L.lt_creatime
 		from luntan L INNER JOIN user U ON L.user_id=U.user_id 
 		<where>
 			L.lt_type=#{lt_type} and L.area=#{area}
@@ -38,35 +38,41 @@
 		</where>
  	</select>
  	
- 	<select id="queryLTById" parameterType="int" resultType="com.liancheng.it.entity.luntan.Luntan">
+ 	<select id="queryLTById" resultType="com.liancheng.it.entity.luntan.Luntan">
  		select 
-			L.lt_id,U.nickname,U.profile,U.level,L.lt_content,L.pic,L.lt_creatime
-		from luntan L INNER JOIN user U ON L.user_id=U.user_id 
-		where L.lt_id=#{lt_id}
+ 			L.lt_id,U.nickname,U.profile,U.level,L.lt_content,L.pic,L.lt_creatime 
+ 		from luntan L INNER JOIN user U ON L.user_id=U.user_id 
+ 		where L.lt_id=#{lt_id}
  	</select>
  	
- 	
- 	
- 	
- 	
- 	
- 	
- 	<select id="findAllBypage" parameterType="map" resultType="com.liancheng.it.entity.luntan.Luntan">
- 		select * from luntan 
- 		where lt_status='0'
- 		order by lt_creatime desc
- 		limit #{page},#{pageSize}
+ 	<select id="queryOneLVComm" resultType="com.liancheng.it.entity.luntan.Commont">
+ 		select 
+ 			C.comm_id,C.user_id,U.nickname,U.profile,U.level,C.other_user_id,C.lt_id,C.content,C.comm_creatime 
+ 		from commont C inner join user U on C.user_id=U.user_id 
+ 		where C.lt_id=#{lt_id} 
+ 		order by C.comm_creatime desc
  	</select>
  	
- 	<select id="findAllById" parameterType="int" resultType="com.liancheng.it.entity.luntan.Luntan">
- 		select * from luntan 
- 		where lt_id=#{lt_id}
+ 	<insert id="saveOneLVComm" keyProperty="comm_id">
+ 		insert into commont 
+ 		(user_id,other_user_id,lt_id,content,comm_creatime) 
+ 		values 
+ 		(#{user_id},#{other_user_id},#{lt_id},#{content},#{comm_creatime})
+ 	</insert>
+ 	
+ 	<insert id="saveTwoLVComm" keyProperty="t_comm_id">
+ 		insert into t_commont 
+ 		(user_id,other_user_id,comm_id,t_content,t_creatime) 
+ 		values 
+ 		(#{user_id},#{other_user_id},#{comm_id},#{t_content},#{t_creatime})
+ 	</insert>
+ 	
+ 	<select id="queryMultiLVComm" resultType="com.liancheng.it.entity.luntan.TwoCommont">
+ 		SELECT 
+			TC.T_comm_id,TC.user_id,U.nickname,U.profile,U.level,TC.other_user_id,TC.comm_id,TC.t_content,TC.t_creatime
+		from t_commont TC INNER JOIN user U on TC.user_id=U.user_id
+		where TC.comm_id=#{comm_id}
+		ORDER BY TC.t_creatime desc
  	</select>
  	
- 	<select id="findPictureBypage" parameterType="map" resultType="com.liancheng.it.entity.luntan.Luntan">
- 		select * from luntan 
- 		where lt_status='1'
- 		order by lt_creatime desc
- 		limit #{page},#{pageSize}
- 	</select>
  </mapper>

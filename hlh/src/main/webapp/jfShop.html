@@ -19,7 +19,7 @@
 <body style=";padding-bottom: 40px;background: #ffffff;font-size: 75px;overflow-x: hidden;max-width: 100%;overflow:Scroll;overflow-x:hidden">
       <div class="wrap" style="min-height: 100%;width: 100%;margin: auto;overflow:Scroll;overflow-x:hidden">
           <header class="mui-bar mui-bar-nav">
-              <a class="mui-action-back mui-icon  mui-pull-left" onClick="back()"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
+              <a href="index.html" class="mui-action-back mui-icon mui-pull-left"><img src="img/list-shops-return.png" alt="" style="height: 17px;"></a>
               <h1 class="mui-title">积分商城</h1>
           </header>
 
@@ -56,7 +56,7 @@
           <!--抽奖-->
             <div class="container"style="border-top: 10px solid #F1F1F1;padding: 20px 0">
                 <div class="col-xs-6" style="text-align: center">
-                    <img src="img/list-Integral-mall--disc.png" alt="" style="width: 100px;height: 100px;">
+                	<canvas id="zhuanpan" style="width: 100px;height: 100px;"></canvas>
                 </div>
                 <div class="col-xs-6">
                     <a href="" style="font-size: 2rem;min-height: 30px;line-height: 30px;">幸运转盘</a>
@@ -111,6 +111,12 @@
               paginationElement : 'li',
               autoplay : 1000,
           })
+          var zhuanpan = document.getElementById('zhuanpan');
+          var ctx = zhuanpan.getContext('2d');
+          var img=new Image();
+          img.src='img/list-Integral-mall--disc.png';
+          ctx.drawImage(img,0,1,300,149);
+          
       </script>
 </body>
 </html>

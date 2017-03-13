@@ -52,6 +52,7 @@
 		<!-- 定义SqlSessionFactory 注入映射文件的信息-->
 		<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<property name="dataSource" ref="dbcp"></property>
+			<property name="typeAliasesPackage" value="com.liancheng.it.entity"/>
 			<property name="mapperLocations" value="classpath:mapper/*Mapper.xml"></property>
 		</bean>
 		

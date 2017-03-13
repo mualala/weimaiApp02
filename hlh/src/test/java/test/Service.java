@@ -21,11 +21,10 @@ import net.sf.json.JSON;
 public class Service  {
 	
 	@Test
-	public void test9(){//²âÊÔ»ôÁÖºÓµÄÊý¾Ý¿âÁ¬½Ó
+	public void test9(){//ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ÖºÓµï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 		String[] conf={"conf/spring-mybatis.xml","conf/spring-mvc.xml","conf/spring-aop.xml"};
 		ApplicationContext ac = new ClassPathXmlApplicationContext(conf);
 		System.out.println(ac.getBean("dbcp"));
-		
 	}
 	
 }

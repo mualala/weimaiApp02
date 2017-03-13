@@ -98,10 +98,10 @@ var luntan = {
 	
 	//分页展示论坛
 	paginationTie: {
-		//pageSize: 3,//每页多少条数据
+		//pageSize: 3,//每页数据
 		
         showPaginationData: function(lt_type){
-        	console.log($(".swiper-slide-active").length);
+        	//console.log($(".swiper-slide-active").length);
         	if(lt_type == 1){
         		$(".swiper-slide-active").eq(1).append(util.getSession('lt_pagin_data'));
         	}else {
@@ -126,14 +126,12 @@ var luntan = {
 				async: false,
 				dataType: 'json',
 				success: function(data){
-					console.log(data);
+					//console.log(data);
 					var slide = '<div class="swiper-slide"></div>';
 					if(1 == lt_type){//论坛分页数据
-						console.log('走的论坛分页');
 						var paginAllData = '';
 						if(data.rows.length>0){
 							for(var i=0;i<data.rows.length;i++){
-								console.log('lt_id='+data.rows[i].lt_id);
 								var paginData ='<div class="container" id="lunta_tie" style="padding: 0; margin-top: 10px;">';
 								paginData += '<div class="col-xs-8" style="padding-right: 0">';
 								paginData += '<div class="">';
@@ -144,13 +142,13 @@ var luntan = {
 								paginData += '<span style="font-size: 12px">'+data.rows[i].nickname+'</span>';
 								paginData += '<span class="btn btn-warning btn-sm">LV.'+(data.rows[i].level)+'</span>';	
 								paginData += '</div>';
-								paginData += '<a href="javascript:void(0);" onclick="luntan.seeTie.localLtId('+data.rows[i].lt_id+');" style="display: inline-block">';
+								paginData += '<a href="javascript:void(0);" onclick="luntan.seeTie.localLtInfo('+data.rows[i].lt_id+',\''+data.rows[i].user_id+'\');" style="display: inline-block">';
 								paginData += '<div class="LH"><p>'+data.rows[i].lt_content+'</p></div>';
 								paginData += '</a>';
 								paginData += '</div>';
 								paginData += '<div class="col-xs-4 pos_img">';
 								if(data.rows[i].pics.length>0){
-									paginData += '<a href="javascript:void(0);" onclick="luntan.seeTie.localLtId('+data.rows[i].lt_id+');" style="display: inline-block"><img src="'+data.rows[i].pics[0]+'" style="width: 80px;height: 80px;" /></a>';
+									paginData += '<a href="javascript:void(0);" onclick="luntan.seeTie.localLtInfo('+data.rows[i].lt_id+',\''+data.rows[i].user_id+'\');" style="display: inline-block"><img src="'+data.rows[i].pics[0]+'" style="width: 80px;height: 80px;" /></a>';
 								}
 								paginData += '<p class="opacit"></p>';
 								if(data.rows[i].pics.length>0){
@@ -173,7 +171,6 @@ var luntan = {
 							}
 						}
 					}else {//图文直播类型 lt_type=2
-						console.log('走的图文直播分页');
 						var twPaginAllData = '';
 						if(data.rows.length>0){
 							for(var i=0;i<data.rows.length;i++){
@@ -229,15 +226,17 @@ var luntan = {
 	
 	seeTie: {
 		//保存点击的lt_id并跳转详情页
-		localLtId: function(lt_id){
+		localLtInfo: function(lt_id, other_user_id){
 			util.setSession('lt_id', lt_id);
+			util.setSession('other_user_id', other_user_id);
 			location.href = 'seeTie.html';
 		},
+		
 		//帖子详情
 		showTieDetail: function(){
 			$.ajax({
 				url: 'luntan/showDetailLT.do',
-				data: {lt_id: util.getSession('lt_id')},
+				data: {'lt_id': util.getSession('lt_id')},
 				type: 'post',
 				dataType: 'json',
 				success: function(data){
@@ -274,39 +273,55 @@ var luntan = {
 					LTDetailData += '</div></div>';
 					//点赞列表
 					LTDetailData += '<div class="" style="height: 10px;background: #E7E7E7;margin-top: 10px"></div>';
-					LTDetailData += '<div class="row" style="margin-top: 37px;border-top:10px solid #F1F1F1;padding: 20px 0 6px">';
-					LTDetailData += '<div class="container">';
-					LTDetailData += '<div class="col-xs-2">';
-					LTDetailData += '<a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="img/home-page-Head-portrait.png" alt=""></a>';
-					LTDetailData += '</div>';
-					LTDetailData += '<div class="col-xs-10 zan_div" style="padding-top: 5px">';
-					LTDetailData += '<div class="col-xs-12" style="padding-right: 0">';
-					LTDetailData += '<span class="font block">已被帅死了</span>';
-					LTDetailData += '<a href="" class="btn-sm btn-warning btn block" style="margin-left: 5px">LV8</a>';
-					LTDetailData += '<span href="" class="time block">一分钟前</span>';
-					LTDetailData += '<span style="margin-left:1%" class="stairblock block">1楼</span>';
-					LTDetailData += '<span class="z_icon block" style=""></span>';
-					LTDetailData += '<span class="z_number block">0</span>';
-					LTDetailData += '<span class="blue_icon block"></span>';
-					LTDetailData += '</div>';
-					LTDetailData += '<div class="col-xs-12" style="line-height: 1.7;padding-top: 15px;padding-bottom: 15px;color: #C4C4C4;word-wrap: break-word">长得和我一样一样儿的...';
-					LTDetailData += '</div></div></div>';
-					//聊天详情
-					LTDetailData += '<div class="container" style="padding-top: 20px;padding-bottom: 20px">';
-					LTDetailData += '<div class="col-xs-12 meet col-xs-offset-1">';
-					LTDetailData += '<span class="name">爱美女子</span>';
-					LTDetailData += '<span class="btn btn-primary btn-xs ">楼主</span>';
-					LTDetailData += '<span>:</span>';
-					LTDetailData += '<span>想聊我锁</span>';
-					LTDetailData += '<div class="col-xs-12 meet col-xs-offset-1 ">';
-					LTDetailData += '<span>已经被帅死</span>';
-					LTDetailData += '<span>:</span>';
-					LTDetailData += '<span>哎啊被发现了</span>';
-					LTDetailData += '</div>';
+					//一级评论
+					if(data.data.comms.length>0){
+						for(var i=0;i<data.data.comms.length;i++){
+							LTDetailData += '<div class="row" style="margin-top: 37px;border-top:10px solid #F1F1F1;padding: 20px 0 6px">';
+							LTDetailData += '<div class="container">';
+							LTDetailData += '<div class="col-xs-2">';
+							if(data.data.comms[i].profile!= null || data.data.comms[i].profile!='' || data.data.comms[i].profile!=undefined){
+								LTDetailData += '<a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="'+data.data.comms[i].profile+'" alt=""></a>';
+							}else {
+								LTDetailData += '<a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="img/list-alerts-The-picture.png" alt=""></a>';
+							}
+							LTDetailData += '</div>';
+							LTDetailData += '<div class="col-xs-10 zan_div" style="padding-top: 5px">';
+							LTDetailData += '<div class="col-xs-12" style="padding-right: 0">';
+							LTDetailData += '<span class="font block">'+data.data.comms[i].nickname+'</span>';
+							LTDetailData += '<a href="" class="btn-sm btn-warning btn block" style="margin-left: 5px">LV'+data.data.comms[i].level+'</a>';
+							LTDetailData += '<span href="" class="time block">'+util.dateDiffForLT(data.data.comms[i].comm_creatime)+'</span>';
+							LTDetailData += '<span style="margin-left:1%" class="stairblock block">1楼</span>';
+							LTDetailData += '<span class="z_icon block" style=""></span>';
+							LTDetailData += '<span class="z_number block">0</span>';
+							LTDetailData += '<span class="blue_icon block pop_modal" onclick="luntan.commont.popTwoCommont('+data.data.comms[i].comm_id+',\''+data.data.comms[i].user_id+'\');"></span>';
+							LTDetailData += '</div>';
+							LTDetailData += '<div class="col-xs-12" style="line-height: 1.7;padding-top: 15px;padding-bottom: 15px;color: #C4C4C4;word-wrap: break-word">'+data.data.comms[i].content;
+							LTDetailData += '</div></div></div>';
+							//添加聊天详情
+							LTDetailData += '<div class="container" style="padding-top: 20px;padding-bottom: 20px">';
+							var multiComms = data.data.comms[i].multiComms;
+							if(multiComms!=null && multiComms.length>0){
+								for(var j=0;j<multiComms.length;j++){
+									LTDetailData += '<div class="col-xs-12 meet col-xs-offset-1">';
+									LTDetailData += '<a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="'+multiComms[j].profile+'" alt=""></a>';
+									LTDetailData += '<span class="name">'+multiComms[j].nickname+'</span>';
+									//LTDetailData += '<span class="btn btn-primary btn-xs ">楼主</span>';
+									LTDetailData += '<span>&nbsp;:&nbsp;&nbsp;&nbsp;</span>';
+									LTDetailData += '<span>'+multiComms[j].t_content+'</span>';
+//								LTDetailData += '<div class="col-xs-12 meet col-xs-offset-1 ">';
+//								LTDetailData += '<span>已经被帅死</span>';
+//								LTDetailData += '<span>:</span>';
+//								LTDetailData += '<span>哎啊被发现了</span>';
+//								LTDetailData += '</div>';
+									//LTDetailData += '<div class="noMore">没有更多了..</div>';
+									LTDetailData += '</div>';
+								}
+							}
+							LTDetailData += '</div>';
+						}
+					}
 					LTDetailData += '<div class="col-xs-12" style="text-align: right;"><a href="chartAnser.html">查看更多>></a></div>';
 					LTDetailData += '</div>';
-					//LTDetailData += '<div class="noMore">没有更多了..</div>';
-					LTDetailData += '</div></div>';
 					$('.wrap').append(LTDetailData);
 				},
 				error: function(){alert('论坛详情数据展示失败');}
@@ -314,6 +329,100 @@ var luntan = {
 		}
 	},
 	
+	/*评论相关的交互*/
+	commont: {
+		//对一级评论是的某条论坛数据展示
+		showOneLTData: function(){
+			$.ajax({
+				url: 'luntan/showDetailLT.do',
+				data: {lt_id: util.getSession('lt_id')},
+				type: 'post',
+				dataType: 'json',
+				success: function(data){
+					var oneLt = '';
+					if(data.data){
+						oneLt = '<div class="row" style="margin-top: 37px;border-top:10px solid #F1F1F1;padding: 20px 0 6px">';
+						oneLt += '<div class="container">';
+						oneLt += '<div class="col-xs-2">';
+						oneLt += '<a href="lingju_yonghuziliao.html" style="display: inline-block"><img src="'+data.data.profile+'" alt=""></a>';
+						oneLt += '</div>';
+						oneLt += '<div class="col-xs-7">';
+						oneLt += '<div class="col-xs-12"><span class="font">'+data.data.nickname+'</span><a href="" class="btn-sm btn-warning btn "style="margin-left: 5px">LV.'+data.data.level+'</a>';
+						oneLt += '<span style="margin-left: 5px">'+util.dateDiffForLT(data.data.lt_creatime)+'</span>';
+						oneLt += '</div></div></div>';
+						oneLt += '<div class="container">';
+						oneLt += '<div class="col-xs-12 meet col-xs-offset-2">'+data.data.lt_content+'</div>';
+						oneLt += '</div></div>';
+					}
+					$('#oneLt').append(oneLt);
+				},
+				error: function(){alert('评论失败');}
+			});
+		},
+		//提交一级评论
+		submitOneLVComm: function(){
+			if(util.getSession('token')==null || util.getSession('token')==undefined || util.getSession('token')==''){
+				alert('请您先登录');
+				location.href = 'login.html';
+			}else if($('#comm_content').val()=='' || $('#comm_content').val()==null){
+				alert('评论的内容不能为空');
+			}else {
+				var comm_params = {
+					user_id: util.getSession('token'),
+					other_user_id: util.getSession('other_user_id'),
+					lt_id: util.getSession('lt_id'),
+					content: $('#comm_content').val()
+				};
+				console.log(comm_params);
+				$.ajax({
+					url: 'luntan/addOneLVCommont.do',
+					data: comm_params,
+					type: 'post',
+					dataType: 'json',
+					success: function(data){
+						alert(data.msg);
+						$('#comm_content').val('');
+					},
+					error: function(){alert('评论失败');}
+				});
+			}
+		},
+		
+		popTwoCommont: function(comm_id, user_id){
+			$('#commont').modal('toggle');
+			util.setSession('comm_id', comm_id);
+			util.setSession('other_user_id', user_id);
+		},
+		//提交二级评论
+		submitTwoLVComm: function(){
+			if(util.getSession('token')==null || util.getSession('token')==undefined || util.getSession('token')==''){
+				alert('请您先登录');
+				location.href = 'login.html';
+			}else if($('#content').val()=='' || $('#content').val()==null){
+				alert('评论的内容不能为空');
+			}else {
+				var comm_params = {
+					user_id: util.getSession('token'),
+					other_user_id: util.getSession('other_user_id'),
+					comm_id: util.getSession('comm_id'),
+					content: $('#content').val()
+				};
+				console.log(comm_params);
+				$.ajax({
+					url: 'luntan/addTwoLVCommont.do',
+					data: comm_params,
+					type: 'post',
+					dataType: 'json',
+					success: function(data){
+						alert(data.msg);
+						$('#content').val('');
+						location.reload(true);
+					},
+					error: function(){alert('评论失败');}
+				});
+			}
+		}
+	},
 	
 	
 };

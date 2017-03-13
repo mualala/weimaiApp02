@@ -19,13 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.liancheng.it.dao.user.CheckCodeDao;
 import com.liancheng.it.dao.user.UserDao;
-import com.liancheng.it.entity.friends.Friends;
 import com.liancheng.it.entity.user.Coder;
 import com.liancheng.it.entity.user.ShoppingAddress;
 import com.liancheng.it.entity.user.User;
-import com.liancheng.it.util.DateUtil;
 import com.liancheng.it.util.HttpSenderUtil;
-import com.liancheng.it.util.Jwt;
 import com.liancheng.it.util.RegistCheckCode;
 import com.liancheng.it.util.UUIDUtil;
 /**

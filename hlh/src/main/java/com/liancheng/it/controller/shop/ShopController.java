@@ -21,9 +21,6 @@ public class ShopController {
 	@Autowired
 	private ShopService shopService;
 	
-	/**
-	 * 创建店铺
-	 */
 	@RequestMapping("/createShop.do")
 	@ResponseBody
 	public JSONObject createShop(@RequestParam(value="shop_profile",required=false) MultipartFile pics, 
@@ -40,6 +37,26 @@ public class ShopController {
 		String localBasePath = req.getSession().getServletContext().getRealPath("/")+"images/shop/";
 		JSONObject jsonObject = shopService.createShop(pics, user_id, shop_name, shop_type, 
 				shop_describe, shop_address, contacts_name, contacts_phone, localBasePath);
+		return jsonObject;
+	}
+	
+	@RequestMapping("/showShopType.do")
+	@ResponseBody
+	public JSONObject showShopType(){
+		JSONObject jsonObject = shopService.showShopType();
+		return jsonObject;
+	}
+	
+	@RequestMapping("/showShopPaginData.do")
+	@ResponseBody
+	public JSONObject showShopPaginData(@RequestParam(value="shopType",required=false) String shopType, 
+			@RequestParam("pageSize") int pageSize, 
+			@RequestParam("pageNumber") int pageNumber, 
+			HttpServletRequest req){
+		//项目环境下的图片路径
+		String path = req.getContextPath();
+		String hostPath01 = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+path+"/images/shop/";
+		JSONObject jsonObject = shopService.showShopPaginData(shopType, pageSize, pageNumber, hostPath01);
 		return jsonObject;
 	}
 	

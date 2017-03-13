@@ -95,9 +95,29 @@
             <a class="mui-action-back mui-icon  mui-pull-right"><img src="img/home-page-square.png" alt="" style="height: 17px;"></a>
         </header>
     </div>
-    <!--轮播-->
+    
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="commont">
+	    <div class="modal-dialog">
+	    	<div class="modal-content">
+				<div class="modal-body">
+					<input type="text" class="form-control" id="content" placeholder="请输入评论的内容">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" onclick="luntan.commont.submitTwoLVComm();" data-dismiss="modal">
+						<i class="icon-save"></i> 提交评论
+					</button>
+					<button class="btn btn-danger" data-dismiss="modal">
+						<i class="icon-remove"></i> 关闭
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
     <script src="js/swiper-3.4.0.min.js"></script>
 	<script src="js/jquery-3.0.0.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script src="js/seeTie.js"></script>
     <script src="js/back.js"></script>
     <script src="js/ZeroClipboard.js"></script>
@@ -109,6 +129,14 @@
 	    $('.share-copy-c input').val(g_url);
 	    var clip = new ZeroClipboard(document.getElementById("btnCopy"));
     	luntan.seeTie.showTieDetail();
+    	
+    	$(document).on("show.bs.modal", ".modal", function(){
+		    $(this).draggable({
+			   //handle: ".modal-header";
+		    });
+		    $(this).css("overflow", "hidden");
+		});
+    	
     </script>
     
     <script language="javascript">

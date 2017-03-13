@@ -26,11 +26,6 @@ var user = {
 	},
 	
 	showUserInfo: function(){
-		console.log($('#nickname').text());
-		console.log($('#luntan_lv').text());
-		console.log($('#f_count').text());
-		console.log($('#jifen').text());
-		console.log($('#label').text());
 		if(util.getSession('token')){
 			$.ajax({
 				url: 'user/showUserInfo.do',
@@ -108,7 +103,6 @@ var user = {
 		
 		showPaginShoppingAddress: {//分页展示收货地址
 			showPaginationData: function(){
-	        	console.log($(".swiper-slide-active").length);
         		$(".swiper-slide-active").eq(0).append(util.getSession('addr_pagin_data'));
 	        },
 	        reqPaginationData: function(pageSize, pageNumber){
@@ -117,7 +111,6 @@ var user = {
 		    			pageSize: pageSize,
 		    			pageNumber: pageNumber,
 		    		};//属性值：pageSize,pageNumber,type,lt_type,area
-	        	//请求得到分页数据
 	            $.ajax({
 					url: 'user/showAddrPagination.do',
 					data: addr_params,
@@ -131,7 +124,6 @@ var user = {
 						var ul = '<ul id="OA_task_1" class="mui-table-view" style="margin-top: 45px;">';
 						if(data.rows.length>0){
 							for(var i=0;i<data.rows.length;i++){
-								//var paginData = '<ul id="OA_task_1" class="mui-table-view" style="margin-top: 45px;">';
 								var paginData ='<li class="mui-table-view-cell">';
 								paginData += '<div class="mui-slider-right mui-disabled">';
 								paginData += '<a class="mui-btn mui-btn-red">删除</a>';
@@ -143,7 +135,6 @@ var user = {
 								paginData += '<div class="col-xs-12">地址：'+data.rows[i].area+' '+data.rows[i].address+'</div>';
 								paginData += '</div></div></li>';
 								ul += paginData;
-								//paginAllData += paginData;
 							}
 							ul += '</ul>';
 							paginAllData += ul;

@@ -19,14 +19,6 @@ public class UserController {
 	@Resource
 	private UserService userService;
 	
-	/**
-	 * 注册
-	 * @param phoneNum
-	 * @param verifyCode
-	 * @param nickname
-	 * @param password
-	 * @return
-	 */
 	@RequestMapping(value="/regist.do",produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public JSONObject regist(@RequestParam("phoneNum") String phoneNum,
@@ -37,12 +29,6 @@ public class UserController {
 		return result;
 	}
 	
-	/**
-	 * 登录
-	 * @param phoneNum
-	 * @param password
-	 * @return
-	 */
 	@RequestMapping("/login.do")
 	@ResponseBody
 	public JSONObject login(@RequestParam("loginUser") String phoneNum, 
@@ -51,11 +37,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 发送验证码
-	 * @param phoneNum
-	 * @return
-	 */
 	@RequestMapping("/sendCode.do")
 	@ResponseBody
 	public JSONObject sendCode(@RequestParam("phoneNum") String phoneNum){
@@ -63,9 +44,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 更新用户信息
-	 */
 	@RequestMapping(value="/updateUser.do",method=RequestMethod.POST)
 	@ResponseBody
 	public JSONObject updateUser(@RequestParam("token") String user_id, 
@@ -83,12 +61,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 展示用户个人信息
-	 * @param user_id
-	 * @param req
-	 * @return
-	 */
 	@RequestMapping("/showUserInfo.do")
 	@ResponseBody
 	public JSONObject showUserInfo(@RequestParam("token") String user_id, 
@@ -100,15 +72,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 添加收货地址
-	 * @param user_id
-	 * @param name
-	 * @param phone
-	 * @param area
-	 * @param address
-	 * @return
-	 */
 	@RequestMapping("/attachShoppingAddress.do")
 	@ResponseBody
 	public JSONObject attachShoppingAddress(@RequestParam("token") String user_id, 
@@ -120,13 +83,6 @@ public class UserController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 展示收货地址的分页数据
-	 * @param user_id
-	 * @param pageSize
-	 * @param pageNumber
-	 * @return
-	 */
 	@RequestMapping("/showAddrPagination.do")
 	@ResponseBody
 	public JSONObject showAddrPagination(@RequestParam("token") String user_id, 

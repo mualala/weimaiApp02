@@ -3,19 +3,19 @@ var shop = {
 	//选中店铺分类
 	selectType: function(){
 		$(".s_xuanzhong").click(function(){
-      	  $(this).addClass("selected").siblings().removeClass("selected");
-      	  $(this).css("background","rgba(40,96,144,0.8) !important").siblings().css("background","#E4E4E4 !important");
-      	  
-      	  var typeVal = "";
-      	  var types = $("#shop_type").children().siblings();
-      	  for(var i=0;i<types.length;i++){
-	  			var selected = $(types[i]).hasClass("selected");
-	  			if(selected){
-	  				typeVal = $(types[i]).find("div").text();
-	  			}
-      	  }
-      	  util.setSession("shop_type", typeVal);
-        });
+	      	  $(this).addClass("selected").siblings().removeClass("selected");
+	      	  $(this).css("background","rgba(40,96,144,0.8) !important").siblings().css("background","#E4E4E4 !important");
+	      	  
+	      	  var typeVal = "";
+	      	  var types = $("#shop_type").children().siblings();
+	      	  for(var i=0;i<types.length;i++){
+		  			var selected = $(types[i]).hasClass("selected");
+		  			if(selected){
+		  				typeVal = $(types[i]).find("div").text();
+		  			}
+	      	  }
+	      	  util.setSession("shop_type", typeVal);
+		});
 	},
 	
 	//提交创建
@@ -71,7 +71,107 @@ var shop = {
 		}
 	},
 	
-	
+	//店铺展示相关的交互
+	showShop: {
+		//加载分类
+		showShopType: function(){
+			$.ajax({
+				url:'shop/showShopType.do',
+				type:'post',
+				data:'',
+				async: false,
+				dataType:'json',
+	    		success:function(data){
+	    			console.log(data.data);
+	    			if(data.data!=null || data.data!=undefined || data.data.length>0){
+	    				var li = '';
+	    				for(var i=0;i<data.data.length;i++){
+	    					li += '<li class="c_xuanze">'+data.data[i]+'</li>';
+	    				}
+	    				$('#shop_type').append(li);
+	    			}
+	    		},
+	    		error:function(){
+	    			alert('店铺的分类加载失败');
+	    		}
+			});
+		},
+		
+		//
+		selectShowType: function(){
+			$(".c_xuanze").click(function(_this){
+		      	  $(this).addClass("selected").siblings().removeClass("selected");
+		      	  $(this).css({'background':'#308EE3','color':'#fff'}).siblings().css({'background':'#F1F1F1','color':'#838383'});
+		      	  
+		      	  var shopTypeVal = "";
+		      	  var types = $("#shop_type").children().siblings();
+		      	  for(var i=0;i<types.length;i++){
+			  			var selected = $(types[i]).hasClass("selected");
+			  			console.log(i+'='+selected+',val='+$(types[i]).text());
+			  			if(selected){
+			  				console.log('aaa='+$(types[i]).text());
+			  				shopTypeVal = $(types[i]).text();
+			  			}
+		      	  }
+		      	  util.setSession("shop_type", shopTypeVal);
+		      	  location.reload(true);
+		        });
+		},
+		
+		//分页展示店铺信息
+		showPaginShopInfo: {
+			showPaginationData: function(){
+        		$(".swiper-slide-active").eq(0).append(util.getSession('shop_pagin_data'));
+	        },
+	        reqPaginationData: function(pageSize, pageNumber){
+	        	var shop_params = {
+	        			shopType: util.getSession('shop_type'),
+		    			pageSize: pageSize,
+		    			pageNumber: pageNumber,
+		    		};
+	        	console.log(shop_params);
+	            $.ajax({
+					url: 'shop/showShopPaginData.do',
+					data: shop_params,
+					type: 'post',
+					async: false,
+					dataType: 'json',
+					success: function(data){
+						console.log(data);
+						var slide = '<div class="swiper-slide"></div>';
+						var paginAllData = '';
+						if(data.rows.length>0){
+							for(var i=0;i<data.rows.length;i++){
+								var paginData ='<div class="row c_dianpu">';
+								paginData += '<p class="col-xs-4">';
+								paginData += '<img src="'+data.rows[i].shop_profile+'" alt=""/>';
+								paginData += '</p>';
+								paginData += '<div class="c_content_text col-xs-8">';
+								paginData += '<p>';
+								paginData += '<span class="">'+data.rows[i].shop_describe+'</span>';
+								paginData += '<a href="tel:'+data.rows[i].contacts_phone+'"><i class="c_phone"></i></a>';
+								paginData += '</p>';
+								paginData += '<span class="c_huanjing">环境优美，提供没费wifi</span>';
+								paginData += '</div></div>';
+								paginAllData += paginData;
+							}
+							util.setSession('shop_pagin_data', paginAllData);
+							//向下添加slide
+							if(Math.ceil(data.total/pageSize)>($("#shop_swiper-wrapper").children().length)){
+								$("#shop_swiper-wrapper").append(slide);
+							}
+						}
+					},
+					error: function(){
+						alert('店铺展示失败');
+					}
+				});
+	        },
+	        
+	        
+	        
+		}
+	},
 	
 	
 	

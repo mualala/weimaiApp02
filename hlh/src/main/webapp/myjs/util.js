@@ -1,7 +1,7 @@
-
+/*工具方法*/
 var util = {
 	//seesion级别缓存
-	setSession: function(_key,_value){
+	setSession: function(_key, _value){
 		try{
 			sessionStorage.setItem(_key, _value);
 		}catch(e){console.log("token storage failed");}
@@ -15,7 +15,7 @@ var util = {
 	},
 	
 	//持久化缓存
-	setLocalDB: function(_key,_value){
+	setLocalDB: function(_key, _value){
 		try{
 			localStorage.setItem(_key, _value);
 		}catch(e){console.log("token storage failed");}

@@ -3,7 +3,6 @@ package com.liancheng.it.service.admin;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,13 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.liancheng.it.dao.admin.AdminDao;
 import com.liancheng.it.entity.admin.Admin;
 import com.liancheng.it.entity.admin.BannerPicReport;
-import com.liancheng.it.entity.admin.DunbarCircle;
-import com.liancheng.it.util.DateUtil;
 import com.liancheng.it.util.UUIDUtil;
 
 import net.minidev.json.JSONObject;
 
-@Service("adminService")//É¨Ãèservice
+@Service("adminService")//É¨ï¿½ï¿½service
 @Aspect
 @Transactional
 public class AdminServiceImpl implements AdminService {
@@ -58,43 +55,43 @@ public class AdminServiceImpl implements AdminService {
 		}else {
 			try {
 				System.out.println("".equals(existBanner.getBan_pic()));
-				//É¾³ý·þÎñÆ÷ÉÏÔ­Ê¼picIdµÄÍ¼Æ¬
+				//É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼picIdï¿½ï¿½Í¼Æ¬
 				if(!"".equals(existBanner.getBan_pic())){
 					File existFile = new File(localBasePath+existBanner.getBan_pic());
 					System.out.println(localBasePath+existBanner.getBan_pic());
 					System.out.println(existFile.exists());
 					if(existFile.exists()){
-						System.out.println("·þÎñÆ÷´æÔÚÒÔÇ°µÄÎÄ¼þÃû="+localBasePath+existBanner.getBan_pic());
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½="+localBasePath+existBanner.getBan_pic());
 						existFile.delete();
 					}
 				}
-				picName = bannerPic.getOriginalFilename();//»ñÈ¡ÉÏ´«ÎÄ¼þµÄÃû³Æ
-				//ÏÈ½«Í¼Æ¬±£´æµ½±¾µØ
+				picName = bannerPic.getOriginalFilename();//ï¿½ï¿½È¡ï¿½Ï´ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				//ï¿½È½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½æµ½ï¿½ï¿½ï¿½ï¿½
 				bannerPic.transferTo(new File(localBasePath+BanPicName+picName));
-				System.out.println("bannerÍ¼±£´æ·þÎñÆ÷µÄÂ·¾¶="+localBasePath+BanPicName+picName);
+				System.out.println("bannerÍ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½="+localBasePath+BanPicName+picName);
 			} catch (Exception e) {
-				System.out.println("ºóÌ¨bannerÍ¼±£´æÊ§°Ü¡£¡£¡£");
-				jsonObject.put("msg", "bannerÍ¼·þÎñÆ÷±£´æÊ§°Ü,ÇëÁªÏµÏµÍ³¹ÜÀíÔ±");
+				System.out.println("ï¿½ï¿½Ì¨bannerÍ¼ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü¡ï¿½ï¿½ï¿½ï¿½ï¿½");
+				jsonObject.put("msg", "bannerÍ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ÏµÏµÍ³ï¿½ï¿½ï¿½ï¿½Ô±");
 				return jsonObject;
 			}
 		}
-		//±£´æµ½Êý¾Ý¿â
+		//ï¿½ï¿½ï¿½æµ½ï¿½ï¿½Ý¿ï¿½
 		params.put("ban_pic", BanPicName+picName);
 		params.put("type", type);
 		params.put("ban_lastmodify_time", new Timestamp(System.currentTimeMillis()));
 		System.out.println(params.toString());
 		adminDao.updateBanner(params);
-		jsonObject.put("msg", "bannerÍ¼±£´æ³É¹¦");
+		jsonObject.put("msg", "bannerÍ¼ï¿½ï¿½ï¿½ï¿½É¹ï¿½");
 		return jsonObject;
 	}
 	
 	public JSONObject modifyBannerPic(int picId, String type, String localBasePath){
 		JSONObject jsonObject = new JSONObject();
 		BannerPicReport existBanner = adminDao.queryBannerById(picId);
-		//É¾³ý·þÎñÆ÷ÉÏÔ­Ê¼picIdµÄÍ¼Æ¬
+		//É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼picIdï¿½ï¿½Í¼Æ¬
 		File existFile = new File(localBasePath+existBanner.getBan_pic());
 		if(existFile.exists()){
-			System.out.println("·þÎñÆ÷´æÔÚÒÔÇ°µÄÎÄ¼þÃû="+localBasePath+existBanner.getBan_pic());
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½="+localBasePath+existBanner.getBan_pic());
 			existFile.delete();
 		}
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -103,7 +100,7 @@ public class AdminServiceImpl implements AdminService {
 		params.put("ban_lastmodify_time", new Timestamp(System.currentTimeMillis()));
 		adminDao.deleteBannerPicById(params);
 		jsonObject.put("status", true);
-		jsonObject.put("msg", "É¾³ýÍ¼Æ¬³É¹¦");
+		jsonObject.put("msg", "É¾ï¿½ï¿½Í¼Æ¬ï¿½É¹ï¿½");
 		return jsonObject;
 	}
 

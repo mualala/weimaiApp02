@@ -17,8 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.liancheng.it.dao.luntan.LuntanDao;
 import com.liancheng.it.dao.user.UserDao;
+import com.liancheng.it.entity.luntan.Commont;
 import com.liancheng.it.entity.luntan.Luntan;
-import com.liancheng.it.entity.user.User;
+import com.liancheng.it.entity.luntan.TwoCommont;
 
 @Service("luntanService")
 public class LuntanServiceImpl implements LuntanService {
@@ -130,12 +131,61 @@ public class LuntanServiceImpl implements LuntanService {
 			}
 		}
 		luntan.setPics(picList);
+		//添加评论
+		List<Commont> comms = luntanDao.queryOneLVComm(lt_id);
+		for(Commont comm:comms){
+			if(comm.getProfile() != null){
+				comm.setProfile(hostPath01+comm.getProfile());
+			}
+			//添加多级评论
+			List<TwoCommont> multiComms = luntanDao.queryMultiLVComm(comm.getComm_id());
+			if(multiComms.size()>0){
+				for(TwoCommont multiComm:multiComms){
+					if(multiComm.getProfile() != null){
+						multiComm.setProfile(hostPath01+multiComm.getProfile());
+					}
+				}
+				comm.setMultiComms(multiComms);
+			}
+		}
+		luntan.setComms(comms);
+		
 		jsonObject.put("data", luntan);
 		return jsonObject;
 	}
 	
+	public JSONObject addOneLVCommont(String user_id, String other_user_id, String lt_id, String content){
+		JSONObject jsonObject = new JSONObject();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("user_id", user_id);
+		params.put("other_user_id", other_user_id);
+		params.put("lt_id", lt_id);
+		params.put("content", content);
+		params.put("comm_creatime", new Timestamp(System.currentTimeMillis()));
+		int rowsCount = luntanDao.saveOneLVComm(params);
+		if(rowsCount == 1){
+			jsonObject.put("msg", "评论成功");
+		}else {
+			jsonObject.put("msg", "评论失败");
+		}
+		return jsonObject;
+	}
 	
-	
-	
+	public JSONObject addTwoLVCommont(String user_id, String other_user_id, String comm_id, String content){
+		JSONObject jsonObject = new JSONObject();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("user_id", user_id);
+		params.put("other_user_id", other_user_id);
+		params.put("comm_id", comm_id);
+		params.put("t_content", content);
+		params.put("t_creatime", new Timestamp(System.currentTimeMillis()));
+		int rowsCount = luntanDao.saveTwoLVComm(params);
+		if(rowsCount == 1){
+			jsonObject.put("msg", "评论成功");
+		}else {
+			jsonObject.put("msg", "评论失败");
+		}
+		return jsonObject;
+	}
 	
 }

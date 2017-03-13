@@ -3,6 +3,7 @@ package com.liancheng.it.service.shop;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.minidev.json.JSONObject;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.liancheng.it.dao.shop.ShopDao;
+import com.liancheng.it.entity.shop.Shop;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -51,7 +53,6 @@ public class ShopServiceImpl implements ShopService {
 		params.put("contacts_phone", contacts_phone);
 		params.put("shop_profile", picName02);
 		params.put("shop_creatime", new Timestamp(System.currentTimeMillis()));
-		logger.info(params.toString());
 		int count = shopDao.saveShop(params);
 		if(count == 1){
 			jsonObject.put("msg", "创建店铺成功");
@@ -61,9 +62,29 @@ public class ShopServiceImpl implements ShopService {
 		return jsonObject;
 	}
 	
+	public JSONObject showShopType(){
+		JSONObject jsonObject = new JSONObject();
+		List<String> allShopType = shopDao.queryAllShopType();
+		jsonObject.put("data", allShopType);
+		return jsonObject;
+	}
 	
-	
-	
+	public JSONObject showShopPaginData(String shopType, int pageSize, int pageNumber, String hostPath01){
+		JSONObject jsonObject = new JSONObject();
+		int start = (pageNumber-1)*pageSize;
+		int end = pageSize;
+		List<Shop> shops = shopDao.queryShopPagin(shopType, start, end);
+		if(shops.size()>0){
+			for(Shop shop:shops){
+				if(shop.getShop_profile() != null ){
+					shop.setShop_profile(hostPath01+shop.getShop_profile().replaceAll(",", ""));
+				}
+			}
+		}
+		jsonObject.put("rows", shops);
+		jsonObject.put("total", shopDao.totalShopPagin(shopType));
+		return jsonObject;
+	}
 	
 	
 	

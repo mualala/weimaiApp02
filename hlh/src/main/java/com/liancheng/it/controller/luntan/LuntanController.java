@@ -1,8 +1,5 @@
 ﻿package com.liancheng.it.controller.luntan;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
-
 import javax.servlet.http.HttpServletRequest;
 
 import net.minidev.json.JSONObject;
@@ -25,9 +22,6 @@ public class LuntanController {
 	@Autowired
 	private LuntanService luntanService;
 	
-	/**
-	 * 论坛发帖
-	 */
 	@RequestMapping(value="/addCommont.do",method=RequestMethod.POST)
 	@ResponseBody
 	public JSONObject addCommont(
@@ -45,10 +39,6 @@ public class LuntanController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 分页展示论坛数据
-	 * @return
-	 */
 	@RequestMapping("/showPaginationLT.do")
 	@ResponseBody
 	public JSONObject showPaginationLT(@RequestParam("pageSize") int pageSize, 
@@ -66,9 +56,6 @@ public class LuntanController {
 		return jsonObject;
 	}
 	
-	/**
-	 * 论坛详情页
-	 */
 	@RequestMapping("/showDetailLT.do")
 	@ResponseBody
 	public JSONObject showDetailLT(@RequestParam("lt_id") int lt_id, 
@@ -81,8 +68,25 @@ public class LuntanController {
 		return jsonObject;
 	}
 	
+	@RequestMapping("/addOneLVCommont.do")
+	@ResponseBody
+	public JSONObject addOneLVCommont(@RequestParam("user_id") String user_id, 
+			@RequestParam("other_user_id") String other_user_id, 
+			@RequestParam("lt_id") String lt_id, 
+			@RequestParam("content") String content){
+		JSONObject jsonObject = luntanService.addOneLVCommont(user_id, other_user_id, lt_id, content);
+		return jsonObject;
+	}
 	
-	
+	@RequestMapping("/addTwoLVCommont.do")
+	@ResponseBody
+	public JSONObject addTwoLVCommont(@RequestParam("user_id") String user_id, 
+			@RequestParam("other_user_id") String other_user_id, 
+			@RequestParam("comm_id") String comm_id, 
+			@RequestParam("content") String content){
+		JSONObject jsonObject = luntanService.addTwoLVCommont(user_id, other_user_id, comm_id, content);
+		return jsonObject;
+	}
 	
 	
 }

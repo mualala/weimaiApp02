@@ -5,12 +5,23 @@
     <title>商铺</title>
     <meta name="viewport" content="height=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
     <link rel="stylesheet" href="css/shangpu.css"/>
+    
+    
     <script src="js/back.js"></script>
     <style>
         div{
             font-family: "黑体";
         }
+        .selected{
+        	background: #308EE3;
+        	color: #fff;
+        }
+        .swiper-container {
+	        width: 100%;
+	        height: 380px;
+    	}
     </style>
 </head>
 <body>
@@ -21,64 +32,45 @@
 
     </header>
     <div class="c_section">
-        <ul class="c_section_nav">
-            <li>甜点饮品</li>
-            <li>快餐</li>
-            <li>超市</li>
-            <li>五金杂货</li>
-            <li>风味小吃</li>
-            <li>海鲜</li>
-            <li>特色火锅</li>
-            <li class="c_xuanze">川菜</li>
-            <li>鲁菜</li>
-            <li>粤菜</li>
-            <li>苏菜</li>
-            <li>浙菜</li>
-            <li>闽菜</li>
-            <li>湘菜</li>
-            <li>徽菜</li>
+        <ul class="c_section_nav" id="shop_type">
         </ul>
     </div>
+    
     <div class="c_section_content container-fluid ">
-        <div class="row c_dianpu">
-            <p class="col-xs-4">
-                <img src="img/list-shops-The-picture.png" alt=""/>
-            </p>
-            <div class="c_content_text col-xs-8">
-                <p>
-                    <span class="">来啊 吃我啊</span>
-                    <a href="tel:13551501576"><i class="c_phone"></i></a>
-                </p>
-                <span class="c_huanjing">
-                    环境优美，提供没费wifi
-                </span>
-            </div>
-        </div>
-        <div class="row c_dianpu">
-            <p class="col-xs-4">
-                <img src="img/list-shops-The-picture.png" alt=""/>
-            </p>
-            <div class="c_content_text col-xs-8">
-                <p>
-                    <span class="">来啊 吃我啊</span>
-                    <a href="tel:13551501576"><i class="c_phone"></i></a>
-                </p>
-                <span class="c_huanjing">环境优美，提供没费wifi</span>
-            </div>
-        </div>
-        <div class="row c_dianpu" style="border-bottom: none">
-            <p class="col-xs-4">
-                <img src="img/list-shops-The-picture.png" alt=""/>
-            </p>
-            <div class="c_content_text col-xs-8">
-                <p>
-                    <span class="">来啊 吃我啊</span>
-                    <a href="tel:13551501576"><i class="c_phone"></i></a>
-                </p>
-                <span class="c_huanjing">环境优美，提供没费wifi</span>
-            </div>
-        </div>
-
+    	<div class="swiper-container" id="shop_swiper-container">
+			<div class="swiper-wrapper" id="shop_swiper-wrapper">
+				<div class="swiper-slide"></div>
+			</div>
+		</div>
     </div>
+    
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/swiper-3.4.0.min.js"></script>
+    <script src="js/back.js"></script>
+    <script src="myjs/util.js"></script>
+    <script src="myjs/shop.js"></script>
+    <script type="text/javascript">
+    	shop.showShop.showShopType();
+    	shop.showShop.selectShowType();
+    	
+    	shop_swiper = new Swiper('#shop_swiper-container',{
+			//pagination: '.lt_swiper-pagination',
+			direction: 'vertical',
+			observer: true,//开启观察者功能
+			onInit: function(swiper){
+				shop.showShop.showPaginShopInfo.reqPaginationData(3, swiper.activeIndex+1);
+				shop.showShop.showPaginShopInfo.showPaginationData();
+			},
+			onSlideChangeEnd: function(swiper) {
+				shop.showShop.showPaginShopInfo.reqPaginationData(3, swiper.activeIndex+1);
+				shop.showShop.showPaginShopInfo.showPaginationData();
+				//console.log(swiper.activeIndex);
+				//console.log($("#lt_swiper-wrapper").children());
+				//console.log($("#lt_swiper-wrapper").children()[swiper.activeIndex-1]);
+				$($("#shop_swiper-wrapper").children()[swiper.activeIndex-1]).empty();
+				$($("#shop_swiper-wrapper").children()[swiper.activeIndex+1]).empty();
+			}
+        });
+    </script>
 </body>
 </html>

@@ -11,4 +11,18 @@
  		(#{user_id},#{shop_name},#{shop_type},#{shop_profile},#{shop_describe},#{shop_address},#{contacts_name},#{contacts_phone},#{shop_creatime})
  	</insert>
  	
+ 	<select id="queryShopPagin" resultType="Shop">
+ 		select * from shop 
+ 		<where>
+ 			<if test="shopType != null and shopType != ''">shop_type=#{shopType}</if>
+ 		</where>
+ 		limit #{start},#{end}
+ 	</select>
+ 	<select id="totalShopPagin" resultType="int">
+ 		select count(0) from shop 
+ 		<where>
+ 			<if test="shopType != null and shopType != ''">shop_type=#{shopType}</if>
+ 		</where>
+ 	</select>
+ 	
  </mapper>
